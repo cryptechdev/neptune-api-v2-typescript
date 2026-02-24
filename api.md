@@ -2,9 +2,13 @@
 
 ## Status
 
+Types:
+
+- <code><a href="./src/resources/v1/status.ts">StatusCheckHealthResponse</a></code>
+
 Methods:
 
-- <code title="get /api/v1/status/health">client.v1.status.<a href="./src/resources/v1/status.ts">checkHealth</a>() -> void</code>
+- <code title="get /api/v1/status/health">client.v1.status.<a href="./src/resources/v1/status.ts">checkHealth</a>() -> StatusCheckHealthResponse</code>
 
 ## Assets
 

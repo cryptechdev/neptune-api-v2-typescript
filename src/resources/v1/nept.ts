@@ -246,7 +246,7 @@ export namespace NeptGetStakingOverviewResponse {
       /**
        * **TODO:** rename, proper description
        *
-       * stake_acc = âˆ« ( emission_rate / total_reward_weight ) dt
+       * stake_acc = ∫ ( emission_rate / total_reward_weight ) dt
        */
       stake_acc: string;
     }

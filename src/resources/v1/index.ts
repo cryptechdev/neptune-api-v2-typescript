@@ -38,7 +38,7 @@ export {
   type NeptGetTokenParamsParams,
   type NeptGetTokenStateParams,
 } from './nept';
-export { Status } from './status';
+export { Status, type StatusCheckHealthResponse } from './status';
 export {
   Users,
   type EventAction,

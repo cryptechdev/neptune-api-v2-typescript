@@ -29,7 +29,9 @@ const client = new NeptuneAPIV2({
   apiKey: process.env['NEPTUNE_API_V2_API_KEY'], // This is the default and can be omitted
 });
 
-await client.v1.status.checkHealth();
+const response = await client.v1.status.checkHealth();
+
+console.log(response.status);
 ```
 
 ### Request & Response types
@@ -44,7 +46,7 @@ const client = new NeptuneAPIV2({
   apiKey: process.env['NEPTUNE_API_V2_API_KEY'], // This is the default and can be omitted
 });
 
-await client.v1.status.checkHealth();
+const response: NeptuneAPIV2.V1.StatusCheckHealthResponse = await client.v1.status.checkHealth();
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -141,9 +143,9 @@ const response = await client.v1.status.checkHealth().asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: result, response: raw } = await client.v1.status.checkHealth().withResponse();
+const { data: response, response: raw } = await client.v1.status.checkHealth().withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(result);
+console.log(response.status);
 ```
 
 ### Logging
