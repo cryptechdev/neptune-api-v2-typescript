@@ -60,7 +60,7 @@ $ yarn link neptune-api-v2
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global neptune-api-v2
+$ pnpm link --global neptune-api-v2
 ```
 
 ## Running tests
