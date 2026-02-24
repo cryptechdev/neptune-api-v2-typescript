@@ -32,7 +32,7 @@ import {
   StakingPoolState,
 } from './nept';
 import * as StatusAPI from './status';
-import { Status } from './status';
+import { Status, StatusCheckHealthResponse } from './status';
 import * as AnalyticsAPI from './analytics/analytics';
 import { Analytics } from './analytics/analytics';
 import * as IntegrationsAPI from './integrations/integrations';
@@ -75,7 +75,7 @@ V1.Analytics = Analytics;
 V1.Integrations = Integrations;
 
 export declare namespace V1 {
-  export { Status as Status };
+  export { Status as Status, type StatusCheckHealthResponse as StatusCheckHealthResponse };
 
   export {
     Assets as Assets,
