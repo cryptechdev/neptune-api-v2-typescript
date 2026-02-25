@@ -254,7 +254,7 @@ export namespace UserNeptUnlockOverview {
     /**
      * `UserNeptUnlockSchedule`
      */
-    schedule: Arrangement.UnionMember0 | Arrangement.Kind;
+    schedule: Arrangement.UnionMember0 | Arrangement.LumpSum;
 
     /**
      * `UserNeptUnlockArrangementAdmin`
@@ -333,7 +333,7 @@ export namespace UserNeptUnlockOverview {
       }
     }
 
-    export interface Kind {
+    export interface LumpSum {
       kind: 'lump_sum';
     }
 
