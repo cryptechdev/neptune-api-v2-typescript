@@ -254,7 +254,7 @@ export namespace UserNeptUnlockOverview {
     /**
      * `UserNeptUnlockSchedule`
      */
-    schedule: Arrangement.UnionMember0 | Arrangement.LumpSum;
+    schedule: Arrangement.Linear | 'lump_sum';
 
     /**
      * `UserNeptUnlockArrangementAdmin`
@@ -293,48 +293,48 @@ export namespace UserNeptUnlockOverview {
       }
     }
 
-    export interface UnionMember0 {
-      /**
-       * The duration of the unlock
-       */
-      duration: NeptAPI.Duration;
-
-      /**
-       * The time at which the unlock has/was/would've completed. This is identical to
-       * `begins_at + duration`.
-       *
-       * This timestamp will remain valid even if the unlock has been reclaimed.
-       * Therefore, it should not be used as a validity check.
-       */
-      ends_at: string;
-
-      extra: UnionMember0.Extra;
-
-      kind: 'linear';
+    export interface Linear {
+      linear: Linear.Linear;
     }
 
-    export namespace UnionMember0 {
-      export interface Extra {
+    export namespace Linear {
+      export interface Linear {
         /**
-         * Human-readable field variants. Must provide `?with-text=true`
+         * The duration of the unlock
          */
-        text?: Extra.Text | null;
+        duration: NeptAPI.Duration;
+
+        /**
+         * The time at which the unlock has/was/would've completed. This is identical to
+         * `begins_at + duration`.
+         *
+         * This timestamp will remain valid even if the unlock has been reclaimed.
+         * Therefore, it should not be used as a validity check.
+         */
+        ends_at: string;
+
+        extra: Linear.Extra;
       }
 
-      export namespace Extra {
-        /**
-         * Human-readable field variants. Must provide `?with-text=true`
-         */
-        export interface Text {
-          duration: string;
+      export namespace Linear {
+        export interface Extra {
+          /**
+           * Human-readable field variants. Must provide `?with-text=true`
+           */
+          text?: Extra.Text | null;
+        }
 
-          ends_at: string;
+        export namespace Extra {
+          /**
+           * Human-readable field variants. Must provide `?with-text=true`
+           */
+          export interface Text {
+            duration: string;
+
+            ends_at: string;
+          }
         }
       }
-    }
-
-    export interface LumpSum {
-      kind: 'lump_sum';
     }
 
     /**
