@@ -50,12 +50,12 @@ export class Assets extends APIResource {
  * classification is distinct and subject to independent change.
  */
 export type AssetClassification =
-  | AssetClassification.UnionMember0
-  | AssetClassification.UnionMember1
-  | AssetClassification.UnionMember2;
+  | AssetClassification.RegularAsset
+  | AssetClassification.NeptuneReceiptAsset
+  | AssetClassification.LiquidStakingTokenAsset;
 
 export namespace AssetClassification {
-  export interface UnionMember0 {
+  export interface RegularAsset {
     kind: 'regular';
 
     /**
@@ -67,7 +67,7 @@ export namespace AssetClassification {
     neptune_receipt_asset?: AssetsAPI.AssetSpec | null;
   }
 
-  export interface UnionMember1 {
+  export interface NeptuneReceiptAsset {
     kind: 'neptune_receipt_token';
 
     /**
@@ -79,7 +79,7 @@ export namespace AssetClassification {
     origin_asset: AssetsAPI.AssetSpec;
   }
 
-  export interface UnionMember2 {
+  export interface LiquidStakingTokenAsset {
     kind: 'liquid_staking_token';
 
     /**
