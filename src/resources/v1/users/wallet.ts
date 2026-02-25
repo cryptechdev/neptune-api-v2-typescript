@@ -55,7 +55,7 @@ export namespace UserWalletPortfolio {
     /**
      * Derived values and amounts.
      */
-    values: Balance.UnionMember0 | Balance.UnknownWalletValues;
+    values: Balance.UnionMember0 | Balance.UnionMember1;
   }
 
   export namespace Balance {
@@ -132,10 +132,12 @@ export namespace UserWalletPortfolio {
       }
     }
 
-    /**
-     * `UnknownWalletValues`
-     */
-    export interface UnknownWalletValues {
+    export interface UnionMember1 {
+      /**
+       * Wallet balance in native denom.
+       */
+      amount: string;
+
       kind: 'unknown_asset';
     }
   }
