@@ -11,22 +11,22 @@ export class Merged extends APIResource {
    * Get user markets for all kinds (lend + borrow debt/collateral), grouped together
    * by asset
    */
-  list(
+  getAllMarkets(
     address: string,
-    query: MergedListParams | null | undefined = {},
+    query: MergedGetAllMarketsParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<MergedListResponse> {
+  ): APIPromise<MergedGetAllMarketsResponse> {
     return this._client.get(path`/api/v1/users/${address}/markets/merged`, { query, ...options });
   }
 
   /**
    * Get user's markets (lend + borrow debt/collateral) for a specific asset
    */
-  retrieveLookup(
+  lookupByAsset(
     address: string,
-    query: MergedRetrieveLookupParams,
+    query: MergedLookupByAssetParams,
     options?: RequestOptions,
-  ): APIPromise<MergedRetrieveLookupResponse> {
+  ): APIPromise<MergedLookupByAssetResponse> {
     return this._client.get(path`/api/v1/users/${address}/markets/merged/lookup`, { query, ...options });
   }
 }
@@ -304,7 +304,7 @@ export namespace UserMergedMarket {
   }
 }
 
-export interface MergedListResponse {
+export interface MergedGetAllMarketsResponse {
   /**
    * Request status
    */
@@ -331,7 +331,7 @@ export interface MergedListResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export interface MergedRetrieveLookupResponse {
+export interface MergedLookupByAssetResponse {
   /**
    * Request status
    */
@@ -353,7 +353,7 @@ export interface MergedRetrieveLookupResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export interface MergedListParams {
+export interface MergedGetAllMarketsParams {
   /**
    * Include text variation fields
    */
@@ -365,7 +365,7 @@ export interface MergedListParams {
   with_value?: boolean;
 }
 
-export interface MergedRetrieveLookupParams {
+export interface MergedLookupByAssetParams {
   /**
    * Asset ID for lookup
    */
@@ -385,9 +385,9 @@ export interface MergedRetrieveLookupParams {
 export declare namespace Merged {
   export {
     type UserMergedMarket as UserMergedMarket,
-    type MergedListResponse as MergedListResponse,
-    type MergedRetrieveLookupResponse as MergedRetrieveLookupResponse,
-    type MergedListParams as MergedListParams,
-    type MergedRetrieveLookupParams as MergedRetrieveLookupParams,
+    type MergedGetAllMarketsResponse as MergedGetAllMarketsResponse,
+    type MergedLookupByAssetResponse as MergedLookupByAssetResponse,
+    type MergedGetAllMarketsParams as MergedGetAllMarketsParams,
+    type MergedLookupByAssetParams as MergedLookupByAssetParams,
   };
 }

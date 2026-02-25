@@ -9,8 +9,8 @@ const client = new NeptuneAPIV2({
 
 describe('resource loansOriginated', () => {
   // Mock server tests are disabled
-  test.skip('retrieveByAsset: only required params', async () => {
-    const responsePromise = client.v1.analytics.market.history.loansOriginated.retrieveByAsset({
+  test.skip('getAll: only required params', async () => {
+    const responsePromise = client.v1.analytics.market.history.loansOriginated.getAll({
       end: 0,
       period: 'h',
       start: 0,
@@ -25,12 +25,11 @@ describe('resource loansOriginated', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveByAsset: required and optional params', async () => {
-    const response = await client.v1.analytics.market.history.loansOriginated.retrieveByAsset({
+  test.skip('getAll: required and optional params', async () => {
+    const response = await client.v1.analytics.market.history.loansOriginated.getAll({
       end: 0,
       period: 'h',
       start: 0,
-      asset_ids: 'token;-K-//-//3-,token;v/-/g-/P',
       interval: 1,
       limit: 1,
       offset: 0,
@@ -38,8 +37,8 @@ describe('resource loansOriginated', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveLoansOriginated: only required params', async () => {
-    const responsePromise = client.v1.analytics.market.history.loansOriginated.retrieveLoansOriginated({
+  test.skip('getByAsset: only required params', async () => {
+    const responsePromise = client.v1.analytics.market.history.loansOriginated.getByAsset({
       end: 0,
       period: 'h',
       start: 0,
@@ -54,11 +53,12 @@ describe('resource loansOriginated', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveLoansOriginated: required and optional params', async () => {
-    const response = await client.v1.analytics.market.history.loansOriginated.retrieveLoansOriginated({
+  test.skip('getByAsset: required and optional params', async () => {
+    const response = await client.v1.analytics.market.history.loansOriginated.getByAsset({
       end: 0,
       period: 'h',
       start: 0,
+      asset_ids: 'token;-K-//-//3-,token;v/-/g-/P',
       interval: 1,
       limit: 1,
       offset: 0,

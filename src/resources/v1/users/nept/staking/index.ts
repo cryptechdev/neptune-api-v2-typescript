@@ -3,17 +3,17 @@
 export {
   Pools,
   type UserStakePool,
-  type PoolListResponse,
-  type PoolRetrieveLookupResponse,
-  type PoolListParams,
-  type PoolRetrieveLookupParams,
+  type PoolGetAllResponse,
+  type PoolLookupResponse,
+  type PoolGetAllParams,
+  type PoolLookupParams,
 } from './pools';
 export {
   Staking,
   type UserStake,
   type UserStakeUnbondingEntry,
-  type StakingListResponse,
-  type StakingRetrieveUnstakingResponse,
-  type StakingListParams,
-  type StakingRetrieveUnstakingParams,
+  type StakingGetOverviewResponse,
+  type StakingGetUnstakingPoolResponse,
+  type StakingGetOverviewParams,
+  type StakingGetUnstakingPoolParams,
 } from './staking';

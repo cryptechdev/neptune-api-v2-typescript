@@ -7,10 +7,10 @@ import * as NeptAPI from '../../nept';
 import * as StakingAPI from './staking/staking';
 import {
   Staking,
-  StakingListParams,
-  StakingListResponse,
-  StakingRetrieveUnstakingParams,
-  StakingRetrieveUnstakingResponse,
+  StakingGetOverviewParams,
+  StakingGetOverviewResponse,
+  StakingGetUnstakingPoolParams,
+  StakingGetUnstakingPoolResponse,
   UserStake,
   UserStakeUnbondingEntry,
 } from './staking/staking';
@@ -24,11 +24,11 @@ export class Nept extends APIResource {
   /**
    * Get user NEPT unlocks
    */
-  retrieveUnlocks(
+  getUnlocks(
     address: string,
-    query: NeptRetrieveUnlocksParams | null | undefined = {},
+    query: NeptGetUnlocksParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<NeptRetrieveUnlocksResponse> {
+  ): APIPromise<NeptGetUnlocksResponse> {
     return this._client.get(path`/api/v1/users/${address}/nept/unlocks`, { query, ...options });
   }
 }
@@ -376,7 +376,7 @@ export namespace UserNeptUnlockOverview {
   }
 }
 
-export interface NeptRetrieveUnlocksResponse {
+export interface NeptGetUnlocksResponse {
   /**
    * Request status
    */
@@ -398,7 +398,7 @@ export interface NeptRetrieveUnlocksResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export interface NeptRetrieveUnlocksParams {
+export interface NeptGetUnlocksParams {
   /**
    * Calculate and include proportion percentages, where applicable
    */
@@ -421,17 +421,17 @@ export declare namespace Nept {
   export {
     type UserNeptUnlockAmounts as UserNeptUnlockAmounts,
     type UserNeptUnlockOverview as UserNeptUnlockOverview,
-    type NeptRetrieveUnlocksResponse as NeptRetrieveUnlocksResponse,
-    type NeptRetrieveUnlocksParams as NeptRetrieveUnlocksParams,
+    type NeptGetUnlocksResponse as NeptGetUnlocksResponse,
+    type NeptGetUnlocksParams as NeptGetUnlocksParams,
   };
 
   export {
     Staking as Staking,
     type UserStake as UserStake,
     type UserStakeUnbondingEntry as UserStakeUnbondingEntry,
-    type StakingListResponse as StakingListResponse,
-    type StakingRetrieveUnstakingResponse as StakingRetrieveUnstakingResponse,
-    type StakingListParams as StakingListParams,
-    type StakingRetrieveUnstakingParams as StakingRetrieveUnstakingParams,
+    type StakingGetOverviewResponse as StakingGetOverviewResponse,
+    type StakingGetUnstakingPoolResponse as StakingGetUnstakingPoolResponse,
+    type StakingGetOverviewParams as StakingGetOverviewParams,
+    type StakingGetUnstakingPoolParams as StakingGetUnstakingPoolParams,
   };
 }

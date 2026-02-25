@@ -9,8 +9,8 @@ const client = new NeptuneAPIV2({
 
 describe('resource merged', () => {
   // Mock server tests are disabled
-  test.skip('list', async () => {
-    const responsePromise = client.v1.users.markets.merged.list('address');
+  test.skip('getAllMarkets', async () => {
+    const responsePromise = client.v1.users.markets.merged.getAllMarkets('address');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,10 +21,10 @@ describe('resource merged', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('list: request options and params are passed correctly', async () => {
+  test.skip('getAllMarkets: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.v1.users.markets.merged.list(
+      client.v1.users.markets.merged.getAllMarkets(
         'address',
         { with_text: true, with_value: true },
         { path: '/_stainless_unknown_path' },
@@ -33,8 +33,8 @@ describe('resource merged', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveLookup: only required params', async () => {
-    const responsePromise = client.v1.users.markets.merged.retrieveLookup('address', {
+  test.skip('lookupByAsset: only required params', async () => {
+    const responsePromise = client.v1.users.markets.merged.lookupByAsset('address', {
       asset_id: 'token;-K-//-//3-',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -47,8 +47,8 @@ describe('resource merged', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveLookup: required and optional params', async () => {
-    const response = await client.v1.users.markets.merged.retrieveLookup('address', {
+  test.skip('lookupByAsset: required and optional params', async () => {
+    const response = await client.v1.users.markets.merged.lookupByAsset('address', {
       asset_id: 'token;-K-//-//3-',
       with_text: true,
       with_value: true,

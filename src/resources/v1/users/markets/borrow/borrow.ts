@@ -5,12 +5,12 @@ import * as AssetsAPI from '../../../assets';
 import * as MarketsAPI from '../markets';
 import * as AccountsAPI from './accounts';
 import {
-  AccountRetrieveCollateralsParams,
-  AccountRetrieveCollateralsResponse,
-  AccountRetrieveDebtsParams,
-  AccountRetrieveDebtsResponse,
-  AccountRetrieveHealthParams,
-  AccountRetrieveHealthResponse,
+  AccountGetCollateralsParams,
+  AccountGetCollateralsResponse,
+  AccountGetDebtsParams,
+  AccountGetDebtsResponse,
+  AccountGetHealthParams,
+  AccountGetHealthResponse,
   AccountRetrieveParams,
   AccountRetrieveResponse,
   Accounts,
@@ -21,18 +21,18 @@ import {
 import * as LookupAPI from './lookup';
 import {
   Lookup,
-  LookupRetrieveCollateralParams,
-  LookupRetrieveCollateralResponse,
-  LookupRetrieveDebtParams,
-  LookupRetrieveDebtResponse,
+  LookupGetCollateralAccountsParams,
+  LookupGetCollateralAccountsResponse,
+  LookupGetDebtAccountsParams,
+  LookupGetDebtAccountsResponse,
 } from './lookup';
 import * as SumAPI from './sum';
 import {
   Sum,
-  SumRetrieveCollateralsParams,
-  SumRetrieveCollateralsResponse,
-  SumRetrieveDebtsParams,
-  SumRetrieveDebtsResponse,
+  SumGetCollateralsParams,
+  SumGetCollateralsResponse,
+  SumGetDebtsParams,
+  SumGetDebtsResponse,
 } from './sum';
 import { APIPromise } from '../../../../../core/api-promise';
 import { RequestOptions } from '../../../../../internal/request-options';
@@ -46,16 +46,16 @@ export class Borrow extends APIResource {
   /**
    * Get user borrow portfolio
    */
-  list(
+  getPortfolio(
     address: string,
-    query: BorrowListParams | null | undefined = {},
+    query: BorrowGetPortfolioParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<BorrowListResponse> {
+  ): APIPromise<BorrowGetPortfolioResponse> {
     return this._client.get(path`/api/v1/users/${address}/markets/borrow`, { query, ...options });
   }
 }
 
-export interface BorrowListResponse {
+export interface BorrowGetPortfolioResponse {
   /**
    * Request status
    */
@@ -77,7 +77,7 @@ export interface BorrowListResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export interface BorrowListParams {
+export interface BorrowGetPortfolioParams {
   /**
    * Include text variation fields
    */
@@ -94,7 +94,10 @@ Borrow.Sum = Sum;
 Borrow.Lookup = Lookup;
 
 export declare namespace Borrow {
-  export { type BorrowListResponse as BorrowListResponse, type BorrowListParams as BorrowListParams };
+  export {
+    type BorrowGetPortfolioResponse as BorrowGetPortfolioResponse,
+    type BorrowGetPortfolioParams as BorrowGetPortfolioParams,
+  };
 
   export {
     Accounts as Accounts,
@@ -102,28 +105,28 @@ export declare namespace Borrow {
     type UserBorrowMarketAccount as UserBorrowMarketAccount,
     type UserCollateralAssetPool as UserCollateralAssetPool,
     type AccountRetrieveResponse as AccountRetrieveResponse,
-    type AccountRetrieveCollateralsResponse as AccountRetrieveCollateralsResponse,
-    type AccountRetrieveDebtsResponse as AccountRetrieveDebtsResponse,
-    type AccountRetrieveHealthResponse as AccountRetrieveHealthResponse,
+    type AccountGetCollateralsResponse as AccountGetCollateralsResponse,
+    type AccountGetDebtsResponse as AccountGetDebtsResponse,
+    type AccountGetHealthResponse as AccountGetHealthResponse,
     type AccountRetrieveParams as AccountRetrieveParams,
-    type AccountRetrieveCollateralsParams as AccountRetrieveCollateralsParams,
-    type AccountRetrieveDebtsParams as AccountRetrieveDebtsParams,
-    type AccountRetrieveHealthParams as AccountRetrieveHealthParams,
+    type AccountGetCollateralsParams as AccountGetCollateralsParams,
+    type AccountGetDebtsParams as AccountGetDebtsParams,
+    type AccountGetHealthParams as AccountGetHealthParams,
   };
 
   export {
     Sum as Sum,
-    type SumRetrieveCollateralsResponse as SumRetrieveCollateralsResponse,
-    type SumRetrieveDebtsResponse as SumRetrieveDebtsResponse,
-    type SumRetrieveCollateralsParams as SumRetrieveCollateralsParams,
-    type SumRetrieveDebtsParams as SumRetrieveDebtsParams,
+    type SumGetCollateralsResponse as SumGetCollateralsResponse,
+    type SumGetDebtsResponse as SumGetDebtsResponse,
+    type SumGetCollateralsParams as SumGetCollateralsParams,
+    type SumGetDebtsParams as SumGetDebtsParams,
   };
 
   export {
     Lookup as Lookup,
-    type LookupRetrieveCollateralResponse as LookupRetrieveCollateralResponse,
-    type LookupRetrieveDebtResponse as LookupRetrieveDebtResponse,
-    type LookupRetrieveCollateralParams as LookupRetrieveCollateralParams,
-    type LookupRetrieveDebtParams as LookupRetrieveDebtParams,
+    type LookupGetCollateralAccountsResponse as LookupGetCollateralAccountsResponse,
+    type LookupGetDebtAccountsResponse as LookupGetDebtAccountsResponse,
+    type LookupGetCollateralAccountsParams as LookupGetCollateralAccountsParams,
+    type LookupGetDebtAccountsParams as LookupGetDebtAccountsParams,
   };
 }

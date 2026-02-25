@@ -9,8 +9,8 @@ const client = new NeptuneAPIV2({
 
 describe('resource lookup', () => {
   // Mock server tests are disabled
-  test.skip('retrieveCollateral: only required params', async () => {
-    const responsePromise = client.v1.users.markets.borrow.lookup.retrieveCollateral('address', {
+  test.skip('getCollateralAccounts: only required params', async () => {
+    const responsePromise = client.v1.users.markets.borrow.lookup.getCollateralAccounts('address', {
       asset_id: 'token;-K-//-//3-',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -23,8 +23,8 @@ describe('resource lookup', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveCollateral: required and optional params', async () => {
-    const response = await client.v1.users.markets.borrow.lookup.retrieveCollateral('address', {
+  test.skip('getCollateralAccounts: required and optional params', async () => {
+    const response = await client.v1.users.markets.borrow.lookup.getCollateralAccounts('address', {
       asset_id: 'token;-K-//-//3-',
       with_text: true,
       with_value: true,
@@ -32,8 +32,8 @@ describe('resource lookup', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveDebt: only required params', async () => {
-    const responsePromise = client.v1.users.markets.borrow.lookup.retrieveDebt('address', {
+  test.skip('getDebtAccounts: only required params', async () => {
+    const responsePromise = client.v1.users.markets.borrow.lookup.getDebtAccounts('address', {
       asset_id: 'token;-K-//-//3-',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -46,8 +46,8 @@ describe('resource lookup', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveDebt: required and optional params', async () => {
-    const response = await client.v1.users.markets.borrow.lookup.retrieveDebt('address', {
+  test.skip('getDebtAccounts: required and optional params', async () => {
+    const response = await client.v1.users.markets.borrow.lookup.getDebtAccounts('address', {
       asset_id: 'token;-K-//-//3-',
       with_text: true,
       with_value: true,

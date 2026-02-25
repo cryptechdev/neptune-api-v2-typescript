@@ -3,8 +3,8 @@
 export { History } from './history';
 export {
   LoansOriginated,
-  type LoansOriginatedRetrieveByAssetResponse,
-  type LoansOriginatedRetrieveLoansOriginatedResponse,
-  type LoansOriginatedRetrieveByAssetParams,
-  type LoansOriginatedRetrieveLoansOriginatedParams,
+  type LoansOriginatedGetAllResponse,
+  type LoansOriginatedGetByAssetResponse,
+  type LoansOriginatedGetAllParams,
+  type LoansOriginatedGetByAssetParams,
 } from './loans-originated';

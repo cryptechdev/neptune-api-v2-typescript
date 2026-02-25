@@ -9,6 +9,26 @@ const client = new NeptuneAPIV2({
 
 describe('resource nept', () => {
   // Mock server tests are disabled
+  test.skip('getParams', async () => {
+    const responsePromise = client.v1.nept.getParams();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('getParams: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.v1.nept.getParams({ with_text: true, with_value: true }, { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(NeptuneAPIV2.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('getStakingOverview', async () => {
     const responsePromise = client.v1.nept.getStakingOverview();
     const rawResponse = await responsePromise.asResponse();
@@ -32,8 +52,8 @@ describe('resource nept', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('getTokenParams', async () => {
-    const responsePromise = client.v1.nept.getTokenParams();
+  test.skip('getState', async () => {
+    const responsePromise = client.v1.nept.getState();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -44,36 +64,10 @@ describe('resource nept', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('getTokenParams: request options and params are passed correctly', async () => {
+  test.skip('getState: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.v1.nept.getTokenParams(
-        { with_text: true, with_value: true },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(NeptuneAPIV2.NotFoundError);
-  });
-
-  // Mock server tests are disabled
-  test.skip('getTokenState', async () => {
-    const responsePromise = client.v1.nept.getTokenState();
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('getTokenState: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.v1.nept.getTokenState(
-        { with_text: true, with_value: true },
-        { path: '/_stainless_unknown_path' },
-      ),
+      client.v1.nept.getState({ with_text: true, with_value: true }, { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(NeptuneAPIV2.NotFoundError);
   });
 });

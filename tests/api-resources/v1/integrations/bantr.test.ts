@@ -9,11 +9,8 @@ const client = new NeptuneAPIV2({
 
 describe('resource bantr', () => {
   // Mock server tests are disabled
-  test.skip('retrieveTransactions: only required params', async () => {
-    const responsePromise = client.v1.integrations.bantr.retrieveTransactions({
-      end_block: 0,
-      start_block: 0,
-    });
+  test.skip('getTransactions: only required params', async () => {
+    const responsePromise = client.v1.integrations.bantr.getTransactions({ end_block: 0, start_block: 0 });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,8 +21,8 @@ describe('resource bantr', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveTransactions: required and optional params', async () => {
-    const response = await client.v1.integrations.bantr.retrieveTransactions({
+  test.skip('getTransactions: required and optional params', async () => {
+    const response = await client.v1.integrations.bantr.getTransactions({
       end_block: 0,
       start_block: 0,
       limit: 0,

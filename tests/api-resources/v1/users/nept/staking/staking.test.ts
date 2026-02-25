@@ -9,8 +9,8 @@ const client = new NeptuneAPIV2({
 
 describe('resource staking', () => {
   // Mock server tests are disabled
-  test.skip('list', async () => {
-    const responsePromise = client.v1.users.nept.staking.list('address');
+  test.skip('getOverview', async () => {
+    const responsePromise = client.v1.users.nept.staking.getOverview('address');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,10 +21,10 @@ describe('resource staking', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('list: request options and params are passed correctly', async () => {
+  test.skip('getOverview: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.v1.users.nept.staking.list(
+      client.v1.users.nept.staking.getOverview(
         'address',
         { with_text: true, with_value: true },
         { path: '/_stainless_unknown_path' },
@@ -33,8 +33,8 @@ describe('resource staking', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveUnstaking', async () => {
-    const responsePromise = client.v1.users.nept.staking.retrieveUnstaking('address');
+  test.skip('getUnstakingPool', async () => {
+    const responsePromise = client.v1.users.nept.staking.getUnstakingPool('address');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -45,10 +45,10 @@ describe('resource staking', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveUnstaking: request options and params are passed correctly', async () => {
+  test.skip('getUnstakingPool: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.v1.users.nept.staking.retrieveUnstaking(
+      client.v1.users.nept.staking.getUnstakingPool(
         'address',
         { with_text: true, with_value: true },
         { path: '/_stainless_unknown_path' },

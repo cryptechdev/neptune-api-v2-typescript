@@ -21,12 +21,12 @@ import * as NeptAPI from './nept';
 import {
   Duration,
   Nept,
+  NeptGetParamsParams,
+  NeptGetParamsResponse,
   NeptGetStakingOverviewParams,
   NeptGetStakingOverviewResponse,
-  NeptGetTokenParamsParams,
-  NeptGetTokenParamsResponse,
-  NeptGetTokenStateParams,
-  NeptGetTokenStateResponse,
+  NeptGetStateParams,
+  NeptGetStateResponse,
   StakingPoolFull,
   StakingPoolParams,
   StakingPoolState,
@@ -40,8 +40,8 @@ import { Integrations } from './integrations/integrations';
 import * as MarketsAPI from './markets/markets';
 import {
   GlobalMarketConfig,
-  MarketGetMarketParamsParams,
-  MarketGetMarketParamsResponse,
+  MarketGetParamsParams,
+  MarketGetParamsResponse,
   MarketOverviewParams,
   MarketOverviewResponse,
   Markets,
@@ -49,10 +49,10 @@ import {
 import * as UsersAPI from './users/users';
 import {
   EventAction,
-  UserRetrieveTxHistoryParams,
-  UserRetrieveTxHistoryResponse,
-  UserRetrieveUserParams,
-  UserRetrieveUserResponse,
+  UserGetTxHistoryParams,
+  UserGetTxHistoryResponse,
+  UserRetrieveParams,
+  UserRetrieveResponse,
   Users,
 } from './users/users';
 
@@ -96,9 +96,9 @@ export declare namespace V1 {
   export {
     Markets as Markets,
     type GlobalMarketConfig as GlobalMarketConfig,
-    type MarketGetMarketParamsResponse as MarketGetMarketParamsResponse,
+    type MarketGetParamsResponse as MarketGetParamsResponse,
     type MarketOverviewResponse as MarketOverviewResponse,
-    type MarketGetMarketParamsParams as MarketGetMarketParamsParams,
+    type MarketGetParamsParams as MarketGetParamsParams,
     type MarketOverviewParams as MarketOverviewParams,
   };
 
@@ -108,21 +108,21 @@ export declare namespace V1 {
     type StakingPoolFull as StakingPoolFull,
     type StakingPoolParams as StakingPoolParams,
     type StakingPoolState as StakingPoolState,
+    type NeptGetParamsResponse as NeptGetParamsResponse,
     type NeptGetStakingOverviewResponse as NeptGetStakingOverviewResponse,
-    type NeptGetTokenParamsResponse as NeptGetTokenParamsResponse,
-    type NeptGetTokenStateResponse as NeptGetTokenStateResponse,
+    type NeptGetStateResponse as NeptGetStateResponse,
+    type NeptGetParamsParams as NeptGetParamsParams,
     type NeptGetStakingOverviewParams as NeptGetStakingOverviewParams,
-    type NeptGetTokenParamsParams as NeptGetTokenParamsParams,
-    type NeptGetTokenStateParams as NeptGetTokenStateParams,
+    type NeptGetStateParams as NeptGetStateParams,
   };
 
   export {
     Users as Users,
     type EventAction as EventAction,
-    type UserRetrieveTxHistoryResponse as UserRetrieveTxHistoryResponse,
-    type UserRetrieveUserResponse as UserRetrieveUserResponse,
-    type UserRetrieveTxHistoryParams as UserRetrieveTxHistoryParams,
-    type UserRetrieveUserParams as UserRetrieveUserParams,
+    type UserRetrieveResponse as UserRetrieveResponse,
+    type UserGetTxHistoryResponse as UserGetTxHistoryResponse,
+    type UserRetrieveParams as UserRetrieveParams,
+    type UserGetTxHistoryParams as UserGetTxHistoryParams,
   };
 
   export { Analytics as Analytics };

@@ -1,24 +1,29 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Markets, type UserMarket, type MarketListResponse, type MarketListParams } from './markets/index';
+export {
+  Markets,
+  type UserMarket,
+  type MarketGetPortfolioResponse,
+  type MarketGetPortfolioParams,
+} from './markets/index';
 export {
   Nept,
   type UserNeptUnlockAmounts,
   type UserNeptUnlockOverview,
-  type NeptRetrieveUnlocksResponse,
-  type NeptRetrieveUnlocksParams,
+  type NeptGetUnlocksResponse,
+  type NeptGetUnlocksParams,
 } from './nept/index';
 export {
   Users,
   type EventAction,
-  type UserRetrieveTxHistoryResponse,
-  type UserRetrieveUserResponse,
-  type UserRetrieveTxHistoryParams,
-  type UserRetrieveUserParams,
+  type UserRetrieveResponse,
+  type UserGetTxHistoryResponse,
+  type UserRetrieveParams,
+  type UserGetTxHistoryParams,
 } from './users';
 export {
   Wallet,
   type UserWalletPortfolio,
-  type WalletRetrieveBalancesResponse,
-  type WalletRetrieveBalancesParams,
+  type WalletGetBalancesResponse,
+  type WalletGetBalancesParams,
 } from './wallet';

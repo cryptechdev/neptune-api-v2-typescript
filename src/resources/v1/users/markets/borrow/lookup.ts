@@ -10,11 +10,11 @@ export class Lookup extends APIResource {
   /**
    * Lookup user borrow market collateral accounts by asset
    */
-  retrieveCollateral(
+  getCollateralAccounts(
     address: string,
-    query: LookupRetrieveCollateralParams,
+    query: LookupGetCollateralAccountsParams,
     options?: RequestOptions,
-  ): APIPromise<LookupRetrieveCollateralResponse> {
+  ): APIPromise<LookupGetCollateralAccountsResponse> {
     return this._client.get(path`/api/v1/users/${address}/markets/borrow/lookup/collateral`, {
       query,
       ...options,
@@ -24,16 +24,16 @@ export class Lookup extends APIResource {
   /**
    * Lookup user borrow market debt by accounts by asset
    */
-  retrieveDebt(
+  getDebtAccounts(
     address: string,
-    query: LookupRetrieveDebtParams,
+    query: LookupGetDebtAccountsParams,
     options?: RequestOptions,
-  ): APIPromise<LookupRetrieveDebtResponse> {
+  ): APIPromise<LookupGetDebtAccountsResponse> {
     return this._client.get(path`/api/v1/users/${address}/markets/borrow/lookup/debt`, { query, ...options });
   }
 }
 
-export interface LookupRetrieveCollateralResponse {
+export interface LookupGetCollateralAccountsResponse {
   /**
    * Request status
    */
@@ -47,7 +47,7 @@ export interface LookupRetrieveCollateralResponse {
   /**
    * `UserCollateralLookup`
    */
-  data?: LookupRetrieveCollateralResponse.Data | null;
+  data?: LookupGetCollateralAccountsResponse.Data | null;
 
   /**
    * Error content, only set if an error occurs
@@ -55,7 +55,7 @@ export interface LookupRetrieveCollateralResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export namespace LookupRetrieveCollateralResponse {
+export namespace LookupGetCollateralAccountsResponse {
   /**
    * `UserCollateralLookup`
    */
@@ -148,7 +148,7 @@ export namespace LookupRetrieveCollateralResponse {
   }
 }
 
-export interface LookupRetrieveDebtResponse {
+export interface LookupGetDebtAccountsResponse {
   /**
    * Request status
    */
@@ -162,7 +162,7 @@ export interface LookupRetrieveDebtResponse {
   /**
    * `UserDebtLookup`
    */
-  data?: LookupRetrieveDebtResponse.Data | null;
+  data?: LookupGetDebtAccountsResponse.Data | null;
 
   /**
    * Error content, only set if an error occurs
@@ -170,7 +170,7 @@ export interface LookupRetrieveDebtResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export namespace LookupRetrieveDebtResponse {
+export namespace LookupGetDebtAccountsResponse {
   /**
    * `UserDebtLookup`
    */
@@ -284,7 +284,7 @@ export namespace LookupRetrieveDebtResponse {
   }
 }
 
-export interface LookupRetrieveCollateralParams {
+export interface LookupGetCollateralAccountsParams {
   /**
    * Asset ID for lookup
    */
@@ -301,7 +301,7 @@ export interface LookupRetrieveCollateralParams {
   with_value?: boolean;
 }
 
-export interface LookupRetrieveDebtParams {
+export interface LookupGetDebtAccountsParams {
   /**
    * Asset ID for lookup
    */
@@ -320,9 +320,9 @@ export interface LookupRetrieveDebtParams {
 
 export declare namespace Lookup {
   export {
-    type LookupRetrieveCollateralResponse as LookupRetrieveCollateralResponse,
-    type LookupRetrieveDebtResponse as LookupRetrieveDebtResponse,
-    type LookupRetrieveCollateralParams as LookupRetrieveCollateralParams,
-    type LookupRetrieveDebtParams as LookupRetrieveDebtParams,
+    type LookupGetCollateralAccountsResponse as LookupGetCollateralAccountsResponse,
+    type LookupGetDebtAccountsResponse as LookupGetDebtAccountsResponse,
+    type LookupGetCollateralAccountsParams as LookupGetCollateralAccountsParams,
+    type LookupGetDebtAccountsParams as LookupGetDebtAccountsParams,
   };
 }

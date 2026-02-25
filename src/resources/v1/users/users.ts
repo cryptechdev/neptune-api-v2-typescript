@@ -4,19 +4,14 @@ import { APIResource } from '../../../core/resource';
 import * as UsersAPI from './users';
 import * as AssetsAPI from '../assets';
 import * as WalletAPI from './wallet';
-import {
-  UserWalletPortfolio,
-  Wallet,
-  WalletRetrieveBalancesParams,
-  WalletRetrieveBalancesResponse,
-} from './wallet';
+import { UserWalletPortfolio, Wallet, WalletGetBalancesParams, WalletGetBalancesResponse } from './wallet';
 import * as MarketsAPI from './markets/markets';
-import { MarketListParams, MarketListResponse, Markets, UserMarket } from './markets/markets';
+import { MarketGetPortfolioParams, MarketGetPortfolioResponse, Markets, UserMarket } from './markets/markets';
 import * as NeptAPI from './nept/nept';
 import {
   Nept as NeptAPINept,
-  NeptRetrieveUnlocksParams,
-  NeptRetrieveUnlocksResponse,
+  NeptGetUnlocksParams,
+  NeptGetUnlocksResponse,
   UserNeptUnlockAmounts,
   UserNeptUnlockOverview,
 } from './nept/nept';
@@ -31,25 +26,25 @@ export class Users extends APIResource {
   wallet: WalletAPI.Wallet = new WalletAPI.Wallet(this._client);
 
   /**
-   * Get user tx history
+   * Get user
    */
-  retrieveTxHistory(
+  retrieve(
     address: string,
-    query: UserRetrieveTxHistoryParams | null | undefined = {},
+    query: UserRetrieveParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<UserRetrieveTxHistoryResponse> {
-    return this._client.get(path`/api/v1/users/${address}/tx-history`, { query, ...options });
+  ): APIPromise<UserRetrieveResponse> {
+    return this._client.get(path`/api/v1/users/${address}/user`, { query, ...options });
   }
 
   /**
-   * Get user
+   * Get user tx history
    */
-  retrieveUser(
+  getTxHistory(
     address: string,
-    query: UserRetrieveUserParams | null | undefined = {},
+    query: UserGetTxHistoryParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<UserRetrieveUserResponse> {
-    return this._client.get(path`/api/v1/users/${address}/user`, { query, ...options });
+  ): APIPromise<UserGetTxHistoryResponse> {
+    return this._client.get(path`/api/v1/users/${address}/tx-history`, { query, ...options });
   }
 }
 
@@ -74,7 +69,68 @@ export type EventAction =
   | 'cascade'
   | 'send';
 
-export interface UserRetrieveTxHistoryResponse {
+export interface UserRetrieveResponse {
+  /**
+   * Request status
+   */
+  status: number;
+
+  /**
+   * Request status text
+   */
+  status_text: string;
+
+  /**
+   * `User`
+   */
+  data?: UserRetrieveResponse.Data | null;
+
+  /**
+   * Error content, only set if an error occurs
+   */
+  error?: AssetsAPI.ErrorData | null;
+}
+
+export namespace UserRetrieveResponse {
+  /**
+   * `User`
+   */
+  export interface Data {
+    /**
+     * `UserMarket`
+     */
+    markets: MarketsAPI.UserMarket;
+
+    /**
+     * `UserNeptOverview`
+     */
+    nept: Data.Nept;
+
+    /**
+     * `UserWalletPortfolio`
+     */
+    wallets: WalletAPI.UserWalletPortfolio;
+  }
+
+  export namespace Data {
+    /**
+     * `UserNeptOverview`
+     */
+    export interface Nept {
+      /**
+       * `UserStake`
+       */
+      staking: StakingAPI.UserStake;
+
+      /**
+       * `UserNeptUnlockOverview`
+       */
+      unlocks: NeptAPI.UserNeptUnlockOverview;
+    }
+  }
+}
+
+export interface UserGetTxHistoryResponse {
   /**
    * Request status
    */
@@ -93,7 +149,7 @@ export interface UserRetrieveTxHistoryResponse {
   /**
    * List contents
    */
-  data?: Array<UserRetrieveTxHistoryResponse.Data> | null;
+  data?: Array<UserGetTxHistoryResponse.Data> | null;
 
   /**
    * Error message, if any
@@ -101,7 +157,7 @@ export interface UserRetrieveTxHistoryResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export namespace UserRetrieveTxHistoryResponse {
+export namespace UserGetTxHistoryResponse {
   /**
    * `UserTx`
    */
@@ -256,68 +312,24 @@ export namespace UserRetrieveTxHistoryResponse {
   }
 }
 
-export interface UserRetrieveUserResponse {
+export interface UserRetrieveParams {
   /**
-   * Request status
+   * Calculate and include proportion percentages, where applicable
    */
-  status: number;
+  with_percent?: boolean;
 
   /**
-   * Request status text
+   * Include text variation fields
    */
-  status_text: string;
+  with_text?: boolean;
 
   /**
-   * `User`
+   * Calculate and include USD values for amounts, where applicable
    */
-  data?: UserRetrieveUserResponse.Data | null;
-
-  /**
-   * Error content, only set if an error occurs
-   */
-  error?: AssetsAPI.ErrorData | null;
+  with_value?: boolean;
 }
 
-export namespace UserRetrieveUserResponse {
-  /**
-   * `User`
-   */
-  export interface Data {
-    /**
-     * `UserMarket`
-     */
-    markets: MarketsAPI.UserMarket;
-
-    /**
-     * `UserNeptOverview`
-     */
-    nept: Data.Nept;
-
-    /**
-     * `UserWalletPortfolio`
-     */
-    wallets: WalletAPI.UserWalletPortfolio;
-  }
-
-  export namespace Data {
-    /**
-     * `UserNeptOverview`
-     */
-    export interface Nept {
-      /**
-       * `UserStake`
-       */
-      staking: StakingAPI.UserStake;
-
-      /**
-       * `UserNeptUnlockOverview`
-       */
-      unlocks: NeptAPI.UserNeptUnlockOverview;
-    }
-  }
-}
-
-export interface UserRetrieveTxHistoryParams {
+export interface UserGetTxHistoryParams {
   /**
    * Optional event/tx action to filter against
    */
@@ -359,23 +371,6 @@ export interface UserRetrieveTxHistoryParams {
   with_value?: boolean;
 }
 
-export interface UserRetrieveUserParams {
-  /**
-   * Calculate and include proportion percentages, where applicable
-   */
-  with_percent?: boolean;
-
-  /**
-   * Include text variation fields
-   */
-  with_text?: boolean;
-
-  /**
-   * Calculate and include USD values for amounts, where applicable
-   */
-  with_value?: boolean;
-}
-
 Users.Markets = Markets;
 Users.Nept = NeptAPINept;
 Users.Wallet = Wallet;
@@ -383,31 +378,31 @@ Users.Wallet = Wallet;
 export declare namespace Users {
   export {
     type EventAction as EventAction,
-    type UserRetrieveTxHistoryResponse as UserRetrieveTxHistoryResponse,
-    type UserRetrieveUserResponse as UserRetrieveUserResponse,
-    type UserRetrieveTxHistoryParams as UserRetrieveTxHistoryParams,
-    type UserRetrieveUserParams as UserRetrieveUserParams,
+    type UserRetrieveResponse as UserRetrieveResponse,
+    type UserGetTxHistoryResponse as UserGetTxHistoryResponse,
+    type UserRetrieveParams as UserRetrieveParams,
+    type UserGetTxHistoryParams as UserGetTxHistoryParams,
   };
 
   export {
     Markets as Markets,
     type UserMarket as UserMarket,
-    type MarketListResponse as MarketListResponse,
-    type MarketListParams as MarketListParams,
+    type MarketGetPortfolioResponse as MarketGetPortfolioResponse,
+    type MarketGetPortfolioParams as MarketGetPortfolioParams,
   };
 
   export {
     NeptAPINept as Nept,
     type UserNeptUnlockAmounts as UserNeptUnlockAmounts,
     type UserNeptUnlockOverview as UserNeptUnlockOverview,
-    type NeptRetrieveUnlocksResponse as NeptRetrieveUnlocksResponse,
-    type NeptRetrieveUnlocksParams as NeptRetrieveUnlocksParams,
+    type NeptGetUnlocksResponse as NeptGetUnlocksResponse,
+    type NeptGetUnlocksParams as NeptGetUnlocksParams,
   };
 
   export {
     Wallet as Wallet,
     type UserWalletPortfolio as UserWalletPortfolio,
-    type WalletRetrieveBalancesResponse as WalletRetrieveBalancesResponse,
-    type WalletRetrieveBalancesParams as WalletRetrieveBalancesParams,
+    type WalletGetBalancesResponse as WalletGetBalancesResponse,
+    type WalletGetBalancesParams as WalletGetBalancesParams,
   };
 }

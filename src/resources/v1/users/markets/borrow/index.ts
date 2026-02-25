@@ -6,26 +6,26 @@ export {
   type UserBorrowMarketAccount,
   type UserCollateralAssetPool,
   type AccountRetrieveResponse,
-  type AccountRetrieveCollateralsResponse,
-  type AccountRetrieveDebtsResponse,
-  type AccountRetrieveHealthResponse,
+  type AccountGetCollateralsResponse,
+  type AccountGetDebtsResponse,
+  type AccountGetHealthResponse,
   type AccountRetrieveParams,
-  type AccountRetrieveCollateralsParams,
-  type AccountRetrieveDebtsParams,
-  type AccountRetrieveHealthParams,
+  type AccountGetCollateralsParams,
+  type AccountGetDebtsParams,
+  type AccountGetHealthParams,
 } from './accounts';
-export { Borrow, type BorrowListResponse, type BorrowListParams } from './borrow';
+export { Borrow, type BorrowGetPortfolioResponse, type BorrowGetPortfolioParams } from './borrow';
 export {
   Lookup,
-  type LookupRetrieveCollateralResponse,
-  type LookupRetrieveDebtResponse,
-  type LookupRetrieveCollateralParams,
-  type LookupRetrieveDebtParams,
+  type LookupGetCollateralAccountsResponse,
+  type LookupGetDebtAccountsResponse,
+  type LookupGetCollateralAccountsParams,
+  type LookupGetDebtAccountsParams,
 } from './lookup';
 export {
   Sum,
-  type SumRetrieveCollateralsResponse,
-  type SumRetrieveDebtsResponse,
-  type SumRetrieveCollateralsParams,
-  type SumRetrieveDebtsParams,
+  type SumGetCollateralsResponse,
+  type SumGetDebtsResponse,
+  type SumGetCollateralsParams,
+  type SumGetDebtsParams,
 } from './sum';

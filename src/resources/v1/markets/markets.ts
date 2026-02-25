@@ -29,8 +29,8 @@ import {
 import * as BorrowAPI from './borrow/borrow';
 import {
   Borrow,
-  BorrowGetBorrowRateHistoryParams,
-  BorrowGetBorrowRateHistoryResponse,
+  BorrowGetRateHistoryParams,
+  BorrowGetRateHistoryResponse,
   BorrowMarketOverview,
   BorrowOverviewParams,
   BorrowOverviewResponse,
@@ -46,10 +46,10 @@ export class Markets extends APIResource {
   /**
    * Get market params
    */
-  getMarketParams(
-    query: MarketGetMarketParamsParams | null | undefined = {},
+  getParams(
+    query: MarketGetParamsParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<MarketGetMarketParamsResponse> {
+  ): APIPromise<MarketGetParamsResponse> {
     return this._client.get('/api/v1/markets/config', { query, ...options });
   }
 
@@ -171,7 +171,7 @@ export namespace GlobalMarketConfig {
   }
 }
 
-export interface MarketGetMarketParamsResponse {
+export interface MarketGetParamsResponse {
   /**
    * Request status
    */
@@ -241,7 +241,7 @@ export namespace MarketOverviewResponse {
   }
 }
 
-export interface MarketGetMarketParamsParams {
+export interface MarketGetParamsParams {
   /**
    * Include text variation fields
    */
@@ -267,9 +267,9 @@ Markets.Borrow = Borrow;
 export declare namespace Markets {
   export {
     type GlobalMarketConfig as GlobalMarketConfig,
-    type MarketGetMarketParamsResponse as MarketGetMarketParamsResponse,
+    type MarketGetParamsResponse as MarketGetParamsResponse,
     type MarketOverviewResponse as MarketOverviewResponse,
-    type MarketGetMarketParamsParams as MarketGetMarketParamsParams,
+    type MarketGetParamsParams as MarketGetParamsParams,
     type MarketOverviewParams as MarketOverviewParams,
   };
 
@@ -299,9 +299,9 @@ export declare namespace Markets {
   export {
     Borrow as Borrow,
     type BorrowMarketOverview as BorrowMarketOverview,
-    type BorrowGetBorrowRateHistoryResponse as BorrowGetBorrowRateHistoryResponse,
+    type BorrowGetRateHistoryResponse as BorrowGetRateHistoryResponse,
     type BorrowOverviewResponse as BorrowOverviewResponse,
-    type BorrowGetBorrowRateHistoryParams as BorrowGetBorrowRateHistoryParams,
+    type BorrowGetRateHistoryParams as BorrowGetRateHistoryParams,
     type BorrowOverviewParams as BorrowOverviewParams,
   };
 }

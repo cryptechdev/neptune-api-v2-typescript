@@ -9,8 +9,8 @@ const client = new NeptuneAPIV2({
 
 describe('resource borrow', () => {
   // Mock server tests are disabled
-  test.skip('getBorrowRateHistory: only required params', async () => {
-    const responsePromise = client.v1.markets.borrow.getBorrowRateHistory({
+  test.skip('getRateHistory: only required params', async () => {
+    const responsePromise = client.v1.markets.borrow.getRateHistory({
       end: 0,
       period: 'h',
       start: 0,
@@ -25,8 +25,8 @@ describe('resource borrow', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('getBorrowRateHistory: required and optional params', async () => {
-    const response = await client.v1.markets.borrow.getBorrowRateHistory({
+  test.skip('getRateHistory: required and optional params', async () => {
+    const response = await client.v1.markets.borrow.getRateHistory({
       end: 0,
       period: 'h',
       start: 0,

@@ -9,8 +9,8 @@ const client = new NeptuneAPIV2({
 
 describe('resource sum', () => {
   // Mock server tests are disabled
-  test.skip('retrieveCollaterals', async () => {
-    const responsePromise = client.v1.users.markets.borrow.sum.retrieveCollaterals('address');
+  test.skip('getCollaterals', async () => {
+    const responsePromise = client.v1.users.markets.borrow.sum.getCollaterals('address');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,10 +21,10 @@ describe('resource sum', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveCollaterals: request options and params are passed correctly', async () => {
+  test.skip('getCollaterals: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.v1.users.markets.borrow.sum.retrieveCollaterals(
+      client.v1.users.markets.borrow.sum.getCollaterals(
         'address',
         { with_text: true, with_value: true },
         { path: '/_stainless_unknown_path' },
@@ -33,8 +33,8 @@ describe('resource sum', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveDebts', async () => {
-    const responsePromise = client.v1.users.markets.borrow.sum.retrieveDebts('address');
+  test.skip('getDebts', async () => {
+    const responsePromise = client.v1.users.markets.borrow.sum.getDebts('address');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -45,10 +45,10 @@ describe('resource sum', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveDebts: request options and params are passed correctly', async () => {
+  test.skip('getDebts: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.v1.users.markets.borrow.sum.retrieveDebts(
+      client.v1.users.markets.borrow.sum.getDebts(
         'address',
         { with_text: true, with_value: true },
         { path: '/_stainless_unknown_path' },

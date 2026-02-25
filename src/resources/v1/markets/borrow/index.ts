@@ -3,9 +3,9 @@
 export {
   Borrow,
   type BorrowMarketOverview,
-  type BorrowGetBorrowRateHistoryResponse,
+  type BorrowGetRateHistoryResponse,
   type BorrowOverviewResponse,
-  type BorrowGetBorrowRateHistoryParams,
+  type BorrowGetRateHistoryParams,
   type BorrowOverviewParams,
 } from './borrow';
 export {

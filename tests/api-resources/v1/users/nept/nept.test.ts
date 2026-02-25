@@ -9,8 +9,8 @@ const client = new NeptuneAPIV2({
 
 describe('resource nept', () => {
   // Mock server tests are disabled
-  test.skip('retrieveUnlocks', async () => {
-    const responsePromise = client.v1.users.nept.retrieveUnlocks('address');
+  test.skip('getUnlocks', async () => {
+    const responsePromise = client.v1.users.nept.getUnlocks('address');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,10 +21,10 @@ describe('resource nept', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveUnlocks: request options and params are passed correctly', async () => {
+  test.skip('getUnlocks: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.v1.users.nept.retrieveUnlocks(
+      client.v1.users.nept.getUnlocks(
         'address',
         {
           with_percent: true,

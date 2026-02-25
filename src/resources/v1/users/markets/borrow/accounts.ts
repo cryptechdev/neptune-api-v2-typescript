@@ -26,11 +26,11 @@ export class Accounts extends APIResource {
   /**
    * Get user borrow subaccount collaterals
    */
-  retrieveCollaterals(
+  getCollaterals(
     index: number,
-    params: AccountRetrieveCollateralsParams,
+    params: AccountGetCollateralsParams,
     options?: RequestOptions,
-  ): APIPromise<AccountRetrieveCollateralsResponse> {
+  ): APIPromise<AccountGetCollateralsResponse> {
     const { address, ...query } = params;
     return this._client.get(path`/api/v1/users/${address}/markets/borrow/accounts/${index}/collaterals`, {
       query,
@@ -41,11 +41,11 @@ export class Accounts extends APIResource {
   /**
    * Get user borrow subaccount debts
    */
-  retrieveDebts(
+  getDebts(
     index: number,
-    params: AccountRetrieveDebtsParams,
+    params: AccountGetDebtsParams,
     options?: RequestOptions,
-  ): APIPromise<AccountRetrieveDebtsResponse> {
+  ): APIPromise<AccountGetDebtsResponse> {
     const { address, ...query } = params;
     return this._client.get(path`/api/v1/users/${address}/markets/borrow/accounts/${index}/debts`, {
       query,
@@ -56,11 +56,11 @@ export class Accounts extends APIResource {
   /**
    * Get user borrow subaccount health
    */
-  retrieveHealth(
+  getHealth(
     index: number,
-    params: AccountRetrieveHealthParams,
+    params: AccountGetHealthParams,
     options?: RequestOptions,
-  ): APIPromise<AccountRetrieveHealthResponse> {
+  ): APIPromise<AccountGetHealthResponse> {
     const { address, ...query } = params;
     return this._client.get(path`/api/v1/users/${address}/markets/borrow/accounts/${index}/health`, {
       query,
@@ -249,7 +249,7 @@ export interface AccountRetrieveResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export interface AccountRetrieveCollateralsResponse {
+export interface AccountGetCollateralsResponse {
   /**
    * Request status
    */
@@ -276,7 +276,7 @@ export interface AccountRetrieveCollateralsResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export interface AccountRetrieveDebtsResponse {
+export interface AccountGetDebtsResponse {
   /**
    * Request status
    */
@@ -303,7 +303,7 @@ export interface AccountRetrieveDebtsResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export interface AccountRetrieveHealthResponse {
+export interface AccountGetHealthResponse {
   /**
    * Request status
    */
@@ -342,7 +342,7 @@ export interface AccountRetrieveParams {
   with_value?: boolean;
 }
 
-export interface AccountRetrieveCollateralsParams {
+export interface AccountGetCollateralsParams {
   /**
    * Path param: The user account address
    */
@@ -359,7 +359,7 @@ export interface AccountRetrieveCollateralsParams {
   with_value?: boolean;
 }
 
-export interface AccountRetrieveDebtsParams {
+export interface AccountGetDebtsParams {
   /**
    * Path param: The user account address
    */
@@ -376,7 +376,7 @@ export interface AccountRetrieveDebtsParams {
   with_value?: boolean;
 }
 
-export interface AccountRetrieveHealthParams {
+export interface AccountGetHealthParams {
   /**
    * Path param: The user account address
    */
@@ -399,12 +399,12 @@ export declare namespace Accounts {
     type UserBorrowMarketAccount as UserBorrowMarketAccount,
     type UserCollateralAssetPool as UserCollateralAssetPool,
     type AccountRetrieveResponse as AccountRetrieveResponse,
-    type AccountRetrieveCollateralsResponse as AccountRetrieveCollateralsResponse,
-    type AccountRetrieveDebtsResponse as AccountRetrieveDebtsResponse,
-    type AccountRetrieveHealthResponse as AccountRetrieveHealthResponse,
+    type AccountGetCollateralsResponse as AccountGetCollateralsResponse,
+    type AccountGetDebtsResponse as AccountGetDebtsResponse,
+    type AccountGetHealthResponse as AccountGetHealthResponse,
     type AccountRetrieveParams as AccountRetrieveParams,
-    type AccountRetrieveCollateralsParams as AccountRetrieveCollateralsParams,
-    type AccountRetrieveDebtsParams as AccountRetrieveDebtsParams,
-    type AccountRetrieveHealthParams as AccountRetrieveHealthParams,
+    type AccountGetCollateralsParams as AccountGetCollateralsParams,
+    type AccountGetDebtsParams as AccountGetDebtsParams,
+    type AccountGetHealthParams as AccountGetHealthParams,
   };
 }

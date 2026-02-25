@@ -3,9 +3,9 @@
 export {
   Borrow,
   type BorrowMarketOverview,
-  type BorrowGetBorrowRateHistoryResponse,
+  type BorrowGetRateHistoryResponse,
   type BorrowOverviewResponse,
-  type BorrowGetBorrowRateHistoryParams,
+  type BorrowGetRateHistoryParams,
   type BorrowOverviewParams,
 } from './borrow/index';
 export {
@@ -24,9 +24,9 @@ export {
 export {
   Markets,
   type GlobalMarketConfig,
-  type MarketGetMarketParamsResponse,
+  type MarketGetParamsResponse,
   type MarketOverviewResponse,
-  type MarketGetMarketParamsParams,
+  type MarketGetParamsParams,
   type MarketOverviewParams,
 } from './markets';
 export {

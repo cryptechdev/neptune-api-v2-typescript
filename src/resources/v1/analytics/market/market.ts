@@ -13,12 +13,12 @@ export class Market extends APIResource {
   /**
    * Get analytics for current market state
    */
-  retrieveState(options?: RequestOptions): APIPromise<MarketRetrieveStateResponse> {
+  getCurrentState(options?: RequestOptions): APIPromise<MarketGetCurrentStateResponse> {
     return this._client.get('/api/v1/analytics/market/state', options);
   }
 }
 
-export interface MarketRetrieveStateResponse {
+export interface MarketGetCurrentStateResponse {
   /**
    * Request status
    */
@@ -32,7 +32,7 @@ export interface MarketRetrieveStateResponse {
   /**
    * Object data
    */
-  data?: MarketRetrieveStateResponse.Data | null;
+  data?: MarketGetCurrentStateResponse.Data | null;
 
   /**
    * Error content, only set if an error occurs
@@ -40,7 +40,7 @@ export interface MarketRetrieveStateResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export namespace MarketRetrieveStateResponse {
+export namespace MarketGetCurrentStateResponse {
   /**
    * Object data
    */
@@ -116,7 +116,7 @@ export namespace MarketRetrieveStateResponse {
 Market.History = History;
 
 export declare namespace Market {
-  export { type MarketRetrieveStateResponse as MarketRetrieveStateResponse };
+  export { type MarketGetCurrentStateResponse as MarketGetCurrentStateResponse };
 
   export { History as History };
 }
