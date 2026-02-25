@@ -32,11 +32,6 @@ import { isEmptyObj } from './internal/utils/values';
 
 export interface ClientOptions {
   /**
-   * Defaults to process.env['NEPTUNE_API_V2_API_KEY'].
-   */
-  apiKey?: string | null | undefined;
-
-  /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
    * Defaults to process.env['NEPTUNE_API_V2_BASE_URL'].
@@ -109,8 +104,6 @@ export interface ClientOptions {
  * API Client for interfacing with the Neptune API V2 API.
  */
 export class NeptuneAPIV2 {
-  apiKey: string | null;
-
   baseURL: string;
   maxRetries: number;
   timeout: number;
@@ -126,7 +119,6 @@ export class NeptuneAPIV2 {
   /**
    * API Client for interfacing with the Neptune API V2 API.
    *
-   * @param {string | null | undefined} [opts.apiKey=process.env['NEPTUNE_API_V2_API_KEY'] ?? null]
    * @param {string} [opts.baseURL=process.env['NEPTUNE_API_V2_BASE_URL'] ?? https://api.example.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -135,13 +127,8 @@ export class NeptuneAPIV2 {
    * @param {HeadersLike} opts.defaultHeaders - Default headers to include with every request to the API.
    * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
-  constructor({
-    baseURL = readEnv('NEPTUNE_API_V2_BASE_URL'),
-    apiKey = readEnv('NEPTUNE_API_V2_API_KEY') ?? null,
-    ...opts
-  }: ClientOptions = {}) {
+  constructor({ baseURL = readEnv('NEPTUNE_API_V2_BASE_URL'), ...opts }: ClientOptions = {}) {
     const options: ClientOptions = {
-      apiKey,
       ...opts,
       baseURL: baseURL || `https://api.example.com`,
     };
@@ -162,8 +149,6 @@ export class NeptuneAPIV2 {
     this.#encoder = Opts.FallbackEncoder;
 
     this._options = options;
-
-    this.apiKey = apiKey;
   }
 
   /**
@@ -179,7 +164,6 @@ export class NeptuneAPIV2 {
       logLevel: this.logLevel,
       fetch: this.fetch,
       fetchOptions: this.fetchOptions,
-      apiKey: this.apiKey,
       ...options,
     });
     return client;
@@ -197,23 +181,7 @@ export class NeptuneAPIV2 {
   }
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
-    if (this.apiKey && values.get('authorization')) {
-      return;
-    }
-    if (nulls.has('authorization')) {
-      return;
-    }
-
-    throw new Error(
-      'Could not resolve authentication method. Expected the apiKey to be set. Or for the "Authorization" headers to be explicitly omitted',
-    );
-  }
-
-  protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
-    if (this.apiKey == null) {
-      return undefined;
-    }
-    return buildHeaders([{ Authorization: `Bearer ${this.apiKey}` }]);
+    return;
   }
 
   /**
@@ -654,7 +622,6 @@ export class NeptuneAPIV2 {
         ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
         ...getPlatformHeaders(),
       },
-      await this.authHeaders(options),
       this._options.defaultHeaders,
       bodyHeaders,
       options.headers,
