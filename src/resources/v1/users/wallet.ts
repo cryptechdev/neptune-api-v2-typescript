@@ -55,90 +55,114 @@ export namespace UserWalletPortfolio {
     /**
      * Derived values and amounts.
      */
-    values: Balance.UnionMember0 | Balance.UnionMember1;
+    values: Balance.KnownAsset | Balance.UnknownAsset;
   }
 
   export namespace Balance {
-    export interface UnionMember0 {
+    /**
+     * This will be provided given the denom matches that of an asset included in the
+     * /assets endpoint.
+     */
+    export interface KnownAsset {
       /**
-       * Wallet balance in native denom.
+       * `KnownWalletValues`
        */
-      amount: string;
-
-      /**
-       * Amount scaled to the asset's standard unit / decimal places.
-       */
-      amount_scaled: string;
-
-      /**
-       * `AssetInfo`
-       */
-      asset_info: AssetsAPI.AssetInfo;
-
-      extra: UnionMember0.Extra;
-
-      kind: 'known_asset';
+      known_asset: KnownAsset.KnownAsset;
     }
 
-    export namespace UnionMember0 {
-      export interface Extra {
+    export namespace KnownAsset {
+      /**
+       * `KnownWalletValues`
+       */
+      export interface KnownAsset {
         /**
-         * Human-readable field variants. Must provide `?with-text=true`
+         * Wallet balance in native denom.
          */
-        text?: Extra.Text | null;
+        amount: string;
 
         /**
-         * USD values for the corresponding amounts above. Must provide `?with-value=true`
+         * Amount scaled to the asset's standard unit / decimal places.
          */
-        value?: Extra.Value | null;
+        amount_scaled: string;
+
+        /**
+         * `AssetInfo`
+         */
+        asset_info: AssetsAPI.AssetInfo;
+
+        extra: KnownAsset.Extra;
       }
 
-      export namespace Extra {
-        /**
-         * Human-readable field variants. Must provide `?with-text=true`
-         */
-        export interface Text {
-          amount: string;
+      export namespace KnownAsset {
+        export interface Extra {
+          /**
+           * Human-readable field variants. Must provide `?with-text=true`
+           */
+          text?: Extra.Text | null;
+
+          /**
+           * USD values for the corresponding amounts above. Must provide `?with-value=true`
+           */
+          value?: Extra.Value | null;
         }
 
-        /**
-         * USD values for the corresponding amounts above. Must provide `?with-value=true`
-         */
-        export interface Value {
-          amount: string;
-
-          extra: Value.Extra;
-        }
-
-        export namespace Value {
-          export interface Extra {
-            /**
-             * Human-readable variants of USD values. Must provide
-             * `?with-text=true&with-value=true`
-             */
-            text?: Extra.Text | null;
+        export namespace Extra {
+          /**
+           * Human-readable field variants. Must provide `?with-text=true`
+           */
+          export interface Text {
+            amount: string;
           }
 
-          export namespace Extra {
-            /**
-             * Human-readable variants of USD values. Must provide
-             * `?with-text=true&with-value=true`
-             */
-            export interface Text {
-              amount: string;
+          /**
+           * USD values for the corresponding amounts above. Must provide `?with-value=true`
+           */
+          export interface Value {
+            amount: string;
+
+            extra: Value.Extra;
+          }
+
+          export namespace Value {
+            export interface Extra {
+              /**
+               * Human-readable variants of USD values. Must provide
+               * `?with-text=true&with-value=true`
+               */
+              text?: Extra.Text | null;
+            }
+
+            export namespace Extra {
+              /**
+               * Human-readable variants of USD values. Must provide
+               * `?with-text=true&with-value=true`
+               */
+              export interface Text {
+                amount: string;
+              }
             }
           }
         }
       }
     }
 
-    export interface UnionMember1 {
+    export interface UnknownAsset {
       /**
-       * Wallet balance in native denom.
+       * `UnknownWalletValues`
        */
-      amount: string;
+      unknown_asset: UnknownAsset.UnknownAsset;
+    }
 
-      kind: 'unknown_asset';
+    export namespace UnknownAsset {
+      /**
+       * `UnknownWalletValues`
+       */
+      export interface UnknownAsset {
+        /**
+         * Wallet balance in native denom.
+         */
+        amount: string;
+      }
     }
   }
 
