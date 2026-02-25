@@ -254,7 +254,7 @@ export namespace UserNeptUnlockOverview {
     /**
      * `UserNeptUnlockSchedule`
      */
-    schedule: Arrangement.Linear | 'lump_sum';
+    schedule: Arrangement.Linear | Arrangement.LumpSum;
 
     /**
      * `UserNeptUnlockArrangementAdmin`
@@ -294,11 +294,13 @@ export namespace UserNeptUnlockOverview {
     }
 
     export interface Linear {
-      linear: Linear.Linear;
+      kind: 'linear';
+
+      properties: Linear.Properties;
     }
 
     export namespace Linear {
-      export interface Linear {
+      export interface Properties {
         /**
          * The duration of the unlock
          */
@@ -313,10 +315,10 @@ export namespace UserNeptUnlockOverview {
          */
         ends_at: string;
 
-        extra: Linear.Extra;
+        extra: Properties.Extra;
       }
 
-      export namespace Linear {
+      export namespace Properties {
         export interface Extra {
           /**
            * Human-readable field variants. Must provide `?with-text=true`
@@ -335,6 +337,10 @@ export namespace UserNeptUnlockOverview {
           }
         }
       }
+    }
+
+    export interface LumpSum {
+      kind: 'lump_sum';
     }
 
     /**
