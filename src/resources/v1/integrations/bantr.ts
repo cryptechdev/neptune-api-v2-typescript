@@ -8,23 +8,23 @@ export class Bantr extends APIResource {
   /**
    * .
    */
-  retrieveTransactions(
-    query: BantrRetrieveTransactionsParams,
+  getTransactions(
+    query: BantrGetTransactionsParams,
     options?: RequestOptions,
-  ): APIPromise<BantrRetrieveTransactionsResponse> {
+  ): APIPromise<BantrGetTransactionsResponse> {
     return this._client.get('/api/v1/integrations/bantr/transactions', { query, ...options });
   }
 }
 
-export interface BantrRetrieveTransactionsResponse {
+export interface BantrGetTransactionsResponse {
   success: boolean;
 
-  data?: Array<BantrRetrieveTransactionsResponse.Data> | null;
+  data?: Array<BantrGetTransactionsResponse.Data> | null;
 
-  error?: BantrRetrieveTransactionsResponse.Error | null;
+  error?: BantrGetTransactionsResponse.Error | null;
 }
 
-export namespace BantrRetrieveTransactionsResponse {
+export namespace BantrGetTransactionsResponse {
   export interface Data {
     /**
      * The type of action (e.g., lend, borrow).
@@ -74,7 +74,7 @@ export namespace BantrRetrieveTransactionsResponse {
   }
 }
 
-export interface BantrRetrieveTransactionsParams {
+export interface BantrGetTransactionsParams {
   /**
    * End block
    */
@@ -93,7 +93,7 @@ export interface BantrRetrieveTransactionsParams {
 
 export declare namespace Bantr {
   export {
-    type BantrRetrieveTransactionsResponse as BantrRetrieveTransactionsResponse,
-    type BantrRetrieveTransactionsParams as BantrRetrieveTransactionsParams,
+    type BantrGetTransactionsResponse as BantrGetTransactionsResponse,
+    type BantrGetTransactionsParams as BantrGetTransactionsParams,
   };
 }

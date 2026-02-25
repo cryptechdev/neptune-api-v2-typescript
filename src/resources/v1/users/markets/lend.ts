@@ -10,22 +10,22 @@ export class Lend extends APIResource {
   /**
    * Get user lending portfolio
    */
-  list(
+  getPortfolio(
     address: string,
-    query: LendListParams | null | undefined = {},
+    query: LendGetPortfolioParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<LendListResponse> {
+  ): APIPromise<LendGetPortfolioResponse> {
     return this._client.get(path`/api/v1/users/${address}/markets/lend`, { query, ...options });
   }
 
   /**
    * Lookup user lending distribution by asset
    */
-  retrieveLookup(
+  lookupDistribution(
     address: string,
-    query: LendRetrieveLookupParams,
+    query: LendLookupDistributionParams,
     options?: RequestOptions,
-  ): APIPromise<LendRetrieveLookupResponse> {
+  ): APIPromise<LendLookupDistributionResponse> {
     return this._client.get(path`/api/v1/users/${address}/markets/lend/lookup`, { query, ...options });
   }
 }
@@ -121,7 +121,7 @@ export namespace UserDebtAssetPool {
   }
 }
 
-export interface LendListResponse {
+export interface LendGetPortfolioResponse {
   /**
    * Request status
    */
@@ -148,7 +148,7 @@ export interface LendListResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export interface LendRetrieveLookupResponse {
+export interface LendLookupDistributionResponse {
   /**
    * Request status
    */
@@ -170,7 +170,7 @@ export interface LendRetrieveLookupResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export interface LendListParams {
+export interface LendGetPortfolioParams {
   /**
    * Include text variation fields
    */
@@ -182,7 +182,7 @@ export interface LendListParams {
   with_value?: boolean;
 }
 
-export interface LendRetrieveLookupParams {
+export interface LendLookupDistributionParams {
   /**
    * Asset ID for lookup
    */
@@ -202,9 +202,9 @@ export interface LendRetrieveLookupParams {
 export declare namespace Lend {
   export {
     type UserDebtAssetPool as UserDebtAssetPool,
-    type LendListResponse as LendListResponse,
-    type LendRetrieveLookupResponse as LendRetrieveLookupResponse,
-    type LendListParams as LendListParams,
-    type LendRetrieveLookupParams as LendRetrieveLookupParams,
+    type LendGetPortfolioResponse as LendGetPortfolioResponse,
+    type LendLookupDistributionResponse as LendLookupDistributionResponse,
+    type LendGetPortfolioParams as LendGetPortfolioParams,
+    type LendLookupDistributionParams as LendLookupDistributionParams,
   };
 }

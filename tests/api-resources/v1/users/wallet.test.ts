@@ -9,8 +9,8 @@ const client = new NeptuneAPIV2({
 
 describe('resource wallet', () => {
   // Mock server tests are disabled
-  test.skip('retrieveBalances', async () => {
-    const responsePromise = client.v1.users.wallet.retrieveBalances('address');
+  test.skip('getBalances', async () => {
+    const responsePromise = client.v1.users.wallet.getBalances('address');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,10 +21,10 @@ describe('resource wallet', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveBalances: request options and params are passed correctly', async () => {
+  test.skip('getBalances: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.v1.users.wallet.retrieveBalances(
+      client.v1.users.wallet.getBalances(
         'address',
         { with_text: true, with_value: true },
         { path: '/_stainless_unknown_path' },

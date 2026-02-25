@@ -20,9 +20,9 @@ export { Integrations } from './integrations/index';
 export {
   Markets,
   type GlobalMarketConfig,
-  type MarketGetMarketParamsResponse,
+  type MarketGetParamsResponse,
   type MarketOverviewResponse,
-  type MarketGetMarketParamsParams,
+  type MarketGetParamsParams,
   type MarketOverviewParams,
 } from './markets/index';
 export {
@@ -31,20 +31,20 @@ export {
   type StakingPoolFull,
   type StakingPoolParams,
   type StakingPoolState,
+  type NeptGetParamsResponse,
   type NeptGetStakingOverviewResponse,
-  type NeptGetTokenParamsResponse,
-  type NeptGetTokenStateResponse,
+  type NeptGetStateResponse,
+  type NeptGetParamsParams,
   type NeptGetStakingOverviewParams,
-  type NeptGetTokenParamsParams,
-  type NeptGetTokenStateParams,
+  type NeptGetStateParams,
 } from './nept';
 export { Status, type StatusCheckHealthResponse } from './status';
 export {
   Users,
   type EventAction,
-  type UserRetrieveTxHistoryResponse,
-  type UserRetrieveUserResponse,
-  type UserRetrieveTxHistoryParams,
-  type UserRetrieveUserParams,
+  type UserRetrieveResponse,
+  type UserGetTxHistoryResponse,
+  type UserRetrieveParams,
+  type UserGetTxHistoryParams,
 } from './users/index';
 export { V1 } from './v1';

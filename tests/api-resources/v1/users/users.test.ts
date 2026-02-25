@@ -9,8 +9,8 @@ const client = new NeptuneAPIV2({
 
 describe('resource users', () => {
   // Mock server tests are disabled
-  test.skip('retrieveTxHistory', async () => {
-    const responsePromise = client.v1.users.retrieveTxHistory('address');
+  test.skip('retrieve', async () => {
+    const responsePromise = client.v1.users.retrieve('address');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,16 +21,13 @@ describe('resource users', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveTxHistory: request options and params are passed correctly', async () => {
+  test.skip('retrieve: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.v1.users.retrieveTxHistory(
+      client.v1.users.retrieve(
         'address',
         {
-          action: 'borrow_flash_loan',
-          limit: 1,
-          prev_event_uuid: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          sort_order: 'asc',
+          with_percent: true,
           with_text: true,
           with_value: true,
         },
@@ -40,8 +37,8 @@ describe('resource users', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveUser', async () => {
-    const responsePromise = client.v1.users.retrieveUser('address');
+  test.skip('getTxHistory', async () => {
+    const responsePromise = client.v1.users.getTxHistory('address');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -52,13 +49,16 @@ describe('resource users', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveUser: request options and params are passed correctly', async () => {
+  test.skip('getTxHistory: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.v1.users.retrieveUser(
+      client.v1.users.getTxHistory(
         'address',
         {
-          with_percent: true,
+          action: 'borrow_flash_loan',
+          limit: 1,
+          prev_event_uuid: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          sort_order: 'asc',
           with_text: true,
           with_value: true,
         },

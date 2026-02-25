@@ -8,6 +8,16 @@ import { RequestOptions } from '../../internal/request-options';
 
 export class Nept extends APIResource {
   /**
+   * Get NEPT token params
+   */
+  getParams(
+    query: NeptGetParamsParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<NeptGetParamsResponse> {
+    return this._client.get('/api/v1/nept/params', { query, ...options });
+  }
+
+  /**
    * Get NEPT staking overview (incl. state + params)
    */
   getStakingOverview(
@@ -18,22 +28,12 @@ export class Nept extends APIResource {
   }
 
   /**
-   * Get NEPT token params
-   */
-  getTokenParams(
-    query: NeptGetTokenParamsParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<NeptGetTokenParamsResponse> {
-    return this._client.get('/api/v1/nept/params', { query, ...options });
-  }
-
-  /**
    * Get NEPT token state
    */
-  getTokenState(
-    query: NeptGetTokenStateParams | null | undefined = {},
+  getState(
+    query: NeptGetStateParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<NeptGetTokenStateResponse> {
+  ): APIPromise<NeptGetStateResponse> {
     return this._client.get('/api/v1/nept/state', { query, ...options });
   }
 }
@@ -184,94 +184,7 @@ export namespace StakingPoolState {
   }
 }
 
-export interface NeptGetStakingOverviewResponse {
-  /**
-   * Request status
-   */
-  status: number;
-
-  /**
-   * Request status text
-   */
-  status_text: string;
-
-  /**
-   * `StakingOverview`
-   */
-  data?: NeptGetStakingOverviewResponse.Data | null;
-
-  /**
-   * Error content, only set if an error occurs
-   */
-  error?: AssetsAPI.ErrorData | null;
-}
-
-export namespace NeptGetStakingOverviewResponse {
-  /**
-   * `StakingOverview`
-   */
-  export interface Data {
-    /**
-     * `AssetInfo`
-     */
-    asset_info: AssetsAPI.AssetInfo;
-
-    /**
-     * `StakingGlobalState` /// -- /// Staking state values that are not directly
-     * associated to a pool
-     */
-    global_state: Data.GlobalState;
-
-    /**
-     * `StakingPool[]` -- Staking pool contract parameter.
-     *
-     * List of available staking pools
-     */
-    pools: Array<NeptAPI.StakingPoolFull>;
-  }
-
-  export namespace Data {
-    /**
-     * `StakingGlobalState` /// -- /// Staking state values that are not directly
-     * associated to a pool
-     */
-    export interface GlobalState {
-      extra: GlobalState.Extra;
-
-      /**
-       * When staking rewards were last distributed
-       */
-      rewards_last_distributed: string;
-
-      /**
-       * **TODO:** rename, proper description
-       *
-       * stake_acc = ∫ ( emission_rate / total_reward_weight ) dt
-       */
-      stake_acc: string;
-    }
-
-    export namespace GlobalState {
-      export interface Extra {
-        /**
-         * Human-readable field variants. Must provide `?with-text=true`
-         */
-        text?: Extra.Text | null;
-      }
-
-      export namespace Extra {
-        /**
-         * Human-readable field variants. Must provide `?with-text=true`
-         */
-        export interface Text {
-          rewards_last_distributed: string;
-        }
-      }
-    }
-  }
-}
-
-export interface NeptGetTokenParamsResponse {
+export interface NeptGetParamsResponse {
   /**
    * Request status
    */
@@ -285,7 +198,7 @@ export interface NeptGetTokenParamsResponse {
   /**
    * `NeptParams`
    */
-  data?: NeptGetTokenParamsResponse.Data | null;
+  data?: NeptGetParamsResponse.Data | null;
 
   /**
    * Error content, only set if an error occurs
@@ -293,7 +206,7 @@ export interface NeptGetTokenParamsResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export namespace NeptGetTokenParamsResponse {
+export namespace NeptGetParamsResponse {
   /**
    * `NeptParams`
    */
@@ -421,7 +334,94 @@ export namespace NeptGetTokenParamsResponse {
   }
 }
 
-export interface NeptGetTokenStateResponse {
+export interface NeptGetStakingOverviewResponse {
+  /**
+   * Request status
+   */
+  status: number;
+
+  /**
+   * Request status text
+   */
+  status_text: string;
+
+  /**
+   * `StakingOverview`
+   */
+  data?: NeptGetStakingOverviewResponse.Data | null;
+
+  /**
+   * Error content, only set if an error occurs
+   */
+  error?: AssetsAPI.ErrorData | null;
+}
+
+export namespace NeptGetStakingOverviewResponse {
+  /**
+   * `StakingOverview`
+   */
+  export interface Data {
+    /**
+     * `AssetInfo`
+     */
+    asset_info: AssetsAPI.AssetInfo;
+
+    /**
+     * `StakingGlobalState` /// -- /// Staking state values that are not directly
+     * associated to a pool
+     */
+    global_state: Data.GlobalState;
+
+    /**
+     * `StakingPool[]` -- Staking pool contract parameter.
+     *
+     * List of available staking pools
+     */
+    pools: Array<NeptAPI.StakingPoolFull>;
+  }
+
+  export namespace Data {
+    /**
+     * `StakingGlobalState` /// -- /// Staking state values that are not directly
+     * associated to a pool
+     */
+    export interface GlobalState {
+      extra: GlobalState.Extra;
+
+      /**
+       * When staking rewards were last distributed
+       */
+      rewards_last_distributed: string;
+
+      /**
+       * **TODO:** rename, proper description
+       *
+       * stake_acc = ∫ ( emission_rate / total_reward_weight ) dt
+       */
+      stake_acc: string;
+    }
+
+    export namespace GlobalState {
+      export interface Extra {
+        /**
+         * Human-readable field variants. Must provide `?with-text=true`
+         */
+        text?: Extra.Text | null;
+      }
+
+      export namespace Extra {
+        /**
+         * Human-readable field variants. Must provide `?with-text=true`
+         */
+        export interface Text {
+          rewards_last_distributed: string;
+        }
+      }
+    }
+  }
+}
+
+export interface NeptGetStateResponse {
   /**
    * Request status
    */
@@ -435,7 +435,7 @@ export interface NeptGetTokenStateResponse {
   /**
    * `NeptState`
    */
-  data?: NeptGetTokenStateResponse.Data | null;
+  data?: NeptGetStateResponse.Data | null;
 
   /**
    * Error content, only set if an error occurs
@@ -443,7 +443,7 @@ export interface NeptGetTokenStateResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export namespace NeptGetTokenStateResponse {
+export namespace NeptGetStateResponse {
   /**
    * `NeptState`
    */
@@ -605,6 +605,18 @@ export namespace NeptGetTokenStateResponse {
   }
 }
 
+export interface NeptGetParamsParams {
+  /**
+   * Include text variation fields
+   */
+  with_text?: boolean;
+
+  /**
+   * Calculate and include USD values for amounts, where applicable
+   */
+  with_value?: boolean;
+}
+
 export interface NeptGetStakingOverviewParams {
   /**
    * Include text variation fields
@@ -617,19 +629,7 @@ export interface NeptGetStakingOverviewParams {
   with_value?: boolean;
 }
 
-export interface NeptGetTokenParamsParams {
-  /**
-   * Include text variation fields
-   */
-  with_text?: boolean;
-
-  /**
-   * Calculate and include USD values for amounts, where applicable
-   */
-  with_value?: boolean;
-}
-
-export interface NeptGetTokenStateParams {
+export interface NeptGetStateParams {
   /**
    * Include text variation fields
    */
@@ -647,11 +647,11 @@ export declare namespace Nept {
     type StakingPoolFull as StakingPoolFull,
     type StakingPoolParams as StakingPoolParams,
     type StakingPoolState as StakingPoolState,
+    type NeptGetParamsResponse as NeptGetParamsResponse,
     type NeptGetStakingOverviewResponse as NeptGetStakingOverviewResponse,
-    type NeptGetTokenParamsResponse as NeptGetTokenParamsResponse,
-    type NeptGetTokenStateResponse as NeptGetTokenStateResponse,
+    type NeptGetStateResponse as NeptGetStateResponse,
+    type NeptGetParamsParams as NeptGetParamsParams,
     type NeptGetStakingOverviewParams as NeptGetStakingOverviewParams,
-    type NeptGetTokenParamsParams as NeptGetTokenParamsParams,
-    type NeptGetTokenStateParams as NeptGetTokenStateParams,
+    type NeptGetStateParams as NeptGetStateParams,
   };
 }

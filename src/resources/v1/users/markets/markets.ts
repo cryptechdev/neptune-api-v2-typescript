@@ -5,24 +5,28 @@ import * as AssetsAPI from '../../assets';
 import * as LendAPI from './lend';
 import {
   Lend as LendAPILend,
-  LendListParams,
-  LendListResponse,
-  LendRetrieveLookupParams,
-  LendRetrieveLookupResponse,
+  LendGetPortfolioParams,
+  LendGetPortfolioResponse,
+  LendLookupDistributionParams,
+  LendLookupDistributionResponse,
   UserDebtAssetPool,
 } from './lend';
 import * as MergedAPI from './merged';
 import {
   Merged,
-  MergedListParams,
-  MergedListResponse,
-  MergedRetrieveLookupParams,
-  MergedRetrieveLookupResponse,
+  MergedGetAllMarketsParams,
+  MergedGetAllMarketsResponse,
+  MergedLookupByAssetParams,
+  MergedLookupByAssetResponse,
   UserMergedMarket,
 } from './merged';
 import * as AccountsAPI from './borrow/accounts';
 import * as BorrowAPI from './borrow/borrow';
-import { Borrow as BorrowAPIBorrow, BorrowListParams, BorrowListResponse } from './borrow/borrow';
+import {
+  Borrow as BorrowAPIBorrow,
+  BorrowGetPortfolioParams,
+  BorrowGetPortfolioResponse,
+} from './borrow/borrow';
 import { APIPromise } from '../../../../core/api-promise';
 import { RequestOptions } from '../../../../internal/request-options';
 import { path } from '../../../../internal/utils/path';
@@ -35,11 +39,11 @@ export class Markets extends APIResource {
   /**
    * Get user market portfolio
    */
-  list(
+  getPortfolio(
     address: string,
-    query: MarketListParams | null | undefined = {},
+    query: MarketGetPortfolioParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<MarketListResponse> {
+  ): APIPromise<MarketGetPortfolioResponse> {
     return this._client.get(path`/api/v1/users/${address}/markets`, { query, ...options });
   }
 }
@@ -127,7 +131,7 @@ export namespace UserMarket {
   }
 }
 
-export interface MarketListResponse {
+export interface MarketGetPortfolioResponse {
   /**
    * Request status
    */
@@ -149,7 +153,7 @@ export interface MarketListResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export interface MarketListParams {
+export interface MarketGetPortfolioParams {
   /**
    * Include text variation fields
    */
@@ -168,31 +172,31 @@ Markets.Merged = Merged;
 export declare namespace Markets {
   export {
     type UserMarket as UserMarket,
-    type MarketListResponse as MarketListResponse,
-    type MarketListParams as MarketListParams,
+    type MarketGetPortfolioResponse as MarketGetPortfolioResponse,
+    type MarketGetPortfolioParams as MarketGetPortfolioParams,
   };
 
   export {
     LendAPILend as Lend,
     type UserDebtAssetPool as UserDebtAssetPool,
-    type LendListResponse as LendListResponse,
-    type LendRetrieveLookupResponse as LendRetrieveLookupResponse,
-    type LendListParams as LendListParams,
-    type LendRetrieveLookupParams as LendRetrieveLookupParams,
+    type LendGetPortfolioResponse as LendGetPortfolioResponse,
+    type LendLookupDistributionResponse as LendLookupDistributionResponse,
+    type LendGetPortfolioParams as LendGetPortfolioParams,
+    type LendLookupDistributionParams as LendLookupDistributionParams,
   };
 
   export {
     BorrowAPIBorrow as Borrow,
-    type BorrowListResponse as BorrowListResponse,
-    type BorrowListParams as BorrowListParams,
+    type BorrowGetPortfolioResponse as BorrowGetPortfolioResponse,
+    type BorrowGetPortfolioParams as BorrowGetPortfolioParams,
   };
 
   export {
     Merged as Merged,
     type UserMergedMarket as UserMergedMarket,
-    type MergedListResponse as MergedListResponse,
-    type MergedRetrieveLookupResponse as MergedRetrieveLookupResponse,
-    type MergedListParams as MergedListParams,
-    type MergedRetrieveLookupParams as MergedRetrieveLookupParams,
+    type MergedGetAllMarketsResponse as MergedGetAllMarketsResponse,
+    type MergedLookupByAssetResponse as MergedLookupByAssetResponse,
+    type MergedGetAllMarketsParams as MergedGetAllMarketsParams,
+    type MergedLookupByAssetParams as MergedLookupByAssetParams,
   };
 }

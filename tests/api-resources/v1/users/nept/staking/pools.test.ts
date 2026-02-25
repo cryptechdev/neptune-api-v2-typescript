@@ -9,8 +9,8 @@ const client = new NeptuneAPIV2({
 
 describe('resource pools', () => {
   // Mock server tests are disabled
-  test.skip('list', async () => {
-    const responsePromise = client.v1.users.nept.staking.pools.list('address');
+  test.skip('getAll', async () => {
+    const responsePromise = client.v1.users.nept.staking.pools.getAll('address');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,10 +21,10 @@ describe('resource pools', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('list: request options and params are passed correctly', async () => {
+  test.skip('getAll: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.v1.users.nept.staking.pools.list(
+      client.v1.users.nept.staking.pools.getAll(
         'address',
         { with_text: true, with_value: true },
         { path: '/_stainless_unknown_path' },
@@ -33,8 +33,8 @@ describe('resource pools', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveLookup', async () => {
-    const responsePromise = client.v1.users.nept.staking.pools.retrieveLookup('address');
+  test.skip('lookup', async () => {
+    const responsePromise = client.v1.users.nept.staking.pools.lookup('address');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -45,10 +45,10 @@ describe('resource pools', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveLookup: request options and params are passed correctly', async () => {
+  test.skip('lookup: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.v1.users.nept.staking.pools.retrieveLookup(
+      client.v1.users.nept.staking.pools.lookup(
         'address',
         {
           duration: 'duration',

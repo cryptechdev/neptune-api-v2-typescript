@@ -35,10 +35,10 @@ export class Borrow extends APIResource {
   /**
    * Get historical borrowing rates for assets
    */
-  getBorrowRateHistory(
-    query: BorrowGetBorrowRateHistoryParams,
+  getRateHistory(
+    query: BorrowGetRateHistoryParams,
     options?: RequestOptions,
-  ): APIPromise<BorrowGetBorrowRateHistoryResponse> {
+  ): APIPromise<BorrowGetRateHistoryResponse> {
     return this._client.get('/api/v1/markets/borrow/rate-history', { query, ...options });
   }
 
@@ -68,7 +68,7 @@ export interface BorrowMarketOverview {
   debts: Array<DebtsAPI.BorrowDebtMarket>;
 }
 
-export interface BorrowGetBorrowRateHistoryResponse {
+export interface BorrowGetRateHistoryResponse {
   /**
    * Request status
    */
@@ -116,7 +116,7 @@ export interface BorrowOverviewResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export interface BorrowGetBorrowRateHistoryParams {
+export interface BorrowGetRateHistoryParams {
   /**
    * End timestamp for interval range (inclusive)
    *
@@ -194,9 +194,9 @@ Borrow.Debts = Debts;
 export declare namespace Borrow {
   export {
     type BorrowMarketOverview as BorrowMarketOverview,
-    type BorrowGetBorrowRateHistoryResponse as BorrowGetBorrowRateHistoryResponse,
+    type BorrowGetRateHistoryResponse as BorrowGetRateHistoryResponse,
     type BorrowOverviewResponse as BorrowOverviewResponse,
-    type BorrowGetBorrowRateHistoryParams as BorrowGetBorrowRateHistoryParams,
+    type BorrowGetRateHistoryParams as BorrowGetRateHistoryParams,
     type BorrowOverviewParams as BorrowOverviewParams,
   };
 

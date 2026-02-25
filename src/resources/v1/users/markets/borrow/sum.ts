@@ -12,11 +12,11 @@ export class Sum extends APIResource {
   /**
    * Get user combined collaterals for all subaccounts
    */
-  retrieveCollaterals(
+  getCollaterals(
     address: string,
-    query: SumRetrieveCollateralsParams | null | undefined = {},
+    query: SumGetCollateralsParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<SumRetrieveCollateralsResponse> {
+  ): APIPromise<SumGetCollateralsResponse> {
     return this._client.get(path`/api/v1/users/${address}/markets/borrow/sum/collaterals`, {
       query,
       ...options,
@@ -26,16 +26,16 @@ export class Sum extends APIResource {
   /**
    * Get user combined debts for all subaccounts
    */
-  retrieveDebts(
+  getDebts(
     address: string,
-    query: SumRetrieveDebtsParams | null | undefined = {},
+    query: SumGetDebtsParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<SumRetrieveDebtsResponse> {
+  ): APIPromise<SumGetDebtsResponse> {
     return this._client.get(path`/api/v1/users/${address}/markets/borrow/sum/debts`, { query, ...options });
   }
 }
 
-export interface SumRetrieveCollateralsResponse {
+export interface SumGetCollateralsResponse {
   /**
    * Request status
    */
@@ -62,7 +62,7 @@ export interface SumRetrieveCollateralsResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export interface SumRetrieveDebtsResponse {
+export interface SumGetDebtsResponse {
   /**
    * Request status
    */
@@ -89,7 +89,7 @@ export interface SumRetrieveDebtsResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export interface SumRetrieveCollateralsParams {
+export interface SumGetCollateralsParams {
   /**
    * Include text variation fields
    */
@@ -101,7 +101,7 @@ export interface SumRetrieveCollateralsParams {
   with_value?: boolean;
 }
 
-export interface SumRetrieveDebtsParams {
+export interface SumGetDebtsParams {
   /**
    * Include text variation fields
    */
@@ -115,9 +115,9 @@ export interface SumRetrieveDebtsParams {
 
 export declare namespace Sum {
   export {
-    type SumRetrieveCollateralsResponse as SumRetrieveCollateralsResponse,
-    type SumRetrieveDebtsResponse as SumRetrieveDebtsResponse,
-    type SumRetrieveCollateralsParams as SumRetrieveCollateralsParams,
-    type SumRetrieveDebtsParams as SumRetrieveDebtsParams,
+    type SumGetCollateralsResponse as SumGetCollateralsResponse,
+    type SumGetDebtsResponse as SumGetDebtsResponse,
+    type SumGetCollateralsParams as SumGetCollateralsParams,
+    type SumGetDebtsParams as SumGetDebtsParams,
   };
 }

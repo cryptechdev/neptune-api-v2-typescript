@@ -5,10 +5,10 @@ import * as StakingAPI from './staking';
 import * as AssetsAPI from '../../../assets';
 import * as PoolsAPI from './pools';
 import {
-  PoolListParams,
-  PoolListResponse,
-  PoolRetrieveLookupParams,
-  PoolRetrieveLookupResponse,
+  PoolGetAllParams,
+  PoolGetAllResponse,
+  PoolLookupParams,
+  PoolLookupResponse,
   Pools,
   UserStakePool,
 } from './pools';
@@ -22,22 +22,22 @@ export class Staking extends APIResource {
   /**
    * Get user staking overview
    */
-  list(
+  getOverview(
     address: string,
-    query: StakingListParams | null | undefined = {},
+    query: StakingGetOverviewParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<StakingListResponse> {
+  ): APIPromise<StakingGetOverviewResponse> {
     return this._client.get(path`/api/v1/users/${address}/nept/staking`, { query, ...options });
   }
 
   /**
    * Get user unstaking pool
    */
-  retrieveUnstaking(
+  getUnstakingPool(
     address: string,
-    query: StakingRetrieveUnstakingParams | null | undefined = {},
+    query: StakingGetUnstakingPoolParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<StakingRetrieveUnstakingResponse> {
+  ): APIPromise<StakingGetUnstakingPoolResponse> {
     return this._client.get(path`/api/v1/users/${address}/nept/staking/unstaking`, { query, ...options });
   }
 }
@@ -309,7 +309,7 @@ export namespace UserStakeUnbondingEntry {
   }
 }
 
-export interface StakingListResponse {
+export interface StakingGetOverviewResponse {
   /**
    * Request status
    */
@@ -331,7 +331,7 @@ export interface StakingListResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export interface StakingRetrieveUnstakingResponse {
+export interface StakingGetUnstakingPoolResponse {
   /**
    * Request status
    */
@@ -345,7 +345,7 @@ export interface StakingRetrieveUnstakingResponse {
   /**
    * Object data
    */
-  data?: StakingRetrieveUnstakingResponse.Data | null;
+  data?: StakingGetUnstakingPoolResponse.Data | null;
 
   /**
    * Error content, only set if an error occurs
@@ -353,7 +353,7 @@ export interface StakingRetrieveUnstakingResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export namespace StakingRetrieveUnstakingResponse {
+export namespace StakingGetUnstakingPoolResponse {
   /**
    * Object data
    */
@@ -380,7 +380,7 @@ export namespace StakingRetrieveUnstakingResponse {
   }
 }
 
-export interface StakingListParams {
+export interface StakingGetOverviewParams {
   /**
    * Include text variation fields
    */
@@ -392,7 +392,7 @@ export interface StakingListParams {
   with_value?: boolean;
 }
 
-export interface StakingRetrieveUnstakingParams {
+export interface StakingGetUnstakingPoolParams {
   /**
    * Include text variation fields
    */
@@ -410,18 +410,18 @@ export declare namespace Staking {
   export {
     type UserStake as UserStake,
     type UserStakeUnbondingEntry as UserStakeUnbondingEntry,
-    type StakingListResponse as StakingListResponse,
-    type StakingRetrieveUnstakingResponse as StakingRetrieveUnstakingResponse,
-    type StakingListParams as StakingListParams,
-    type StakingRetrieveUnstakingParams as StakingRetrieveUnstakingParams,
+    type StakingGetOverviewResponse as StakingGetOverviewResponse,
+    type StakingGetUnstakingPoolResponse as StakingGetUnstakingPoolResponse,
+    type StakingGetOverviewParams as StakingGetOverviewParams,
+    type StakingGetUnstakingPoolParams as StakingGetUnstakingPoolParams,
   };
 
   export {
     Pools as Pools,
     type UserStakePool as UserStakePool,
-    type PoolListResponse as PoolListResponse,
-    type PoolRetrieveLookupResponse as PoolRetrieveLookupResponse,
-    type PoolListParams as PoolListParams,
-    type PoolRetrieveLookupParams as PoolRetrieveLookupParams,
+    type PoolGetAllResponse as PoolGetAllResponse,
+    type PoolLookupResponse as PoolLookupResponse,
+    type PoolGetAllParams as PoolGetAllParams,
+    type PoolLookupParams as PoolLookupParams,
   };
 }

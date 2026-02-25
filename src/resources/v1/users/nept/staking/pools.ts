@@ -11,22 +11,22 @@ export class Pools extends APIResource {
   /**
    * Get user staking pools
    */
-  list(
+  getAll(
     address: string,
-    query: PoolListParams | null | undefined = {},
+    query: PoolGetAllParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<PoolListResponse> {
+  ): APIPromise<PoolGetAllResponse> {
     return this._client.get(path`/api/v1/users/${address}/nept/staking/pools`, { query, ...options });
   }
 
   /**
    * Get user staking pool by duration/index
    */
-  retrieveLookup(
+  lookup(
     address: string,
-    query: PoolRetrieveLookupParams | null | undefined = {},
+    query: PoolLookupParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<PoolRetrieveLookupResponse> {
+  ): APIPromise<PoolLookupResponse> {
     return this._client.get(path`/api/v1/users/${address}/nept/staking/pools/lookup`, { query, ...options });
   }
 }
@@ -195,7 +195,7 @@ export namespace UserStakePool {
   }
 }
 
-export interface PoolListResponse {
+export interface PoolGetAllResponse {
   /**
    * Request status
    */
@@ -222,7 +222,7 @@ export interface PoolListResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export interface PoolRetrieveLookupResponse {
+export interface PoolLookupResponse {
   /**
    * Request status
    */
@@ -244,7 +244,7 @@ export interface PoolRetrieveLookupResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export interface PoolListParams {
+export interface PoolGetAllParams {
   /**
    * Include text variation fields
    */
@@ -256,7 +256,7 @@ export interface PoolListParams {
   with_value?: boolean;
 }
 
-export interface PoolRetrieveLookupParams {
+export interface PoolLookupParams {
   /**
    * Duration of pool to lookup (**in nanoseconds**)
    *
@@ -285,9 +285,9 @@ export interface PoolRetrieveLookupParams {
 export declare namespace Pools {
   export {
     type UserStakePool as UserStakePool,
-    type PoolListResponse as PoolListResponse,
-    type PoolRetrieveLookupResponse as PoolRetrieveLookupResponse,
-    type PoolListParams as PoolListParams,
-    type PoolRetrieveLookupParams as PoolRetrieveLookupParams,
+    type PoolGetAllResponse as PoolGetAllResponse,
+    type PoolLookupResponse as PoolLookupResponse,
+    type PoolGetAllParams as PoolGetAllParams,
+    type PoolLookupParams as PoolLookupParams,
   };
 }

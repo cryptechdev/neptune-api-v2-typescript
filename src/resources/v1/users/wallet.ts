@@ -10,11 +10,11 @@ export class Wallet extends APIResource {
   /**
    * Get user portfolio
    */
-  retrieveBalances(
+  getBalances(
     address: string,
-    query: WalletRetrieveBalancesParams | null | undefined = {},
+    query: WalletGetBalancesParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<WalletRetrieveBalancesResponse> {
+  ): APIPromise<WalletGetBalancesResponse> {
     return this._client.get(path`/api/v1/users/${address}/wallet/balances`, { query, ...options });
   }
 }
@@ -177,7 +177,7 @@ export namespace UserWalletPortfolio {
   }
 }
 
-export interface WalletRetrieveBalancesResponse {
+export interface WalletGetBalancesResponse {
   /**
    * Request status
    */
@@ -199,7 +199,7 @@ export interface WalletRetrieveBalancesResponse {
   error?: AssetsAPI.ErrorData | null;
 }
 
-export interface WalletRetrieveBalancesParams {
+export interface WalletGetBalancesParams {
   /**
    * Include text variation fields
    */
@@ -214,7 +214,7 @@ export interface WalletRetrieveBalancesParams {
 export declare namespace Wallet {
   export {
     type UserWalletPortfolio as UserWalletPortfolio,
-    type WalletRetrieveBalancesResponse as WalletRetrieveBalancesResponse,
-    type WalletRetrieveBalancesParams as WalletRetrieveBalancesParams,
+    type WalletGetBalancesResponse as WalletGetBalancesResponse,
+    type WalletGetBalancesParams as WalletGetBalancesParams,
   };
 }

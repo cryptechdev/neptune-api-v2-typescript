@@ -30,10 +30,8 @@ describe('resource accounts', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveCollaterals: only required params', async () => {
-    const responsePromise = client.v1.users.markets.borrow.accounts.retrieveCollaterals(0, {
-      address: 'address',
-    });
+  test.skip('getCollaterals: only required params', async () => {
+    const responsePromise = client.v1.users.markets.borrow.accounts.getCollaterals(0, { address: 'address' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -44,8 +42,8 @@ describe('resource accounts', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveCollaterals: required and optional params', async () => {
-    const response = await client.v1.users.markets.borrow.accounts.retrieveCollaterals(0, {
+  test.skip('getCollaterals: required and optional params', async () => {
+    const response = await client.v1.users.markets.borrow.accounts.getCollaterals(0, {
       address: 'address',
       with_text: true,
       with_value: true,
@@ -53,8 +51,8 @@ describe('resource accounts', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveDebts: only required params', async () => {
-    const responsePromise = client.v1.users.markets.borrow.accounts.retrieveDebts(0, { address: 'address' });
+  test.skip('getDebts: only required params', async () => {
+    const responsePromise = client.v1.users.markets.borrow.accounts.getDebts(0, { address: 'address' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -65,8 +63,8 @@ describe('resource accounts', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveDebts: required and optional params', async () => {
-    const response = await client.v1.users.markets.borrow.accounts.retrieveDebts(0, {
+  test.skip('getDebts: required and optional params', async () => {
+    const response = await client.v1.users.markets.borrow.accounts.getDebts(0, {
       address: 'address',
       with_text: true,
       with_value: true,
@@ -74,8 +72,8 @@ describe('resource accounts', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveHealth: only required params', async () => {
-    const responsePromise = client.v1.users.markets.borrow.accounts.retrieveHealth(0, { address: 'address' });
+  test.skip('getHealth: only required params', async () => {
+    const responsePromise = client.v1.users.markets.borrow.accounts.getHealth(0, { address: 'address' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -86,8 +84,8 @@ describe('resource accounts', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveHealth: required and optional params', async () => {
-    const response = await client.v1.users.markets.borrow.accounts.retrieveHealth(0, {
+  test.skip('getHealth: required and optional params', async () => {
+    const response = await client.v1.users.markets.borrow.accounts.getHealth(0, {
       address: 'address',
       with_text: true,
       with_value: true,

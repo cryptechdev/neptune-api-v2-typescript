@@ -9,8 +9,8 @@ const client = new NeptuneAPIV2({
 
 describe('resource market', () => {
   // Mock server tests are disabled
-  test.skip('retrieveState', async () => {
-    const responsePromise = client.v1.analytics.market.retrieveState();
+  test.skip('getCurrentState', async () => {
+    const responsePromise = client.v1.analytics.market.getCurrentState();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
