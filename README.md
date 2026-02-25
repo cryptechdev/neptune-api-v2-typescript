@@ -25,9 +25,7 @@ The full API of this library can be found in [api.md](api.md).
 ```js
 import NeptuneAPIV2 from 'neptune-api-v2';
 
-const client = new NeptuneAPIV2({
-  apiKey: process.env['NEPTUNE_API_V2_API_KEY'], // This is the default and can be omitted
-});
+const client = new NeptuneAPIV2();
 
 const response = await client.v1.status.checkHealth();
 
@@ -42,9 +40,7 @@ This library includes TypeScript definitions for all request params and response
 ```ts
 import NeptuneAPIV2 from 'neptune-api-v2';
 
-const client = new NeptuneAPIV2({
-  apiKey: process.env['NEPTUNE_API_V2_API_KEY'], // This is the default and can be omitted
-});
+const client = new NeptuneAPIV2();
 
 const response: NeptuneAPIV2.V1.StatusCheckHealthResponse = await client.v1.status.checkHealth();
 ```
