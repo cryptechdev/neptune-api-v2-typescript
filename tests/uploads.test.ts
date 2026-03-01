@@ -1,6 +1,6 @@
 import fs from 'fs';
-import type { ResponseLike } from 'neptune-api-v2/internal/to-file';
-import { toFile } from 'neptune-api-v2/core/uploads';
+import type { ResponseLike } from '@neptunefinance/api-v2/internal/to-file';
+import { toFile } from '@neptunefinance/api-v2/core/uploads';
 import { File } from 'node:buffer';
 
 class MyClass {
@@ -97,7 +97,7 @@ describe('missing File error message', () => {
   });
 
   test('is thrown', async () => {
-    const uploads = await import('neptune-api-v2/core/uploads');
+    const uploads = await import('@neptunefinance/api-v2/core/uploads');
     await expect(
       uploads.toFile(mockResponse({ url: 'https://example.com/my/audio.mp3' })),
     ).rejects.toMatchInlineSnapshot(

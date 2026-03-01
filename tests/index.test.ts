@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIPromise } from 'neptune-api-v2/core/api-promise';
+import { APIPromise } from '@neptunefinance/api-v2/core/api-promise';
 
 import util from 'node:util';
-import NeptuneAPIV2 from 'neptune-api-v2';
-import { APIUserAbortError } from 'neptune-api-v2';
+import NeptuneAPIV2 from '@neptunefinance/api-v2';
+import { APIUserAbortError } from '@neptunefinance/api-v2';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {
@@ -292,13 +292,13 @@ describe('instantiate client', () => {
     test('empty env variable', () => {
       process.env['NEPTUNE_API_V2_BASE_URL'] = ''; // empty
       const client = new NeptuneAPIV2({});
-      expect(client.baseURL).toEqual('https://api.example.com');
+      expect(client.baseURL).toEqual('https://api-v2.nept.finance');
     });
 
     test('blank env variable', () => {
       process.env['NEPTUNE_API_V2_BASE_URL'] = '  '; // blank
       const client = new NeptuneAPIV2({});
-      expect(client.baseURL).toEqual('https://api.example.com');
+      expect(client.baseURL).toEqual('https://api-v2.nept.finance');
     });
 
     test('in request options', () => {

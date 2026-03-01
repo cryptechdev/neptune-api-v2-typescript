@@ -25,7 +25,7 @@ export default tseslint.config(
         {
           patterns: [
             {
-              regex: '^neptune-api-v2(/.*)?',
+              regex: '^@neptunefinance/api-v2(/.*)?',
               message: 'Use a relative import, not a package import.',
             },
           ],

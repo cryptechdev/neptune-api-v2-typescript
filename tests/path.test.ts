@@ -1,4 +1,4 @@
-import { createPathTagFunction, encodeURIPath } from 'neptune-api-v2/internal/utils/path';
+import { createPathTagFunction, encodeURIPath } from '@neptunefinance/api-v2/internal/utils/path';
 import { inspect } from 'node:util';
 import { runInNewContext } from 'node:vm';
 
