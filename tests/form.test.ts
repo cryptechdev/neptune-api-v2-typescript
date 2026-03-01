@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'neptune-api-v2/internal/uploads';
-import { toFile } from 'neptune-api-v2/core/uploads';
+import { multipartFormRequestOptions, createForm } from '@neptunefinance/api-v2/internal/uploads';
+import { toFile } from '@neptunefinance/api-v2/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

@@ -8,8 +8,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "paths": {
-      "neptune-api-v2/*": ["./src/*"],
-      "neptune-api-v2": ["./src/index.ts"]
+      "@neptunefinance/api-v2/*": ["./src/*"],
+      "@neptunefinance/api-v2": ["./src/index.ts"]
     },
     "noEmit": true,
 

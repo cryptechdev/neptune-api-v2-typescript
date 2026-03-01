@@ -7,8 +7,8 @@ const config: JestConfigWithTsJest = {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { sourceMaps: 'inline' }],
   },
   moduleNameMapper: {
-    '^neptune-api-v2$': '<rootDir>/src/index.ts',
-    '^neptune-api-v2/(.*)$': '<rootDir>/src/$1',
+    '^@neptunefinance/api-v2$': '<rootDir>/src/index.ts',
+    '^@neptunefinance/api-v2/(.*)$': '<rootDir>/src/$1',
   },
   modulePathIgnorePatterns: [
     '<rootDir>/ecosystem-tests/',

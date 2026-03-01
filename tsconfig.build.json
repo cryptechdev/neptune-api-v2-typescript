@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "neptune-api-v2/*": ["./dist/src/*"],
-      "neptune-api-v2": ["./dist/src/index.ts"]
+      "@neptunefinance/api-v2/*": ["./dist/src/*"],
+      "@neptunefinance/api-v2": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,

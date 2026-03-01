@@ -169,7 +169,7 @@ export class NeptuneAPIV2 {
   /**
    * API Client for interfacing with the Neptune API V2 API.
    *
-   * @param {string} [opts.baseURL=process.env['NEPTUNE_API_V2_BASE_URL'] ?? https://api.example.com] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['NEPTUNE_API_V2_BASE_URL'] ?? https://api-v2.nept.finance] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -180,7 +180,7 @@ export class NeptuneAPIV2 {
   constructor({ baseURL = readEnv('NEPTUNE_API_V2_BASE_URL'), ...opts }: ClientOptions = {}) {
     const options: ClientOptions = {
       ...opts,
-      baseURL: baseURL || `https://api.example.com`,
+      baseURL: baseURL || `https://api-v2.nept.finance`,
     };
 
     this.baseURL = options.baseURL!;
@@ -223,7 +223,7 @@ export class NeptuneAPIV2 {
    * Check whether the base URL is set to its default.
    */
   #baseURLOverridden(): boolean {
-    return this.baseURL !== 'https://api.example.com';
+    return this.baseURL !== 'https://api-v2.nept.finance';
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {

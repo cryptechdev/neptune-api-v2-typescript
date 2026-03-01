@@ -1,5 +1,5 @@
 {
-  "name": "neptune-api-v2",
+  "name": "@neptunefinance/api-v2",
   "version": "0.0.1",
   "description": "The official TypeScript library for the Neptune API V2 API",
   "author": "Neptune API V2 <>",

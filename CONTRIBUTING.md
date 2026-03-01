@@ -55,12 +55,12 @@ $ cd neptune-api-v2-typescript
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link neptune-api-v2
+$ yarn link @neptunefinance/api-v2
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link --global neptune-api-v2
+$ pnpm link --global @neptunefinance/api-v2
 ```
 
 ## Running tests
