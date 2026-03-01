@@ -27,7 +27,7 @@ import NeptuneAPIV2 from 'neptune-api-v2';
 
 const client = new NeptuneAPIV2();
 
-const response = await client.v1.status.checkHealth();
+const response = await client.status.checkHealth();
 
 console.log(response.status);
 ```
@@ -42,7 +42,7 @@ import NeptuneAPIV2 from 'neptune-api-v2';
 
 const client = new NeptuneAPIV2();
 
-const response: NeptuneAPIV2.V1.StatusCheckHealthResponse = await client.v1.status.checkHealth();
+const response: NeptuneAPIV2.StatusCheckHealthResponse = await client.status.checkHealth();
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -55,7 +55,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const response = await client.v1.status.checkHealth().catch(async (err) => {
+const response = await client.status.checkHealth().catch(async (err) => {
   if (err instanceof NeptuneAPIV2.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
@@ -95,7 +95,7 @@ const client = new NeptuneAPIV2({
 });
 
 // Or, configure per-request:
-await client.v1.status.checkHealth({
+await client.status.checkHealth({
   maxRetries: 5,
 });
 ```
@@ -112,7 +112,7 @@ const client = new NeptuneAPIV2({
 });
 
 // Override per-request:
-await client.v1.status.checkHealth({
+await client.status.checkHealth({
   timeout: 5 * 1000,
 });
 ```
@@ -135,11 +135,11 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new NeptuneAPIV2();
 
-const response = await client.v1.status.checkHealth().asResponse();
+const response = await client.status.checkHealth().asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: response, response: raw } = await client.v1.status.checkHealth().withResponse();
+const { data: response, response: raw } = await client.status.checkHealth().withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(response.status);
 ```
@@ -221,7 +221,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.v1.status.checkHealth({
+client.status.checkHealth({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',

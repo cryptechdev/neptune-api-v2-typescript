@@ -1,328 +1,293 @@
-# V1
-
-## Status
+# Core
 
 Types:
 
-- <code><a href="./src/resources/v1/status.ts">StatusCheckHealthResponse</a></code>
+- <code><a href="./src/resources/core.ts">ErrorData</a></code>
+- <code><a href="./src/resources/core.ts">Interval</a></code>
+- <code><a href="./src/resources/core.ts">IntervalUnit</a></code>
 
-Methods:
-
-- <code title="get /api/v1/status/health">client.v1.status.<a href="./src/resources/v1/status.ts">checkHealth</a>() -> StatusCheckHealthResponse</code>
-
-## Assets
+# Status
 
 Types:
 
-- <code><a href="./src/resources/v1/assets.ts">AssetClassification</a></code>
-- <code><a href="./src/resources/v1/assets.ts">AssetInfo</a></code>
-- <code><a href="./src/resources/v1/assets.ts">AssetMetadata</a></code>
-- <code><a href="./src/resources/v1/assets.ts">AssetSpec</a></code>
-- <code><a href="./src/resources/v1/assets.ts">ErrorData</a></code>
-- <code><a href="./src/resources/v1/assets.ts">Interval</a></code>
-- <code><a href="./src/resources/v1/assets.ts">IntervalUnit</a></code>
-- <code><a href="./src/resources/v1/assets.ts">AssetListResponse</a></code>
-- <code><a href="./src/resources/v1/assets.ts">AssetGetPriceHistoryResponse</a></code>
-- <code><a href="./src/resources/v1/assets.ts">AssetListPricesResponse</a></code>
+- <code><a href="./src/resources/status.ts">StatusCheckHealthResponse</a></code>
 
 Methods:
 
-- <code title="get /api/v1/assets">client.v1.assets.<a href="./src/resources/v1/assets.ts">list</a>() -> AssetListResponse</code>
-- <code title="get /api/v1/assets/price-history">client.v1.assets.<a href="./src/resources/v1/assets.ts">getPriceHistory</a>({ ...params }) -> AssetGetPriceHistoryResponse</code>
-- <code title="get /api/v1/assets/prices">client.v1.assets.<a href="./src/resources/v1/assets.ts">listPrices</a>({ ...params }) -> AssetListPricesResponse</code>
+- <code title="get /api/v1/status/health">client.status.<a href="./src/resources/status.ts">checkHealth</a>() -> StatusCheckHealthResponse</code>
 
-## Markets
+# Assets
 
 Types:
 
-- <code><a href="./src/resources/v1/markets/markets.ts">GlobalMarketConfig</a></code>
-- <code><a href="./src/resources/v1/markets/markets.ts">MarketGetParamsResponse</a></code>
-- <code><a href="./src/resources/v1/markets/markets.ts">MarketOverviewResponse</a></code>
+- <code><a href="./src/resources/assets.ts">AssetClassification</a></code>
+- <code><a href="./src/resources/assets.ts">AssetInfo</a></code>
+- <code><a href="./src/resources/assets.ts">AssetMetadata</a></code>
+- <code><a href="./src/resources/assets.ts">AssetSpec</a></code>
+- <code><a href="./src/resources/assets.ts">AssetListResponse</a></code>
+- <code><a href="./src/resources/assets.ts">AssetGetPriceHistoryResponse</a></code>
+- <code><a href="./src/resources/assets.ts">AssetListPricesResponse</a></code>
 
 Methods:
 
-- <code title="get /api/v1/markets/config">client.v1.markets.<a href="./src/resources/v1/markets/markets.ts">getParams</a>({ ...params }) -> MarketGetParamsResponse</code>
-- <code title="get /api/v1/markets">client.v1.markets.<a href="./src/resources/v1/markets/markets.ts">overview</a>({ ...params }) -> MarketOverviewResponse</code>
+- <code title="get /api/v1/assets">client.assets.<a href="./src/resources/assets.ts">list</a>() -> AssetListResponse</code>
+- <code title="get /api/v1/assets/price-history">client.assets.<a href="./src/resources/assets.ts">getPriceHistory</a>({ ...params }) -> AssetGetPriceHistoryResponse</code>
+- <code title="get /api/v1/assets/prices">client.assets.<a href="./src/resources/assets.ts">listPrices</a>({ ...params }) -> AssetListPricesResponse</code>
 
-### Merged
+# Markets
 
 Types:
 
-- <code><a href="./src/resources/v1/markets/merged.ts">MergedMarket</a></code>
-- <code><a href="./src/resources/v1/markets/merged.ts">MergedGetMergedDataResponse</a></code>
-- <code><a href="./src/resources/v1/markets/merged.ts">MergedLookupByAssetResponse</a></code>
+- <code><a href="./src/resources/markets/markets.ts">AssetRateHistory</a></code>
+- <code><a href="./src/resources/markets/markets.ts">GlobalMarketConfig</a></code>
+- <code><a href="./src/resources/markets/markets.ts">MergedMarket</a></code>
+- <code><a href="./src/resources/markets/markets.ts">MarketGetMergedResponse</a></code>
+- <code><a href="./src/resources/markets/markets.ts">MarketGetMergedByAssetResponse</a></code>
+- <code><a href="./src/resources/markets/markets.ts">MarketGetOverviewResponse</a></code>
+- <code><a href="./src/resources/markets/markets.ts">MarketGetParamsResponse</a></code>
 
 Methods:
 
-- <code title="get /api/v1/markets/merged">client.v1.markets.merged.<a href="./src/resources/v1/markets/merged.ts">getMergedData</a>({ ...params }) -> MergedGetMergedDataResponse</code>
-- <code title="get /api/v1/markets/merged/lookup">client.v1.markets.merged.<a href="./src/resources/v1/markets/merged.ts">lookupByAsset</a>({ ...params }) -> MergedLookupByAssetResponse</code>
+- <code title="get /api/v1/markets/merged">client.markets.<a href="./src/resources/markets/markets.ts">getMerged</a>({ ...params }) -> MarketGetMergedResponse</code>
+- <code title="get /api/v1/markets/merged/lookup">client.markets.<a href="./src/resources/markets/markets.ts">getMergedByAsset</a>({ ...params }) -> MarketGetMergedByAssetResponse</code>
+- <code title="get /api/v1/markets">client.markets.<a href="./src/resources/markets/markets.ts">getOverview</a>({ ...params }) -> MarketGetOverviewResponse</code>
+- <code title="get /api/v1/markets/config">client.markets.<a href="./src/resources/markets/markets.ts">getParams</a>({ ...params }) -> MarketGetParamsResponse</code>
+
+## Lend
+
+Types:
+
+- <code><a href="./src/resources/markets/lend.ts">LendMarket</a></code>
+- <code><a href="./src/resources/markets/lend.ts">LendMarketState</a></code>
+- <code><a href="./src/resources/markets/lend.ts">MarketRate</a></code>
+- <code><a href="./src/resources/markets/lend.ts">LendListResponse</a></code>
+- <code><a href="./src/resources/markets/lend.ts">LendGetByAssetResponse</a></code>
+- <code><a href="./src/resources/markets/lend.ts">LendGetRateHistoryResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v1/markets/lend">client.markets.lend.<a href="./src/resources/markets/lend.ts">list</a>({ ...params }) -> LendListResponse</code>
+- <code title="get /api/v1/markets/lend/lookup">client.markets.lend.<a href="./src/resources/markets/lend.ts">getByAsset</a>({ ...params }) -> LendGetByAssetResponse</code>
+- <code title="get /api/v1/markets/lend/rate-history">client.markets.lend.<a href="./src/resources/markets/lend.ts">getRateHistory</a>({ ...params }) -> LendGetRateHistoryResponse</code>
+
+## Borrow
+
+Types:
+
+- <code><a href="./src/resources/markets/borrow/borrow.ts">BorrowMarketOverview</a></code>
+- <code><a href="./src/resources/markets/borrow/borrow.ts">BorrowGetOverviewResponse</a></code>
+- <code><a href="./src/resources/markets/borrow/borrow.ts">BorrowGetRateHistoryResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v1/markets/borrow">client.markets.borrow.<a href="./src/resources/markets/borrow/borrow.ts">getOverview</a>({ ...params }) -> BorrowGetOverviewResponse</code>
+- <code title="get /api/v1/markets/borrow/rate-history">client.markets.borrow.<a href="./src/resources/markets/borrow/borrow.ts">getRateHistory</a>({ ...params }) -> BorrowGetRateHistoryResponse</code>
+
+### Collaterals
+
+Types:
+
+- <code><a href="./src/resources/markets/borrow/collaterals.ts">BorrowCollateralConfig</a></code>
+- <code><a href="./src/resources/markets/borrow/collaterals.ts">BorrowCollateralMarket</a></code>
+- <code><a href="./src/resources/markets/borrow/collaterals.ts">BorrowCollateralState</a></code>
+- <code><a href="./src/resources/markets/borrow/collaterals.ts">CollateralListResponse</a></code>
+- <code><a href="./src/resources/markets/borrow/collaterals.ts">CollateralGetByAssetResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v1/markets/borrow/collaterals">client.markets.borrow.collaterals.<a href="./src/resources/markets/borrow/collaterals.ts">list</a>({ ...params }) -> CollateralListResponse</code>
+- <code title="get /api/v1/markets/borrow/collaterals/lookup">client.markets.borrow.collaterals.<a href="./src/resources/markets/borrow/collaterals.ts">getByAsset</a>({ ...params }) -> CollateralGetByAssetResponse</code>
+
+### Debts
+
+Types:
+
+- <code><a href="./src/resources/markets/borrow/debts.ts">BorrowDebtConfig</a></code>
+- <code><a href="./src/resources/markets/borrow/debts.ts">BorrowDebtMarket</a></code>
+- <code><a href="./src/resources/markets/borrow/debts.ts">BorrowDebtState</a></code>
+- <code><a href="./src/resources/markets/borrow/debts.ts">DebtListResponse</a></code>
+- <code><a href="./src/resources/markets/borrow/debts.ts">DebtGetByAssetResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v1/markets/borrow/debts">client.markets.borrow.debts.<a href="./src/resources/markets/borrow/debts.ts">list</a>({ ...params }) -> DebtListResponse</code>
+- <code title="get /api/v1/markets/borrow/debts/lookup">client.markets.borrow.debts.<a href="./src/resources/markets/borrow/debts.ts">getByAsset</a>({ ...params }) -> DebtGetByAssetResponse</code>
+
+# Nept
+
+Types:
+
+- <code><a href="./src/resources/nept.ts">StakingPoolFull</a></code>
+- <code><a href="./src/resources/nept.ts">StakingPoolParams</a></code>
+- <code><a href="./src/resources/nept.ts">StakingPoolState</a></code>
+- <code><a href="./src/resources/nept.ts">NeptGetParamsResponse</a></code>
+- <code><a href="./src/resources/nept.ts">NeptGetStakingOverviewResponse</a></code>
+- <code><a href="./src/resources/nept.ts">NeptGetStateResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v1/nept/params">client.nept.<a href="./src/resources/nept.ts">getParams</a>({ ...params }) -> NeptGetParamsResponse</code>
+- <code title="get /api/v1/nept/staking">client.nept.<a href="./src/resources/nept.ts">getStakingOverview</a>({ ...params }) -> NeptGetStakingOverviewResponse</code>
+- <code title="get /api/v1/nept/state">client.nept.<a href="./src/resources/nept.ts">getState</a>({ ...params }) -> NeptGetStateResponse</code>
+
+# User
+
+Types:
+
+- <code><a href="./src/resources/user/user.ts">EventAction</a></code>
+- <code><a href="./src/resources/user/user.ts">UserGetTxHistoryResponse</a></code>
+- <code><a href="./src/resources/user/user.ts">UserGetUserResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v1/users/{address}/tx-history">client.user.<a href="./src/resources/user/user.ts">getTxHistory</a>(address, { ...params }) -> UserGetTxHistoryResponse</code>
+- <code title="get /api/v1/users/{address}/user">client.user.<a href="./src/resources/user/user.ts">getUser</a>(address, { ...params }) -> UserGetUserResponse</code>
+
+## Market
+
+Types:
+
+- <code><a href="./src/resources/user/market/market.ts">UserMarket</a></code>
+- <code><a href="./src/resources/user/market/market.ts">UserMergedMarket</a></code>
+- <code><a href="./src/resources/user/market/market.ts">MarketGetMergedResponse</a></code>
+- <code><a href="./src/resources/user/market/market.ts">MarketGetMergedByAssetResponse</a></code>
+- <code><a href="./src/resources/user/market/market.ts">MarketGetPortfolioResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v1/users/{address}/markets/merged">client.user.market.<a href="./src/resources/user/market/market.ts">getMerged</a>(address, { ...params }) -> MarketGetMergedResponse</code>
+- <code title="get /api/v1/users/{address}/markets/merged/lookup">client.user.market.<a href="./src/resources/user/market/market.ts">getMergedByAsset</a>(address, { ...params }) -> MarketGetMergedByAssetResponse</code>
+- <code title="get /api/v1/users/{address}/markets">client.user.market.<a href="./src/resources/user/market/market.ts">getPortfolio</a>(address, { ...params }) -> MarketGetPortfolioResponse</code>
 
 ### Lend
 
 Types:
 
-- <code><a href="./src/resources/v1/markets/lend.ts">AssetRateHistory</a></code>
-- <code><a href="./src/resources/v1/markets/lend.ts">LendMarket</a></code>
-- <code><a href="./src/resources/v1/markets/lend.ts">LendMarketState</a></code>
-- <code><a href="./src/resources/v1/markets/lend.ts">MarketRate</a></code>
-- <code><a href="./src/resources/v1/markets/lend.ts">LendGetLendingMarketsResponse</a></code>
-- <code><a href="./src/resources/v1/markets/lend.ts">LendGetRateHistoryResponse</a></code>
-- <code><a href="./src/resources/v1/markets/lend.ts">LendLookupByAssetResponse</a></code>
+- <code><a href="./src/resources/user/market/lend.ts">UserDebtAssetPool</a></code>
+- <code><a href="./src/resources/user/market/lend.ts">LendListResponse</a></code>
+- <code><a href="./src/resources/user/market/lend.ts">LendGetByAssetResponse</a></code>
 
 Methods:
 
-- <code title="get /api/v1/markets/lend">client.v1.markets.lend.<a href="./src/resources/v1/markets/lend.ts">getLendingMarkets</a>({ ...params }) -> LendGetLendingMarketsResponse</code>
-- <code title="get /api/v1/markets/lend/rate-history">client.v1.markets.lend.<a href="./src/resources/v1/markets/lend.ts">getRateHistory</a>({ ...params }) -> LendGetRateHistoryResponse</code>
-- <code title="get /api/v1/markets/lend/lookup">client.v1.markets.lend.<a href="./src/resources/v1/markets/lend.ts">lookupByAsset</a>({ ...params }) -> LendLookupByAssetResponse</code>
+- <code title="get /api/v1/users/{address}/markets/lend">client.user.market.lend.<a href="./src/resources/user/market/lend.ts">list</a>(address, { ...params }) -> LendListResponse</code>
+- <code title="get /api/v1/users/{address}/markets/lend/lookup">client.user.market.lend.<a href="./src/resources/user/market/lend.ts">getByAsset</a>(address, { ...params }) -> LendGetByAssetResponse</code>
 
 ### Borrow
 
 Types:
 
-- <code><a href="./src/resources/v1/markets/borrow/borrow.ts">BorrowMarketOverview</a></code>
-- <code><a href="./src/resources/v1/markets/borrow/borrow.ts">BorrowGetRateHistoryResponse</a></code>
-- <code><a href="./src/resources/v1/markets/borrow/borrow.ts">BorrowOverviewResponse</a></code>
+- <code><a href="./src/resources/user/market/borrow/borrow.ts">UserBorrowMarket</a></code>
+- <code><a href="./src/resources/user/market/borrow/borrow.ts">BorrowGetCollateralAccountsByAssetResponse</a></code>
+- <code><a href="./src/resources/user/market/borrow/borrow.ts">BorrowGetCollateralTotalsResponse</a></code>
+- <code><a href="./src/resources/user/market/borrow/borrow.ts">BorrowGetDebtAccountsByAssetResponse</a></code>
+- <code><a href="./src/resources/user/market/borrow/borrow.ts">BorrowGetDebtsTotalsResponse</a></code>
+- <code><a href="./src/resources/user/market/borrow/borrow.ts">BorrowGetPortfolioResponse</a></code>
 
 Methods:
 
-- <code title="get /api/v1/markets/borrow/rate-history">client.v1.markets.borrow.<a href="./src/resources/v1/markets/borrow/borrow.ts">getRateHistory</a>({ ...params }) -> BorrowGetRateHistoryResponse</code>
-- <code title="get /api/v1/markets/borrow">client.v1.markets.borrow.<a href="./src/resources/v1/markets/borrow/borrow.ts">overview</a>({ ...params }) -> BorrowOverviewResponse</code>
+- <code title="get /api/v1/users/{address}/markets/borrow/lookup/collateral">client.user.market.borrow.<a href="./src/resources/user/market/borrow/borrow.ts">getCollateralAccountsByAsset</a>(address, { ...params }) -> BorrowGetCollateralAccountsByAssetResponse</code>
+- <code title="get /api/v1/users/{address}/markets/borrow/sum/collaterals">client.user.market.borrow.<a href="./src/resources/user/market/borrow/borrow.ts">getCollateralTotals</a>(address, { ...params }) -> BorrowGetCollateralTotalsResponse</code>
+- <code title="get /api/v1/users/{address}/markets/borrow/lookup/debt">client.user.market.borrow.<a href="./src/resources/user/market/borrow/borrow.ts">getDebtAccountsByAsset</a>(address, { ...params }) -> BorrowGetDebtAccountsByAssetResponse</code>
+- <code title="get /api/v1/users/{address}/markets/borrow/sum/debts">client.user.market.borrow.<a href="./src/resources/user/market/borrow/borrow.ts">getDebtsTotals</a>(address, { ...params }) -> BorrowGetDebtsTotalsResponse</code>
+- <code title="get /api/v1/users/{address}/markets/borrow">client.user.market.borrow.<a href="./src/resources/user/market/borrow/borrow.ts">getPortfolio</a>(address, { ...params }) -> BorrowGetPortfolioResponse</code>
 
-#### Collaterals
+#### Subaccount
 
 Types:
 
-- <code><a href="./src/resources/v1/markets/borrow/collaterals.ts">BorrowCollateralConfig</a></code>
-- <code><a href="./src/resources/v1/markets/borrow/collaterals.ts">BorrowCollateralMarket</a></code>
-- <code><a href="./src/resources/v1/markets/borrow/collaterals.ts">BorrowCollateralState</a></code>
-- <code><a href="./src/resources/v1/markets/borrow/collaterals.ts">CollateralListResponse</a></code>
-- <code><a href="./src/resources/v1/markets/borrow/collaterals.ts">CollateralLookupByAssetResponse</a></code>
+- <code><a href="./src/resources/user/market/borrow/subaccount.ts">UserAccountHealth</a></code>
+- <code><a href="./src/resources/user/market/borrow/subaccount.ts">UserBorrowMarketAccount</a></code>
+- <code><a href="./src/resources/user/market/borrow/subaccount.ts">UserCollateralAssetPool</a></code>
+- <code><a href="./src/resources/user/market/borrow/subaccount.ts">SubaccountGetSubaccountResponse</a></code>
+- <code><a href="./src/resources/user/market/borrow/subaccount.ts">SubaccountGetSubaccountCollateralsResponse</a></code>
+- <code><a href="./src/resources/user/market/borrow/subaccount.ts">SubaccountGetSubaccountDebtsResponse</a></code>
+- <code><a href="./src/resources/user/market/borrow/subaccount.ts">SubaccountGetSubaccountHealthResponse</a></code>
 
 Methods:
 
-- <code title="get /api/v1/markets/borrow/collaterals">client.v1.markets.borrow.collaterals.<a href="./src/resources/v1/markets/borrow/collaterals.ts">list</a>({ ...params }) -> CollateralListResponse</code>
-- <code title="get /api/v1/markets/borrow/collaterals/lookup">client.v1.markets.borrow.collaterals.<a href="./src/resources/v1/markets/borrow/collaterals.ts">lookupByAsset</a>({ ...params }) -> CollateralLookupByAssetResponse</code>
-
-#### Debts
-
-Types:
-
-- <code><a href="./src/resources/v1/markets/borrow/debts.ts">BorrowDebtConfig</a></code>
-- <code><a href="./src/resources/v1/markets/borrow/debts.ts">BorrowDebtMarket</a></code>
-- <code><a href="./src/resources/v1/markets/borrow/debts.ts">BorrowDebtState</a></code>
-- <code><a href="./src/resources/v1/markets/borrow/debts.ts">DebtListResponse</a></code>
-- <code><a href="./src/resources/v1/markets/borrow/debts.ts">DebtLookupByAssetResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/markets/borrow/debts">client.v1.markets.borrow.debts.<a href="./src/resources/v1/markets/borrow/debts.ts">list</a>({ ...params }) -> DebtListResponse</code>
-- <code title="get /api/v1/markets/borrow/debts/lookup">client.v1.markets.borrow.debts.<a href="./src/resources/v1/markets/borrow/debts.ts">lookupByAsset</a>({ ...params }) -> DebtLookupByAssetResponse</code>
+- <code title="get /api/v1/users/{address}/markets/borrow/accounts/{index}">client.user.market.borrow.subaccount.<a href="./src/resources/user/market/borrow/subaccount.ts">getSubaccount</a>(index, { ...params }) -> SubaccountGetSubaccountResponse</code>
+- <code title="get /api/v1/users/{address}/markets/borrow/accounts/{index}/collaterals">client.user.market.borrow.subaccount.<a href="./src/resources/user/market/borrow/subaccount.ts">getSubaccountCollaterals</a>(index, { ...params }) -> SubaccountGetSubaccountCollateralsResponse</code>
+- <code title="get /api/v1/users/{address}/markets/borrow/accounts/{index}/debts">client.user.market.borrow.subaccount.<a href="./src/resources/user/market/borrow/subaccount.ts">getSubaccountDebts</a>(index, { ...params }) -> SubaccountGetSubaccountDebtsResponse</code>
+- <code title="get /api/v1/users/{address}/markets/borrow/accounts/{index}/health">client.user.market.borrow.subaccount.<a href="./src/resources/user/market/borrow/subaccount.ts">getSubaccountHealth</a>(index, { ...params }) -> SubaccountGetSubaccountHealthResponse</code>
 
 ## Nept
 
 Types:
 
-- <code><a href="./src/resources/v1/nept.ts">Duration</a></code>
-- <code><a href="./src/resources/v1/nept.ts">StakingPoolFull</a></code>
-- <code><a href="./src/resources/v1/nept.ts">StakingPoolParams</a></code>
-- <code><a href="./src/resources/v1/nept.ts">StakingPoolState</a></code>
-- <code><a href="./src/resources/v1/nept.ts">NeptGetParamsResponse</a></code>
-- <code><a href="./src/resources/v1/nept.ts">NeptGetStakingOverviewResponse</a></code>
-- <code><a href="./src/resources/v1/nept.ts">NeptGetStateResponse</a></code>
+- <code><a href="./src/resources/user/nept/nept.ts">UserNeptUnlockAmounts</a></code>
+- <code><a href="./src/resources/user/nept/nept.ts">UserNeptUnlockOverview</a></code>
+- <code><a href="./src/resources/user/nept/nept.ts">NeptGetUnlocksResponse</a></code>
 
 Methods:
 
-- <code title="get /api/v1/nept/params">client.v1.nept.<a href="./src/resources/v1/nept.ts">getParams</a>({ ...params }) -> NeptGetParamsResponse</code>
-- <code title="get /api/v1/nept/staking">client.v1.nept.<a href="./src/resources/v1/nept.ts">getStakingOverview</a>({ ...params }) -> NeptGetStakingOverviewResponse</code>
-- <code title="get /api/v1/nept/state">client.v1.nept.<a href="./src/resources/v1/nept.ts">getState</a>({ ...params }) -> NeptGetStateResponse</code>
+- <code title="get /api/v1/users/{address}/nept/unlocks">client.user.nept.<a href="./src/resources/user/nept/nept.ts">getUnlocks</a>(address, { ...params }) -> NeptGetUnlocksResponse</code>
 
-## Users
+### Staking
 
 Types:
 
-- <code><a href="./src/resources/v1/users/users.ts">EventAction</a></code>
-- <code><a href="./src/resources/v1/users/users.ts">UserRetrieveResponse</a></code>
-- <code><a href="./src/resources/v1/users/users.ts">UserGetTxHistoryResponse</a></code>
+- <code><a href="./src/resources/user/nept/staking.ts">UserStake</a></code>
+- <code><a href="./src/resources/user/nept/staking.ts">UserStakePool</a></code>
+- <code><a href="./src/resources/user/nept/staking.ts">UserStakeUnbondingEntry</a></code>
+- <code><a href="./src/resources/user/nept/staking.ts">StakingGetOverviewResponse</a></code>
+- <code><a href="./src/resources/user/nept/staking.ts">StakingGetStakingPoolResponse</a></code>
+- <code><a href="./src/resources/user/nept/staking.ts">StakingGetStakingPoolsResponse</a></code>
+- <code><a href="./src/resources/user/nept/staking.ts">StakingGetUnstakingResponse</a></code>
 
 Methods:
 
-- <code title="get /api/v1/users/{address}/user">client.v1.users.<a href="./src/resources/v1/users/users.ts">retrieve</a>(address, { ...params }) -> UserRetrieveResponse</code>
-- <code title="get /api/v1/users/{address}/tx-history">client.v1.users.<a href="./src/resources/v1/users/users.ts">getTxHistory</a>(address, { ...params }) -> UserGetTxHistoryResponse</code>
+- <code title="get /api/v1/users/{address}/nept/staking">client.user.nept.staking.<a href="./src/resources/user/nept/staking.ts">getOverview</a>(address, { ...params }) -> StakingGetOverviewResponse</code>
+- <code title="get /api/v1/users/{address}/nept/staking/pools/lookup">client.user.nept.staking.<a href="./src/resources/user/nept/staking.ts">getStakingPool</a>(address, { ...params }) -> StakingGetStakingPoolResponse</code>
+- <code title="get /api/v1/users/{address}/nept/staking/pools">client.user.nept.staking.<a href="./src/resources/user/nept/staking.ts">getStakingPools</a>(address, { ...params }) -> StakingGetStakingPoolsResponse</code>
+- <code title="get /api/v1/users/{address}/nept/staking/unstaking">client.user.nept.staking.<a href="./src/resources/user/nept/staking.ts">getUnstaking</a>(address, { ...params }) -> StakingGetUnstakingResponse</code>
 
-### Markets
+## Wallet
 
 Types:
 
-- <code><a href="./src/resources/v1/users/markets/markets.ts">UserMarket</a></code>
-- <code><a href="./src/resources/v1/users/markets/markets.ts">MarketGetPortfolioResponse</a></code>
+- <code><a href="./src/resources/user/wallet.ts">UserWalletPortfolio</a></code>
+- <code><a href="./src/resources/user/wallet.ts">WalletAssetKnown</a></code>
+- <code><a href="./src/resources/user/wallet.ts">WalletBalance</a></code>
+- <code><a href="./src/resources/user/wallet.ts">WalletGetBalanceByAssetResponse</a></code>
+- <code><a href="./src/resources/user/wallet.ts">WalletGetBalancesResponse</a></code>
 
 Methods:
 
-- <code title="get /api/v1/users/{address}/markets">client.v1.users.markets.<a href="./src/resources/v1/users/markets/markets.ts">getPortfolio</a>(address, { ...params }) -> MarketGetPortfolioResponse</code>
+- <code title="get /api/v1/users/{address}/wallet/balance">client.user.wallet.<a href="./src/resources/user/wallet.ts">getBalanceByAsset</a>(address, { ...params }) -> WalletGetBalanceByAssetResponse</code>
+- <code title="get /api/v1/users/{address}/wallet/balances">client.user.wallet.<a href="./src/resources/user/wallet.ts">getBalances</a>(address, { ...params }) -> WalletGetBalancesResponse</code>
 
-#### Lend
+# Analytics
+
+## Market
 
 Types:
 
-- <code><a href="./src/resources/v1/users/markets/lend.ts">UserDebtAssetPool</a></code>
-- <code><a href="./src/resources/v1/users/markets/lend.ts">LendGetPortfolioResponse</a></code>
-- <code><a href="./src/resources/v1/users/markets/lend.ts">LendLookupDistributionResponse</a></code>
+- <code><a href="./src/resources/analytics/market/market.ts">MarketGetCurrentStateResponse</a></code>
 
 Methods:
 
-- <code title="get /api/v1/users/{address}/markets/lend">client.v1.users.markets.lend.<a href="./src/resources/v1/users/markets/lend.ts">getPortfolio</a>(address, { ...params }) -> LendGetPortfolioResponse</code>
-- <code title="get /api/v1/users/{address}/markets/lend/lookup">client.v1.users.markets.lend.<a href="./src/resources/v1/users/markets/lend.ts">lookupDistribution</a>(address, { ...params }) -> LendLookupDistributionResponse</code>
+- <code title="get /api/v1/analytics/market/state">client.analytics.market.<a href="./src/resources/analytics/market/market.ts">getCurrentState</a>() -> MarketGetCurrentStateResponse</code>
 
-#### Borrow
+### History
 
 Types:
 
-- <code><a href="./src/resources/v1/users/markets/borrow/borrow.ts">BorrowGetPortfolioResponse</a></code>
+- <code><a href="./src/resources/analytics/market/history.ts">HistoryGetLoansOriginatedResponse</a></code>
+- <code><a href="./src/resources/analytics/market/history.ts">HistoryGetLoansOriginatedByAssetResponse</a></code>
 
 Methods:
 
-- <code title="get /api/v1/users/{address}/markets/borrow">client.v1.users.markets.borrow.<a href="./src/resources/v1/users/markets/borrow/borrow.ts">getPortfolio</a>(address, { ...params }) -> BorrowGetPortfolioResponse</code>
+- <code title="get /api/v1/analytics/market/history/loans-originated">client.analytics.market.history.<a href="./src/resources/analytics/market/history.ts">getLoansOriginated</a>({ ...params }) -> HistoryGetLoansOriginatedResponse</code>
+- <code title="get /api/v1/analytics/market/history/loans-originated/by-asset">client.analytics.market.history.<a href="./src/resources/analytics/market/history.ts">getLoansOriginatedByAsset</a>({ ...params }) -> HistoryGetLoansOriginatedByAssetResponse</code>
 
-##### Accounts
+# Integrations
+
+## Bantr
 
 Types:
 
-- <code><a href="./src/resources/v1/users/markets/borrow/accounts.ts">UserAccountHealth</a></code>
-- <code><a href="./src/resources/v1/users/markets/borrow/accounts.ts">UserBorrowMarketAccount</a></code>
-- <code><a href="./src/resources/v1/users/markets/borrow/accounts.ts">UserCollateralAssetPool</a></code>
-- <code><a href="./src/resources/v1/users/markets/borrow/accounts.ts">AccountRetrieveResponse</a></code>
-- <code><a href="./src/resources/v1/users/markets/borrow/accounts.ts">AccountGetCollateralsResponse</a></code>
-- <code><a href="./src/resources/v1/users/markets/borrow/accounts.ts">AccountGetDebtsResponse</a></code>
-- <code><a href="./src/resources/v1/users/markets/borrow/accounts.ts">AccountGetHealthResponse</a></code>
+- <code><a href="./src/resources/integrations/bantr.ts">BantrGetTransactionsResponse</a></code>
 
 Methods:
 
-- <code title="get /api/v1/users/{address}/markets/borrow/accounts/{index}">client.v1.users.markets.borrow.accounts.<a href="./src/resources/v1/users/markets/borrow/accounts.ts">retrieve</a>(index, { ...params }) -> AccountRetrieveResponse</code>
-- <code title="get /api/v1/users/{address}/markets/borrow/accounts/{index}/collaterals">client.v1.users.markets.borrow.accounts.<a href="./src/resources/v1/users/markets/borrow/accounts.ts">getCollaterals</a>(index, { ...params }) -> AccountGetCollateralsResponse</code>
-- <code title="get /api/v1/users/{address}/markets/borrow/accounts/{index}/debts">client.v1.users.markets.borrow.accounts.<a href="./src/resources/v1/users/markets/borrow/accounts.ts">getDebts</a>(index, { ...params }) -> AccountGetDebtsResponse</code>
-- <code title="get /api/v1/users/{address}/markets/borrow/accounts/{index}/health">client.v1.users.markets.borrow.accounts.<a href="./src/resources/v1/users/markets/borrow/accounts.ts">getHealth</a>(index, { ...params }) -> AccountGetHealthResponse</code>
-
-##### Sum
-
-Types:
-
-- <code><a href="./src/resources/v1/users/markets/borrow/sum.ts">SumGetCollateralsResponse</a></code>
-- <code><a href="./src/resources/v1/users/markets/borrow/sum.ts">SumGetDebtsResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/users/{address}/markets/borrow/sum/collaterals">client.v1.users.markets.borrow.sum.<a href="./src/resources/v1/users/markets/borrow/sum.ts">getCollaterals</a>(address, { ...params }) -> SumGetCollateralsResponse</code>
-- <code title="get /api/v1/users/{address}/markets/borrow/sum/debts">client.v1.users.markets.borrow.sum.<a href="./src/resources/v1/users/markets/borrow/sum.ts">getDebts</a>(address, { ...params }) -> SumGetDebtsResponse</code>
-
-##### Lookup
-
-Types:
-
-- <code><a href="./src/resources/v1/users/markets/borrow/lookup.ts">LookupGetCollateralAccountsResponse</a></code>
-- <code><a href="./src/resources/v1/users/markets/borrow/lookup.ts">LookupGetDebtAccountsResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/users/{address}/markets/borrow/lookup/collateral">client.v1.users.markets.borrow.lookup.<a href="./src/resources/v1/users/markets/borrow/lookup.ts">getCollateralAccounts</a>(address, { ...params }) -> LookupGetCollateralAccountsResponse</code>
-- <code title="get /api/v1/users/{address}/markets/borrow/lookup/debt">client.v1.users.markets.borrow.lookup.<a href="./src/resources/v1/users/markets/borrow/lookup.ts">getDebtAccounts</a>(address, { ...params }) -> LookupGetDebtAccountsResponse</code>
-
-#### Merged
-
-Types:
-
-- <code><a href="./src/resources/v1/users/markets/merged.ts">UserMergedMarket</a></code>
-- <code><a href="./src/resources/v1/users/markets/merged.ts">MergedGetAllMarketsResponse</a></code>
-- <code><a href="./src/resources/v1/users/markets/merged.ts">MergedLookupByAssetResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/users/{address}/markets/merged">client.v1.users.markets.merged.<a href="./src/resources/v1/users/markets/merged.ts">getAllMarkets</a>(address, { ...params }) -> MergedGetAllMarketsResponse</code>
-- <code title="get /api/v1/users/{address}/markets/merged/lookup">client.v1.users.markets.merged.<a href="./src/resources/v1/users/markets/merged.ts">lookupByAsset</a>(address, { ...params }) -> MergedLookupByAssetResponse</code>
-
-### Nept
-
-Types:
-
-- <code><a href="./src/resources/v1/users/nept/nept.ts">UserNeptUnlockAmounts</a></code>
-- <code><a href="./src/resources/v1/users/nept/nept.ts">UserNeptUnlockOverview</a></code>
-- <code><a href="./src/resources/v1/users/nept/nept.ts">NeptGetUnlocksResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/users/{address}/nept/unlocks">client.v1.users.nept.<a href="./src/resources/v1/users/nept/nept.ts">getUnlocks</a>(address, { ...params }) -> NeptGetUnlocksResponse</code>
-
-#### Staking
-
-Types:
-
-- <code><a href="./src/resources/v1/users/nept/staking/staking.ts">UserStake</a></code>
-- <code><a href="./src/resources/v1/users/nept/staking/staking.ts">UserStakeUnbondingEntry</a></code>
-- <code><a href="./src/resources/v1/users/nept/staking/staking.ts">StakingGetOverviewResponse</a></code>
-- <code><a href="./src/resources/v1/users/nept/staking/staking.ts">StakingGetUnstakingPoolResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/users/{address}/nept/staking">client.v1.users.nept.staking.<a href="./src/resources/v1/users/nept/staking/staking.ts">getOverview</a>(address, { ...params }) -> StakingGetOverviewResponse</code>
-- <code title="get /api/v1/users/{address}/nept/staking/unstaking">client.v1.users.nept.staking.<a href="./src/resources/v1/users/nept/staking/staking.ts">getUnstakingPool</a>(address, { ...params }) -> StakingGetUnstakingPoolResponse</code>
-
-##### Pools
-
-Types:
-
-- <code><a href="./src/resources/v1/users/nept/staking/pools.ts">UserStakePool</a></code>
-- <code><a href="./src/resources/v1/users/nept/staking/pools.ts">PoolGetAllResponse</a></code>
-- <code><a href="./src/resources/v1/users/nept/staking/pools.ts">PoolLookupResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/users/{address}/nept/staking/pools">client.v1.users.nept.staking.pools.<a href="./src/resources/v1/users/nept/staking/pools.ts">getAll</a>(address, { ...params }) -> PoolGetAllResponse</code>
-- <code title="get /api/v1/users/{address}/nept/staking/pools/lookup">client.v1.users.nept.staking.pools.<a href="./src/resources/v1/users/nept/staking/pools.ts">lookup</a>(address, { ...params }) -> PoolLookupResponse</code>
-
-### Wallet
-
-Types:
-
-- <code><a href="./src/resources/v1/users/wallet.ts">UserWalletPortfolio</a></code>
-- <code><a href="./src/resources/v1/users/wallet.ts">WalletGetBalancesResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/users/{address}/wallet/balances">client.v1.users.wallet.<a href="./src/resources/v1/users/wallet.ts">getBalances</a>(address, { ...params }) -> WalletGetBalancesResponse</code>
-
-## Analytics
-
-### Market
-
-Types:
-
-- <code><a href="./src/resources/v1/analytics/market/market.ts">MarketGetCurrentStateResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/analytics/market/state">client.v1.analytics.market.<a href="./src/resources/v1/analytics/market/market.ts">getCurrentState</a>() -> MarketGetCurrentStateResponse</code>
-
-#### History
-
-##### LoansOriginated
-
-Types:
-
-- <code><a href="./src/resources/v1/analytics/market/history/loans-originated.ts">LoansOriginatedGetAllResponse</a></code>
-- <code><a href="./src/resources/v1/analytics/market/history/loans-originated.ts">LoansOriginatedGetByAssetResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/analytics/market/history/loans-originated">client.v1.analytics.market.history.loansOriginated.<a href="./src/resources/v1/analytics/market/history/loans-originated.ts">getAll</a>({ ...params }) -> LoansOriginatedGetAllResponse</code>
-- <code title="get /api/v1/analytics/market/history/loans-originated/by-asset">client.v1.analytics.market.history.loansOriginated.<a href="./src/resources/v1/analytics/market/history/loans-originated.ts">getByAsset</a>({ ...params }) -> LoansOriginatedGetByAssetResponse</code>
-
-## Integrations
-
-### Bantr
-
-Types:
-
-- <code><a href="./src/resources/v1/integrations/bantr.ts">BantrGetTransactionsResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/integrations/bantr/transactions">client.v1.integrations.bantr.<a href="./src/resources/v1/integrations/bantr.ts">getTransactions</a>({ ...params }) -> BantrGetTransactionsResponse</code>
+- <code title="get /api/v1/integrations/bantr/transactions">client.integrations.bantr.<a href="./src/resources/integrations/bantr.ts">getTransactions</a>({ ...params }) -> BantrGetTransactionsResponse</code>

@@ -17,7 +17,56 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import { V1 } from './resources/v1/v1';
+import {
+  AssetClassification,
+  AssetGetPriceHistoryParams,
+  AssetGetPriceHistoryResponse,
+  AssetInfo,
+  AssetListPricesParams,
+  AssetListPricesResponse,
+  AssetListResponse,
+  AssetMetadata,
+  AssetSpec,
+  Assets,
+} from './resources/assets';
+import { Core, ErrorData, Interval, IntervalUnit } from './resources/core';
+import {
+  Nept,
+  NeptGetParamsParams,
+  NeptGetParamsResponse,
+  NeptGetStakingOverviewParams,
+  NeptGetStakingOverviewResponse,
+  NeptGetStateParams,
+  NeptGetStateResponse,
+  StakingPoolFull,
+  StakingPoolParams,
+  StakingPoolState,
+} from './resources/nept';
+import { Status, StatusCheckHealthResponse } from './resources/status';
+import { Analytics } from './resources/analytics/analytics';
+import { Integrations } from './resources/integrations/integrations';
+import {
+  AssetRateHistory,
+  GlobalMarketConfig,
+  MarketGetMergedByAssetParams,
+  MarketGetMergedByAssetResponse,
+  MarketGetMergedParams,
+  MarketGetMergedResponse,
+  MarketGetOverviewParams,
+  MarketGetOverviewResponse,
+  MarketGetParamsParams,
+  MarketGetParamsResponse,
+  Markets,
+  MergedMarket,
+} from './resources/markets/markets';
+import {
+  EventAction,
+  User,
+  UserGetTxHistoryParams,
+  UserGetTxHistoryResponse,
+  UserGetUserParams,
+  UserGetUserResponse,
+} from './resources/user/user';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -690,13 +739,88 @@ export class NeptuneAPIV2 {
 
   static toFile = Uploads.toFile;
 
-  v1: API.V1 = new API.V1(this);
+  core: API.Core = new API.Core(this);
+  status: API.Status = new API.Status(this);
+  assets: API.Assets = new API.Assets(this);
+  markets: API.Markets = new API.Markets(this);
+  nept: API.Nept = new API.Nept(this);
+  user: API.User = new API.User(this);
+  analytics: API.Analytics = new API.Analytics(this);
+  integrations: API.Integrations = new API.Integrations(this);
 }
 
-NeptuneAPIV2.V1 = V1;
+NeptuneAPIV2.Core = Core;
+NeptuneAPIV2.Status = Status;
+NeptuneAPIV2.Assets = Assets;
+NeptuneAPIV2.Markets = Markets;
+NeptuneAPIV2.Nept = Nept;
+NeptuneAPIV2.User = User;
+NeptuneAPIV2.Analytics = Analytics;
+NeptuneAPIV2.Integrations = Integrations;
 
 export declare namespace NeptuneAPIV2 {
   export type RequestOptions = Opts.RequestOptions;
 
-  export { V1 as V1 };
+  export {
+    Core as Core,
+    type ErrorData as ErrorData,
+    type Interval as Interval,
+    type IntervalUnit as IntervalUnit,
+  };
+
+  export { Status as Status, type StatusCheckHealthResponse as StatusCheckHealthResponse };
+
+  export {
+    Assets as Assets,
+    type AssetClassification as AssetClassification,
+    type AssetInfo as AssetInfo,
+    type AssetMetadata as AssetMetadata,
+    type AssetSpec as AssetSpec,
+    type AssetListResponse as AssetListResponse,
+    type AssetGetPriceHistoryResponse as AssetGetPriceHistoryResponse,
+    type AssetListPricesResponse as AssetListPricesResponse,
+    type AssetGetPriceHistoryParams as AssetGetPriceHistoryParams,
+    type AssetListPricesParams as AssetListPricesParams,
+  };
+
+  export {
+    Markets as Markets,
+    type AssetRateHistory as AssetRateHistory,
+    type GlobalMarketConfig as GlobalMarketConfig,
+    type MergedMarket as MergedMarket,
+    type MarketGetMergedResponse as MarketGetMergedResponse,
+    type MarketGetMergedByAssetResponse as MarketGetMergedByAssetResponse,
+    type MarketGetOverviewResponse as MarketGetOverviewResponse,
+    type MarketGetParamsResponse as MarketGetParamsResponse,
+    type MarketGetMergedParams as MarketGetMergedParams,
+    type MarketGetMergedByAssetParams as MarketGetMergedByAssetParams,
+    type MarketGetOverviewParams as MarketGetOverviewParams,
+    type MarketGetParamsParams as MarketGetParamsParams,
+  };
+
+  export {
+    Nept as Nept,
+    type StakingPoolFull as StakingPoolFull,
+    type StakingPoolParams as StakingPoolParams,
+    type StakingPoolState as StakingPoolState,
+    type NeptGetParamsResponse as NeptGetParamsResponse,
+    type NeptGetStakingOverviewResponse as NeptGetStakingOverviewResponse,
+    type NeptGetStateResponse as NeptGetStateResponse,
+    type NeptGetParamsParams as NeptGetParamsParams,
+    type NeptGetStakingOverviewParams as NeptGetStakingOverviewParams,
+    type NeptGetStateParams as NeptGetStateParams,
+  };
+
+  export {
+    User as User,
+    type EventAction as EventAction,
+    type UserGetTxHistoryResponse as UserGetTxHistoryResponse,
+    type UserGetUserResponse as UserGetUserResponse,
+    type UserGetTxHistoryParams as UserGetTxHistoryParams,
+    type UserGetUserParams as UserGetUserParams,
+  };
+
+  export { Analytics as Analytics };
+
+  export { Integrations as Integrations };
 }
