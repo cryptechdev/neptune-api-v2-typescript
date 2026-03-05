@@ -381,7 +381,7 @@ export namespace NeptGetStakingOverviewResponse {
       rewards_last_distributed: string;
 
       /**
-       * **TODO:** rename, proper description
+       * **TODO:** rename, proper description, text/value?
        *
        * stake_acc = ∫ ( emission_rate / total_reward_weight ) dt
        */

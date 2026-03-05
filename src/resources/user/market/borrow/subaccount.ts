@@ -364,11 +364,6 @@ export interface SubaccountGetSubaccountHealthParams {
    * Query param: Include text variation fields
    */
   with_text?: boolean;
-
-  /**
-   * Query param: Calculate and include USD values for amounts, where applicable
-   */
-  with_value?: boolean;
 }
 
 export declare namespace Subaccount {

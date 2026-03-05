@@ -145,8 +145,7 @@ export namespace BorrowGetCollateralAccountsByAssetResponse {
    */
   export interface Data {
     /**
-     * All collateral subaccounts for the associated asset type Collateral sub-accounts
-     * for the user
+     * All collateral subaccounts for the associated asset type
      */
     accounts: Array<Data.Account>;
 

@@ -91,7 +91,6 @@ describe('resource subaccount', () => {
     const response = await client.user.market.borrow.subaccount.getSubaccountHealth(0, {
       address: 'address',
       with_text: true,
-      with_value: true,
     });
   });
 });
