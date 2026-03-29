@@ -2,7 +2,6 @@
 
 import { APIResource } from '../../../../core/resource';
 import * as AssetsAPI from '../../../assets';
-import * as CoreAPI from '../../../core';
 import * as LendAPI from '../lend';
 import { APIPromise } from '../../../../core/api-promise';
 import { RequestOptions } from '../../../../internal/request-options';
@@ -205,100 +204,116 @@ export namespace UserCollateralAssetPool {
   }
 }
 
+/**
+ * Object data success response
+ */
 export interface SubaccountGetSubaccountResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
-  data: UserBorrowMarketAccount | null;
+  data: UserBorrowMarketAccount;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * List data success response
+ */
 export interface SubaccountGetSubaccountCollateralsResponse {
   /**
-   * Total number of objects in all pages
+   * Total number of objects irrespective of any pagination parameters.
    */
-  count: number | null;
+  count: number;
 
   /**
-   * List contents
+   * Primary response content (list)
    */
-  data: Array<UserCollateralAssetPool> | null;
+  data: Array<UserCollateralAssetPool>;
 
   /**
-   * Error message, if any
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * List data success response
+ */
 export interface SubaccountGetSubaccountDebtsResponse {
   /**
-   * Total number of objects in all pages
+   * Total number of objects irrespective of any pagination parameters.
    */
-  count: number | null;
+  count: number;
 
   /**
-   * List contents
+   * Primary response content (list)
    */
-  data: Array<LendAPI.UserDebtAssetPool> | null;
+  data: Array<LendAPI.UserDebtAssetPool>;
 
   /**
-   * Error message, if any
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface SubaccountGetSubaccountHealthResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
-  data: UserAccountHealth | null;
+  data: UserAccountHealth;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }

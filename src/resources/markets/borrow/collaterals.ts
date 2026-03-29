@@ -2,7 +2,6 @@
 
 import { APIResource } from '../../../core/resource';
 import * as AssetsAPI from '../../assets';
-import * as CoreAPI from '../../core';
 import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
 
@@ -210,51 +209,59 @@ export namespace BorrowCollateralState {
   }
 }
 
+/**
+ * List data success response
+ */
 export interface CollateralListResponse {
   /**
-   * Total number of objects in all pages
+   * Total number of objects irrespective of any pagination parameters.
    */
-  count: number | null;
+  count: number;
 
   /**
-   * List contents
+   * Primary response content (list)
    */
-  data: Array<BorrowCollateralMarket> | null;
+  data: Array<BorrowCollateralMarket>;
 
   /**
-   * Error message, if any
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface CollateralGetByAssetResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
-  data: BorrowCollateralMarket | null;
+  data: BorrowCollateralMarket;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }

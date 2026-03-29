@@ -65,46 +65,54 @@ export interface BorrowMarketOverview {
   debts: Array<DebtsAPI.BorrowDebtMarket>;
 }
 
+/**
+ * Object data success response
+ */
 export interface BorrowGetOverviewResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
-  data: BorrowMarketOverview | null;
+  data: BorrowMarketOverview;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface BorrowGetRateHistoryResponse {
   /**
-   * Historical rates for assets
+   * Primary response content (object)
    */
-  data: MarketsAPI.AssetRateHistory | null;
+  data: MarketsAPI.AssetRateHistory;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
@@ -155,7 +163,7 @@ export interface BorrowGetRateHistoryParams {
    * Optional comma-separated list of asset IDs to filter for. If excluded, values
    * will be returned for all assets.
    */
-  asset_ids?: string;
+  asset_ids?: string | null;
 
   /**
    * Interval value

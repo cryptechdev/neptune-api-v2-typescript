@@ -162,73 +162,85 @@ export namespace MarketRate {
   }
 }
 
+/**
+ * List data success response
+ */
 export interface LendListResponse {
   /**
-   * Total number of objects in all pages
+   * Total number of objects irrespective of any pagination parameters.
    */
-  count: number | null;
+  count: number;
 
   /**
-   * List contents
+   * Primary response content (list)
    */
-  data: Array<LendMarket> | null;
+  data: Array<LendMarket>;
 
   /**
-   * Error message, if any
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface LendGetByAssetResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
-  data: LendMarket | null;
+  data: LendMarket;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface LendGetRateHistoryResponse {
   /**
-   * Historical rates for assets
+   * Primary response content (object)
    */
-  data: MarketsAPI.AssetRateHistory | null;
+  data: MarketsAPI.AssetRateHistory;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
@@ -296,7 +308,7 @@ export interface LendGetRateHistoryParams {
    * Optional comma-separated list of asset IDs to filter for. If excluded, values
    * will be returned for all assets.
    */
-  asset_ids?: string;
+  asset_ids?: string | null;
 
   /**
    * Interval value

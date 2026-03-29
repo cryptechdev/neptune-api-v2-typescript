@@ -3,7 +3,6 @@
 import { APIResource } from '../../core/resource';
 import * as UserAPI from './user';
 import * as AssetsAPI from '../assets';
-import * as CoreAPI from '../core';
 import * as WalletAPI from './wallet';
 import {
   UserWalletPortfolio,
@@ -89,29 +88,33 @@ export type EventAction =
   | 'cascade'
   | 'send';
 
+/**
+ * List data success response
+ */
 export interface UserGetTxHistoryResponse {
   /**
-   * Total number of objects in all pages
+   * Total number of objects irrespective of any pagination parameters.
    */
-  count: number | null;
+  count: number;
 
   /**
-   * List contents
+   * Primary response content (list)
    */
-  data: Array<UserGetTxHistoryResponse.Data> | null;
+  data: Array<UserGetTxHistoryResponse.Data>;
 
   /**
-   * Error message, if any
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
@@ -272,31 +275,35 @@ export namespace UserGetTxHistoryResponse {
   }
 }
 
+/**
+ * Object data success response
+ */
 export interface UserGetUserResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
-  data: UserGetUserResponse.Data | null;
+  data: UserGetUserResponse.Data;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
 export namespace UserGetUserResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
   export interface Data {
     /**
@@ -321,12 +328,12 @@ export namespace UserGetUserResponse {
      */
     export interface Nept {
       /**
-       * -- Overview of the user's staking contributions/activity
+       * Overview of the user's staking contributions/activity
        */
       staking: StakingAPI.UserStake;
 
       /**
-       * -- Overview of the user's unlock arrangements and claim statistics
+       * Overview of the user's unlock arrangements and claim statistics
        */
       unlocks: NeptAPI.UserNeptUnlockOverview;
     }

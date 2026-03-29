@@ -29,7 +29,7 @@ import {
   AssetSpec,
   Assets,
 } from './resources/assets';
-import { Core, ErrorData, Interval, IntervalUnit } from './resources/core';
+import { Core, Interval, IntervalUnit } from './resources/core';
 import {
   Nept,
   NeptGetParamsParams,
@@ -762,12 +762,7 @@ NeptuneAPIV2.Integrations = Integrations;
 export declare namespace NeptuneAPIV2 {
   export type RequestOptions = Opts.RequestOptions;
 
-  export {
-    Core as Core,
-    type ErrorData as ErrorData,
-    type Interval as Interval,
-    type IntervalUnit as IntervalUnit,
-  };
+  export { Core as Core, type Interval as Interval, type IntervalUnit as IntervalUnit };
 
   export { Status as Status, type StatusCheckHealthResponse as StatusCheckHealthResponse };
 

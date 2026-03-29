@@ -2,7 +2,6 @@
 
 import { APIResource } from '../../../core/resource';
 import * as NeptAPI from './nept';
-import * as CoreAPI from '../../core';
 import * as StakingAPI from './staking';
 import {
   Staking,
@@ -39,7 +38,7 @@ export class Nept extends APIResource {
 
 export interface UserNeptUnlockAmounts {
   /**
-   * The full unlock amount.
+   * The full unlock amount
    *
    * This value is immutable and does not change with regards to
    * expiry/reclamation/lock states.
@@ -47,7 +46,7 @@ export interface UserNeptUnlockAmounts {
   amount: string;
 
   /**
-   * The amount currently claimable.
+   * The amount currently claimable
    *
    * This takes into account: reclamation, lock state, expiry, and previously
    * claimed. In other words, this is an accurate representation of what the user can
@@ -62,7 +61,7 @@ export interface UserNeptUnlockAmounts {
 
   /**
    * The amount that was claimable but has now expired due to the presence and
-   * subsequent passing of `expires_at`.
+   * subsequent passing of `expires_at`
    */
   expired: string;
 
@@ -221,7 +220,7 @@ export namespace UserNeptUnlockAmounts {
 
 export interface UserNeptUnlockOverview {
   /**
-   * -- A list of the user's active unlock arrangements
+   * A list of the user's active unlock arrangements
    */
   arrangements: Array<UserNeptUnlockOverview.Arrangement>;
 
@@ -233,7 +232,7 @@ export interface UserNeptUnlockOverview {
   last_claimed_at: string | null;
 
   /**
-   * -- Contains pre-calculated total amounts for all unlock agreements
+   * Contains pre-calculated total amounts for all unlock agreements
    */
   totals: UserNeptUnlockAmounts;
 }
@@ -377,24 +376,28 @@ export namespace UserNeptUnlockOverview {
   }
 }
 
+/**
+ * Object data success response
+ */
 export interface NeptGetUnlocksResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
-  data: UserNeptUnlockOverview | null;
+  data: UserNeptUnlockOverview;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }

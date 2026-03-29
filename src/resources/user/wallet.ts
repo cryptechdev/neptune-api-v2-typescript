@@ -3,7 +3,6 @@
 import { APIResource } from '../../core/resource';
 import * as WalletAPI from './wallet';
 import * as AssetsAPI from '../assets';
-import * as CoreAPI from '../core';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -171,53 +170,61 @@ export namespace WalletBalance {
   }
 }
 
+/**
+ * Object data success response
+ */
 export interface WalletGetBalanceByAssetResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
-  data: WalletBalance | null;
+  data: WalletBalance;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface WalletGetBalancesResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
-  data: WalletGetBalancesResponse.Data | null;
+  data: WalletGetBalancesResponse.Data;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
 export namespace WalletGetBalancesResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
   export interface Data {
     /**
@@ -232,7 +239,7 @@ export namespace WalletGetBalancesResponse {
      * **NOTE:** this only accounts for assets which are internally known & tracked.
      * See the `/assets` endpoint for a list of supported assets.
      */
-    total_value?: string | null;
+    total_value: string | null;
   }
 }
 
