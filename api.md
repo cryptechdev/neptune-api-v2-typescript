@@ -279,6 +279,16 @@ Methods:
 - <code title="get /api/v1/analytics/market/history/loans-originated">client.analytics.market.history.<a href="./src/resources/analytics/market/history.ts">getLoansOriginated</a>({ ...params }) -> HistoryGetLoansOriginatedResponse</code>
 - <code title="get /api/v1/analytics/market/history/loans-originated/by-asset">client.analytics.market.history.<a href="./src/resources/analytics/market/history.ts">getLoansOriginatedByAsset</a>({ ...params }) -> HistoryGetLoansOriginatedByAssetResponse</code>
 
+## Nept
+
+Types:
+
+- <code><a href="./src/resources/analytics/nept.ts">NeptUnlocksDistributionResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v1/analytics/nept/unlocks-distribution">client.analytics.nept.<a href="./src/resources/analytics/nept.ts">unlocksDistribution</a>({ ...params }) -> NeptUnlocksDistributionResponse</code>
+
 # Integrations
 
 ## Bantr
