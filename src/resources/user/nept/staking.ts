@@ -3,7 +3,6 @@
 import { APIResource } from '../../../core/resource';
 import * as StakingAPI from './staking';
 import * as AssetsAPI from '../../assets';
-import * as CoreAPI from '../../core';
 import * as NeptAPI from '../../nept';
 import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
@@ -478,102 +477,118 @@ export namespace UserStakeUnbondingEntry {
   }
 }
 
+/**
+ * Object data success response
+ */
 export interface StakingGetOverviewResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
-  data: UserStake | null;
+  data: UserStake;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface StakingGetStakingPoolResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
-  data: UserStakePool | null;
+  data: UserStakePool;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * List data success response
+ */
 export interface StakingGetStakingPoolsResponse {
   /**
-   * Total number of objects in all pages
+   * Total number of objects irrespective of any pagination parameters.
    */
-  count: number | null;
+  count: number;
 
   /**
-   * List contents
+   * Primary response content (list)
    */
-  data: Array<UserStakePool> | null;
+  data: Array<UserStakePool>;
 
   /**
-   * Error message, if any
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface StakingGetUnstakingResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
-  data: StakingGetUnstakingResponse.Data | null;
+  data: StakingGetUnstakingResponse.Data;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
 export namespace StakingGetUnstakingResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
   export interface Data {
     /**

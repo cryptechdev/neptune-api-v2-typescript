@@ -3,7 +3,6 @@
 import { APIResource } from '../core/resource';
 import * as NeptAPI from './nept';
 import * as AssetsAPI from './assets';
-import * as CoreAPI from './core';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
@@ -56,12 +55,12 @@ export interface StakingPoolFull {
   index: number;
 
   /**
-   * -- Staking pool contract parameters
+   * Staking pool contract parameters
    */
   params: StakingPoolParams;
 
   /**
-   * -- Current contract state of staking pool
+   * Current contract state of staking pool
    */
   state: StakingPoolState;
 }
@@ -175,31 +174,35 @@ export namespace StakingPoolState {
   }
 }
 
+/**
+ * Object data success response
+ */
 export interface NeptGetParamsResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
-  data: NeptGetParamsResponse.Data | null;
+  data: NeptGetParamsResponse.Data;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
 export namespace NeptGetParamsResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
   export interface Data {
     /**
@@ -294,7 +297,7 @@ export namespace NeptGetParamsResponse {
       index: number;
 
       /**
-       * -- Staking pool contract parameters
+       * Staking pool contract parameters
        */
       params: NeptAPI.StakingPoolParams;
     }
@@ -323,31 +326,35 @@ export namespace NeptGetParamsResponse {
   }
 }
 
+/**
+ * Object data success response
+ */
 export interface NeptGetStakingOverviewResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
-  data: NeptGetStakingOverviewResponse.Data | null;
+  data: NeptGetStakingOverviewResponse.Data;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
 export namespace NeptGetStakingOverviewResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
   export interface Data {
     /**
@@ -381,7 +388,7 @@ export namespace NeptGetStakingOverviewResponse {
       rewards_last_distributed: string;
 
       /**
-       * **TODO:** rename, proper description, text/value?
+       * **! TODO:** rename, proper description, text/value?
        *
        * stake_acc = ∫ ( emission_rate / total_reward_weight ) dt
        */
@@ -410,31 +417,35 @@ export namespace NeptGetStakingOverviewResponse {
   }
 }
 
+/**
+ * Object data success response
+ */
 export interface NeptGetStateResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
-  data: NeptGetStateResponse.Data | null;
+  data: NeptGetStateResponse.Data;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
 export namespace NeptGetStateResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
   export interface Data {
     extra: Data.Extra;
@@ -563,7 +574,7 @@ export namespace NeptGetStateResponse {
       index: number;
 
       /**
-       * -- Current contract state of staking pool
+       * Current contract state of staking pool
        */
       state: NeptAPI.StakingPoolState;
     }

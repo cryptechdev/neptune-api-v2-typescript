@@ -2,7 +2,6 @@
 
 Types:
 
-- <code><a href="./src/resources/core.ts">ErrorData</a></code>
 - <code><a href="./src/resources/core.ts">Interval</a></code>
 - <code><a href="./src/resources/core.ts">IntervalUnit</a></code>
 

@@ -2,7 +2,6 @@
 
 import { APIResource } from '../../../core/resource';
 import * as AssetsAPI from '../../assets';
-import * as CoreAPI from '../../core';
 import * as LendAPI from '../lend';
 import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
@@ -233,51 +232,59 @@ export namespace BorrowDebtState {
   }
 }
 
+/**
+ * List data success response
+ */
 export interface DebtListResponse {
   /**
-   * Total number of objects in all pages
+   * Total number of objects irrespective of any pagination parameters.
    */
-  count: number | null;
+  count: number;
 
   /**
-   * List contents
+   * Primary response content (list)
    */
-  data: Array<BorrowDebtMarket> | null;
+  data: Array<BorrowDebtMarket>;
 
   /**
-   * Error message, if any
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface DebtGetByAssetResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
-  data: BorrowDebtMarket | null;
+  data: BorrowDebtMarket;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }

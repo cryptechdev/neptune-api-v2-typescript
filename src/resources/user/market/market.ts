@@ -2,7 +2,6 @@
 
 import { APIResource } from '../../../core/resource';
 import * as AssetsAPI from '../../assets';
-import * as CoreAPI from '../../core';
 import * as LendAPI from './lend';
 import {
   Lend as LendAPILend,
@@ -370,73 +369,85 @@ export namespace UserMergedMarket {
   }
 }
 
+/**
+ * List data success response
+ */
 export interface MarketGetMergedResponse {
   /**
-   * Total number of objects in all pages
+   * Total number of objects irrespective of any pagination parameters.
    */
-  count: number | null;
+  count: number;
 
   /**
-   * List contents
+   * Primary response content (list)
    */
-  data: Array<UserMergedMarket> | null;
+  data: Array<UserMergedMarket>;
 
   /**
-   * Error message, if any
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface MarketGetMergedByAssetResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
-  data: UserMergedMarket | null;
+  data: UserMergedMarket;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface MarketGetPortfolioResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
-  data: UserMarket | null;
+  data: UserMarket;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }

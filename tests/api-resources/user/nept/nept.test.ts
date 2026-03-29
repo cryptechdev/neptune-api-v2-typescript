@@ -7,7 +7,7 @@ const client = new NeptuneAPIV2({ baseURL: process.env['TEST_API_BASE_URL'] ?? '
 describe('resource nept', () => {
   // Mock server tests are disabled
   test.skip('getUnlocks', async () => {
-    const responsePromise = client.user.nept.getUnlocks('address');
+    const responsePromise = client.user.nept.getUnlocks('injvalcons1a03k0ztfyjnd70apawva003pkh0adqmau0a9q0');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,7 +22,7 @@ describe('resource nept', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.user.nept.getUnlocks(
-        'address',
+        'injvalcons1a03k0ztfyjnd70apawva003pkh0adqmau0a9q0',
         {
           with_percent: true,
           with_text: true,

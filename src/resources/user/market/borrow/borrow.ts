@@ -2,7 +2,6 @@
 
 import { APIResource } from '../../../../core/resource';
 import * as AssetsAPI from '../../../assets';
-import * as CoreAPI from '../../../core';
 import * as LendAPI from '../lend';
 import * as SubaccountAPI from './subaccount';
 import {
@@ -117,31 +116,35 @@ export namespace UserBorrowMarket {
   }
 }
 
+/**
+ * Object data success response
+ */
 export interface BorrowGetCollateralAccountsByAssetResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
-  data: BorrowGetCollateralAccountsByAssetResponse.Data | null;
+  data: BorrowGetCollateralAccountsByAssetResponse.Data;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
 export namespace BorrowGetCollateralAccountsByAssetResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
   export interface Data {
     /**
@@ -228,58 +231,66 @@ export namespace BorrowGetCollateralAccountsByAssetResponse {
   }
 }
 
+/**
+ * List data success response
+ */
 export interface BorrowGetCollateralTotalsResponse {
   /**
-   * Total number of objects in all pages
+   * Total number of objects irrespective of any pagination parameters.
    */
-  count: number | null;
+  count: number;
 
   /**
-   * List contents
+   * Primary response content (list)
    */
-  data: Array<SubaccountAPI.UserCollateralAssetPool> | null;
+  data: Array<SubaccountAPI.UserCollateralAssetPool>;
 
   /**
-   * Error message, if any
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface BorrowGetDebtAccountsByAssetResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
-  data: BorrowGetDebtAccountsByAssetResponse.Data | null;
+  data: BorrowGetDebtAccountsByAssetResponse.Data;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
 export namespace BorrowGetDebtAccountsByAssetResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
   export interface Data {
     /**
@@ -388,51 +399,59 @@ export namespace BorrowGetDebtAccountsByAssetResponse {
   }
 }
 
+/**
+ * List data success response
+ */
 export interface BorrowGetDebtsTotalsResponse {
   /**
-   * Total number of objects in all pages
+   * Total number of objects irrespective of any pagination parameters.
    */
-  count: number | null;
+  count: number;
 
   /**
-   * List contents
+   * Primary response content (list)
    */
-  data: Array<LendAPI.UserDebtAssetPool> | null;
+  data: Array<LendAPI.UserDebtAssetPool>;
 
   /**
-   * Error message, if any
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface BorrowGetPortfolioResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
-  data: UserBorrowMarket | null;
+  data: UserBorrowMarket;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }

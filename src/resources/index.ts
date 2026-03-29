@@ -13,7 +13,7 @@ export {
   type AssetGetPriceHistoryParams,
   type AssetListPricesParams,
 } from './assets';
-export { Core, type ErrorData, type Interval, type IntervalUnit } from './core';
+export { Core, type Interval, type IntervalUnit } from './core';
 export { Integrations } from './integrations/integrations';
 export {
   Markets,

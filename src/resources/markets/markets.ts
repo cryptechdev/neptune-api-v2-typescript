@@ -331,80 +331,92 @@ export namespace MergedMarket {
   }
 }
 
+/**
+ * List data success response
+ */
 export interface MarketGetMergedResponse {
   /**
-   * Total number of objects in all pages
+   * Total number of objects irrespective of any pagination parameters.
    */
-  count: number | null;
+  count: number;
 
   /**
-   * List contents
+   * Primary response content (list)
    */
-  data: Array<MergedMarket> | null;
+  data: Array<MergedMarket>;
 
   /**
-   * Error message, if any
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface MarketGetMergedByAssetResponse {
   /**
-   * Data for all of an assets markets
+   * Primary response content (object)
    */
-  data: MergedMarket | null;
+  data: MergedMarket;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface MarketGetOverviewResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
-  data: MarketGetOverviewResponse.Data | null;
+  data: MarketGetOverviewResponse.Data;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
 export namespace MarketGetOverviewResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
   export interface Data {
     /**
@@ -424,24 +436,28 @@ export namespace MarketGetOverviewResponse {
   }
 }
 
+/**
+ * Object data success response
+ */
 export interface MarketGetParamsResponse {
   /**
-   * Object data
+   * Primary response content (object)
    */
-  data: GlobalMarketConfig | null;
+  data: GlobalMarketConfig;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
