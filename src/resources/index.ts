@@ -6,6 +6,9 @@ export {
   type AssetClassification,
   type AssetInfo,
   type AssetMetadata,
+  type AssetPrice,
+  type AssetPriceHistory,
+  type AssetRateHistory,
   type AssetSpec,
   type AssetListResponse,
   type AssetGetPriceHistoryResponse,
@@ -13,12 +16,26 @@ export {
   type AssetGetPriceHistoryParams,
   type AssetListPricesParams,
 } from './assets';
-export { Core, type Interval, type IntervalUnit } from './core';
+export {
+  Core,
+  type ErrorData,
+  type ErrorDataVariants,
+  type ErrorKind,
+  type ErrorResponseVariants,
+  type ErrorScope,
+  type FieldValidationError,
+  type Interval,
+  type IntervalUnit,
+  type ListErrorResponse,
+  type ObjErrorResponse,
+  type ValidationErrorData,
+  type ValidationFieldSource,
+} from './core';
 export { Integrations } from './integrations/integrations';
 export {
   Markets,
-  type AssetRateHistory,
   type GlobalMarketConfig,
+  type MarketRate,
   type MergedMarket,
   type MarketGetMergedResponse,
   type MarketGetMergedByAssetResponse,
@@ -31,6 +48,9 @@ export {
 } from './markets/markets';
 export {
   Nept,
+  type NeptParams,
+  type NeptState,
+  type NeptUnlockDistributionGroup,
   type StakingPoolFull,
   type StakingPoolParams,
   type StakingPoolState,
@@ -43,8 +63,10 @@ export {
 } from './nept';
 export { Status, type StatusCheckHealthResponse } from './status';
 export {
-  User,
+  UserResource,
   type EventAction,
+  type User,
+  type UserTx,
   type UserGetTxHistoryResponse,
   type UserGetUserResponse,
   type UserGetTxHistoryParams,

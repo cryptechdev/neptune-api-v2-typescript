@@ -2,7 +2,6 @@
 
 import { APIResource } from '../../../../core/resource';
 import * as AssetsAPI from '../../../assets';
-import * as LendAPI from '../lend';
 import * as SubaccountAPI from './subaccount';
 import {
   Subaccount,
@@ -16,7 +15,10 @@ import {
   SubaccountGetSubaccountResponse,
   UserAccountHealth,
   UserBorrowMarketAccount,
+  UserCollateralAccountPool,
   UserCollateralAssetPool,
+  UserDebtAccountPool,
+  UserDebtAssetPool,
 } from './subaccount';
 import { APIPromise } from '../../../../core/api-promise';
 import { RequestOptions } from '../../../../internal/request-options';
@@ -96,33 +98,25 @@ export interface UserBorrowMarket {
   /**
    * Collateral/debt totals of all sub-accounts by asset
    */
-  totals: UserBorrowMarket.Totals;
+  totals: UserBorrowMarketPools;
 }
 
-export namespace UserBorrowMarket {
+export interface UserBorrowMarketPools {
   /**
-   * Collateral/debt totals of all sub-accounts by asset
+   * Account collateral allocations
    */
-  export interface Totals {
-    /**
-     * Account collateral allocations
-     */
-    collaterals: Array<SubaccountAPI.UserCollateralAssetPool>;
+  collaterals: Array<SubaccountAPI.UserCollateralAssetPool>;
 
-    /**
-     * Account debt allocations
-     */
-    debts: Array<LendAPI.UserDebtAssetPool>;
-  }
+  /**
+   * Account debt allocations
+   */
+  debts: Array<SubaccountAPI.UserDebtAssetPool>;
 }
 
 /**
  * Object data success response
  */
 export interface BorrowGetCollateralAccountsByAssetResponse {
-  /**
-   * Primary response content (object)
-   */
   data: BorrowGetCollateralAccountsByAssetResponse.Data;
 
   /**
@@ -143,91 +137,16 @@ export interface BorrowGetCollateralAccountsByAssetResponse {
 }
 
 export namespace BorrowGetCollateralAccountsByAssetResponse {
-  /**
-   * Primary response content (object)
-   */
   export interface Data {
     /**
      * All collateral subaccounts for the associated asset type
      */
-    accounts: Array<Data.Account>;
+    accounts: Array<SubaccountAPI.UserCollateralAccountPool>;
 
     /**
      * Asset identifiers with associated metadata
      */
     asset_info: AssetsAPI.AssetInfo;
-  }
-
-  export namespace Data {
-    export interface Account {
-      /**
-       * Amount of this asset which is actively collateralized
-       */
-      amount: string;
-
-      extra: Account.Extra;
-
-      /**
-       * Account index
-       */
-      index: number;
-    }
-
-    export namespace Account {
-      export interface Extra {
-        /**
-         * Human-readable field variants. Will not be null when query param `with_text` is
-         * `true`.
-         */
-        text: Extra.Text | null;
-
-        /**
-         * USD values for the corresponding amounts above. Will not be null when query
-         * param `with_value` is `true`.
-         */
-        value: Extra.Value | null;
-      }
-
-      export namespace Extra {
-        /**
-         * Human-readable field variants. Will not be null when query param `with_text` is
-         * `true`.
-         */
-        export interface Text {
-          amount: string;
-        }
-
-        /**
-         * USD values for the corresponding amounts above. Will not be null when query
-         * param `with_value` is `true`.
-         */
-        export interface Value {
-          amount: string;
-
-          extra: Value.Extra;
-        }
-
-        export namespace Value {
-          export interface Extra {
-            /**
-             * Human-readable variants of USD values. Will not be null when query params
-             * `with_text` and `with_value` are `true`.
-             */
-            text: Extra.Text | null;
-          }
-
-          export namespace Extra {
-            /**
-             * Human-readable variants of USD values. Will not be null when query params
-             * `with_text` and `with_value` are `true`.
-             */
-            export interface Text {
-              amount: string;
-            }
-          }
-        }
-      }
-    }
   }
 }
 
@@ -240,9 +159,6 @@ export interface BorrowGetCollateralTotalsResponse {
    */
   count: number;
 
-  /**
-   * Primary response content (list)
-   */
   data: Array<SubaccountAPI.UserCollateralAssetPool>;
 
   /**
@@ -266,9 +182,6 @@ export interface BorrowGetCollateralTotalsResponse {
  * Object data success response
  */
 export interface BorrowGetDebtAccountsByAssetResponse {
-  /**
-   * Primary response content (object)
-   */
   data: BorrowGetDebtAccountsByAssetResponse.Data;
 
   /**
@@ -289,113 +202,16 @@ export interface BorrowGetDebtAccountsByAssetResponse {
 }
 
 export namespace BorrowGetDebtAccountsByAssetResponse {
-  /**
-   * Primary response content (object)
-   */
   export interface Data {
     /**
      * All debt subaccounts for the associated asset type
      */
-    accounts: Array<Data.Account>;
+    accounts: Array<SubaccountAPI.UserDebtAccountPool>;
 
     /**
      * Asset identifiers with associated metadata
      */
     asset_info: AssetsAPI.AssetInfo;
-  }
-
-  export namespace Data {
-    export interface Account {
-      /**
-       * Sum open debt amount (this is simply the principal + interest)
-       */
-      debt: string;
-
-      extra: Account.Extra;
-
-      /**
-       * Account index
-       */
-      index: number;
-
-      /**
-       * Sum of accrued interest for open debt position
-       */
-      interest: string;
-
-      /**
-       * Initial amount borrowed (of debts which have not yet been repaid)
-       */
-      principal: string;
-    }
-
-    export namespace Account {
-      export interface Extra {
-        /**
-         * Human-readable field variants. Will not be null when query param `with_text` is
-         * `true`.
-         */
-        text: Extra.Text | null;
-
-        /**
-         * USD values for the corresponding amounts above. Will not be null when query
-         * param `with_value` is `true`.
-         */
-        value: Extra.Value | null;
-      }
-
-      export namespace Extra {
-        /**
-         * Human-readable field variants. Will not be null when query param `with_text` is
-         * `true`.
-         */
-        export interface Text {
-          debt: string;
-
-          interest: string;
-
-          principal: string;
-        }
-
-        /**
-         * USD values for the corresponding amounts above. Will not be null when query
-         * param `with_value` is `true`.
-         */
-        export interface Value {
-          debt: string;
-
-          extra: Value.Extra;
-
-          interest: string;
-
-          principal: string;
-        }
-
-        export namespace Value {
-          export interface Extra {
-            /**
-             * Human-readable variants of USD values. Will not be null when query params
-             * `with_text` and `with_value` are `true`.
-             */
-            text: Extra.Text | null;
-          }
-
-          export namespace Extra {
-            /**
-             * Human-readable variants of USD values. Will not be null when query params
-             * `with_text` and `with_value` are `true`.
-             */
-            export interface Text {
-              debt: string;
-
-              interest: string;
-
-              principal: string;
-            }
-          }
-        }
-      }
-    }
   }
 }
 
@@ -408,10 +224,7 @@ export interface BorrowGetDebtsTotalsResponse {
    */
   count: number;
 
-  /**
-   * Primary response content (list)
-   */
-  data: Array<LendAPI.UserDebtAssetPool>;
+  data: Array<SubaccountAPI.UserDebtAssetPool>;
 
   /**
    * Error data. Guaranteed `null` for successful response.
@@ -434,9 +247,6 @@ export interface BorrowGetDebtsTotalsResponse {
  * Object data success response
  */
 export interface BorrowGetPortfolioResponse {
-  /**
-   * Primary response content (object)
-   */
   data: UserBorrowMarket;
 
   /**
@@ -531,6 +341,7 @@ Borrow.Subaccount = Subaccount;
 export declare namespace Borrow {
   export {
     type UserBorrowMarket as UserBorrowMarket,
+    type UserBorrowMarketPools as UserBorrowMarketPools,
     type BorrowGetCollateralAccountsByAssetResponse as BorrowGetCollateralAccountsByAssetResponse,
     type BorrowGetCollateralTotalsResponse as BorrowGetCollateralTotalsResponse,
     type BorrowGetDebtAccountsByAssetResponse as BorrowGetDebtAccountsByAssetResponse,
@@ -547,7 +358,10 @@ export declare namespace Borrow {
     Subaccount as Subaccount,
     type UserAccountHealth as UserAccountHealth,
     type UserBorrowMarketAccount as UserBorrowMarketAccount,
+    type UserCollateralAccountPool as UserCollateralAccountPool,
     type UserCollateralAssetPool as UserCollateralAssetPool,
+    type UserDebtAccountPool as UserDebtAccountPool,
+    type UserDebtAssetPool as UserDebtAssetPool,
     type SubaccountGetSubaccountResponse as SubaccountGetSubaccountResponse,
     type SubaccountGetSubaccountCollateralsResponse as SubaccountGetSubaccountCollateralsResponse,
     type SubaccountGetSubaccountDebtsResponse as SubaccountGetSubaccountDebtsResponse,

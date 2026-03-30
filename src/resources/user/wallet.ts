@@ -69,6 +69,8 @@ export namespace UserWalletPortfolio {
   }
 }
 
+export type WalletAsset = WalletAssetKnown | WalletAssetUnknown;
+
 export interface WalletAssetKnown {
   /**
    * Wallet balance in native denom.
@@ -146,6 +148,15 @@ export namespace WalletAssetKnown {
   }
 }
 
+export interface WalletAssetUnknown {
+  /**
+   * Wallet balance in native denom.
+   */
+  amount: string;
+
+  kind: 'unknown';
+}
+
 export interface WalletBalance {
   /**
    * Provides a unique identifier for an asset for use throughout the Neptune API.
@@ -156,27 +167,13 @@ export interface WalletBalance {
   /**
    * Derived values and amounts.
    */
-  values: WalletAssetKnown | WalletBalance.WalletAssetUnknown;
-}
-
-export namespace WalletBalance {
-  export interface WalletAssetUnknown {
-    /**
-     * Wallet balance in native denom.
-     */
-    amount: string;
-
-    kind: 'unknown';
-  }
+  values: WalletAsset;
 }
 
 /**
  * Object data success response
  */
 export interface WalletGetBalanceByAssetResponse {
-  /**
-   * Primary response content (object)
-   */
   data: WalletBalance;
 
   /**
@@ -200,9 +197,6 @@ export interface WalletGetBalanceByAssetResponse {
  * Object data success response
  */
 export interface WalletGetBalancesResponse {
-  /**
-   * Primary response content (object)
-   */
   data: WalletGetBalancesResponse.Data;
 
   /**
@@ -223,9 +217,6 @@ export interface WalletGetBalancesResponse {
 }
 
 export namespace WalletGetBalancesResponse {
-  /**
-   * Primary response content (object)
-   */
   export interface Data {
     /**
      * Array of each wallet balance
@@ -275,7 +266,9 @@ export interface WalletGetBalancesParams {
 export declare namespace Wallet {
   export {
     type UserWalletPortfolio as UserWalletPortfolio,
+    type WalletAsset as WalletAsset,
     type WalletAssetKnown as WalletAssetKnown,
+    type WalletAssetUnknown as WalletAssetUnknown,
     type WalletBalance as WalletBalance,
     type WalletGetBalanceByAssetResponse as WalletGetBalanceByAssetResponse,
     type WalletGetBalancesResponse as WalletGetBalancesResponse,

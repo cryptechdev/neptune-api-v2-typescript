@@ -28,9 +28,6 @@ export class Market extends APIResource {
  * Object data success response
  */
 export interface MarketGetCurrentStateResponse {
-  /**
-   * Primary response content (object)
-   */
   data: MarketGetCurrentStateResponse.Data;
 
   /**
@@ -51,9 +48,6 @@ export interface MarketGetCurrentStateResponse {
 }
 
 export namespace MarketGetCurrentStateResponse {
-  /**
-   * Primary response content (object)
-   */
   export interface Data {
     assets: Array<Data.Asset>;
 

@@ -3,6 +3,7 @@
 export {
   Borrow,
   type UserBorrowMarket,
+  type UserBorrowMarketPools,
   type BorrowGetCollateralAccountsByAssetResponse,
   type BorrowGetCollateralTotalsResponse,
   type BorrowGetDebtAccountsByAssetResponse,
@@ -16,7 +17,7 @@ export {
 } from './borrow/index';
 export {
   Lend,
-  type UserDebtAssetPool,
+  type UserLendMarket,
   type LendListResponse,
   type LendGetByAssetResponse,
   type LendListParams,

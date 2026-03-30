@@ -142,6 +142,18 @@ export interface BorrowCollateralMarket {
   state: BorrowCollateralState;
 }
 
+export interface BorrowCollateralMarketData {
+  /**
+   * Collateral configuration parameters
+   */
+  config: BorrowCollateralConfig;
+
+  /**
+   * Current collateral state
+   */
+  state: BorrowCollateralState;
+}
+
 export interface BorrowCollateralState {
   balance: string;
 
@@ -218,9 +230,6 @@ export interface CollateralListResponse {
    */
   count: number;
 
-  /**
-   * Primary response content (list)
-   */
   data: Array<BorrowCollateralMarket>;
 
   /**
@@ -244,9 +253,6 @@ export interface CollateralListResponse {
  * Object data success response
  */
 export interface CollateralGetByAssetResponse {
-  /**
-   * Primary response content (object)
-   */
   data: BorrowCollateralMarket;
 
   /**
@@ -299,6 +305,7 @@ export declare namespace Collaterals {
   export {
     type BorrowCollateralConfig as BorrowCollateralConfig,
     type BorrowCollateralMarket as BorrowCollateralMarket,
+    type BorrowCollateralMarketData as BorrowCollateralMarketData,
     type BorrowCollateralState as BorrowCollateralState,
     type CollateralListResponse as CollateralListResponse,
     type CollateralGetByAssetResponse as CollateralGetByAssetResponse,

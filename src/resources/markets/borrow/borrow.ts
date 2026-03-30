@@ -1,12 +1,13 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../../core/resource';
+import * as AssetsAPI from '../../assets';
 import * as CoreAPI from '../../core';
-import * as MarketsAPI from '../markets';
 import * as CollateralsAPI from './collaterals';
 import {
   BorrowCollateralConfig,
   BorrowCollateralMarket,
+  BorrowCollateralMarketData,
   BorrowCollateralState,
   CollateralGetByAssetParams,
   CollateralGetByAssetResponse,
@@ -18,6 +19,7 @@ import * as DebtsAPI from './debts';
 import {
   BorrowDebtConfig,
   BorrowDebtMarket,
+  BorrowDebtMarketData,
   BorrowDebtState,
   DebtGetByAssetParams,
   DebtGetByAssetResponse,
@@ -69,9 +71,6 @@ export interface BorrowMarketOverview {
  * Object data success response
  */
 export interface BorrowGetOverviewResponse {
-  /**
-   * Primary response content (object)
-   */
   data: BorrowMarketOverview;
 
   /**
@@ -96,9 +95,9 @@ export interface BorrowGetOverviewResponse {
  */
 export interface BorrowGetRateHistoryResponse {
   /**
-   * Primary response content (object)
+   * Historical rates for assets
    */
-  data: MarketsAPI.AssetRateHistory;
+  data: AssetsAPI.AssetRateHistory;
 
   /**
    * Error data. Guaranteed `null` for successful response.
@@ -205,6 +204,7 @@ export declare namespace Borrow {
     Collaterals as Collaterals,
     type BorrowCollateralConfig as BorrowCollateralConfig,
     type BorrowCollateralMarket as BorrowCollateralMarket,
+    type BorrowCollateralMarketData as BorrowCollateralMarketData,
     type BorrowCollateralState as BorrowCollateralState,
     type CollateralListResponse as CollateralListResponse,
     type CollateralGetByAssetResponse as CollateralGetByAssetResponse,
@@ -216,6 +216,7 @@ export declare namespace Borrow {
     Debts as Debts,
     type BorrowDebtConfig as BorrowDebtConfig,
     type BorrowDebtMarket as BorrowDebtMarket,
+    type BorrowDebtMarketData as BorrowDebtMarketData,
     type BorrowDebtState as BorrowDebtState,
     type DebtListResponse as DebtListResponse,
     type DebtGetByAssetResponse as DebtGetByAssetResponse,

@@ -2,7 +2,6 @@
 
 import { APIResource } from '../../../../core/resource';
 import * as AssetsAPI from '../../../assets';
-import * as LendAPI from '../lend';
 import { APIPromise } from '../../../../core/api-promise';
 import { RequestOptions } from '../../../../internal/request-options';
 import { path } from '../../../../internal/utils/path';
@@ -121,7 +120,7 @@ export interface UserBorrowMarketAccount {
   /**
    * Account debt allocations
    */
-  debts: Array<LendAPI.UserDebtAssetPool>;
+  debts: Array<UserDebtAssetPool>;
 
   /**
    * Health data for this account
@@ -132,6 +131,76 @@ export interface UserBorrowMarketAccount {
    * Account index
    */
   index: number;
+}
+
+export interface UserCollateralAccountPool {
+  /**
+   * Amount of this asset which is actively collateralized
+   */
+  amount: string;
+
+  extra: UserCollateralAccountPool.Extra;
+
+  /**
+   * Account index
+   */
+  index: number;
+}
+
+export namespace UserCollateralAccountPool {
+  export interface Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    text: Extra.Text | null;
+
+    /**
+     * USD values for the corresponding amounts above. Will not be null when query
+     * param `with_value` is `true`.
+     */
+    value: Extra.Value | null;
+  }
+
+  export namespace Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    export interface Text {
+      amount: string;
+    }
+
+    /**
+     * USD values for the corresponding amounts above. Will not be null when query
+     * param `with_value` is `true`.
+     */
+    export interface Value {
+      amount: string;
+
+      extra: Value.Extra;
+    }
+
+    export namespace Value {
+      export interface Extra {
+        /**
+         * Human-readable variants of USD values. Will not be null when query params
+         * `with_text` and `with_value` are `true`.
+         */
+        text: Extra.Text | null;
+      }
+
+      export namespace Extra {
+        /**
+         * Human-readable variants of USD values. Will not be null when query params
+         * `with_text` and `with_value` are `true`.
+         */
+        export interface Text {
+          amount: string;
+        }
+      }
+    }
+  }
 }
 
 export interface UserCollateralAssetPool {
@@ -204,13 +273,194 @@ export namespace UserCollateralAssetPool {
   }
 }
 
+export interface UserDebtAccountPool {
+  /**
+   * Sum open debt amount (this is simply the principal + interest)
+   */
+  debt: string;
+
+  extra: UserDebtAccountPool.Extra;
+
+  /**
+   * Account index
+   */
+  index: number;
+
+  /**
+   * Sum of accrued interest for open debt position
+   */
+  interest: string;
+
+  /**
+   * Initial amount borrowed (of debts which have not yet been repaid)
+   */
+  principal: string;
+}
+
+export namespace UserDebtAccountPool {
+  export interface Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    text: Extra.Text | null;
+
+    /**
+     * USD values for the corresponding amounts above. Will not be null when query
+     * param `with_value` is `true`.
+     */
+    value: Extra.Value | null;
+  }
+
+  export namespace Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    export interface Text {
+      debt: string;
+
+      interest: string;
+
+      principal: string;
+    }
+
+    /**
+     * USD values for the corresponding amounts above. Will not be null when query
+     * param `with_value` is `true`.
+     */
+    export interface Value {
+      debt: string;
+
+      extra: Value.Extra;
+
+      interest: string;
+
+      principal: string;
+    }
+
+    export namespace Value {
+      export interface Extra {
+        /**
+         * Human-readable variants of USD values. Will not be null when query params
+         * `with_text` and `with_value` are `true`.
+         */
+        text: Extra.Text | null;
+      }
+
+      export namespace Extra {
+        /**
+         * Human-readable variants of USD values. Will not be null when query params
+         * `with_text` and `with_value` are `true`.
+         */
+        export interface Text {
+          debt: string;
+
+          interest: string;
+
+          principal: string;
+        }
+      }
+    }
+  }
+}
+
+export interface UserDebtAssetPool {
+  /**
+   * Asset identifiers with associated metadata
+   */
+  asset_info: AssetsAPI.AssetInfo;
+
+  /**
+   * Sum open debt amount (this is simply the principal + interest)
+   */
+  debt: string;
+
+  extra: UserDebtAssetPool.Extra;
+
+  /**
+   * Sum of accrued interest for open debt position
+   */
+  interest: string;
+
+  /**
+   * Initial amount borrowed (of debts which have not yet been repaid)
+   */
+  principal: string;
+}
+
+export namespace UserDebtAssetPool {
+  export interface Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    text: Extra.Text | null;
+
+    /**
+     * USD values for the corresponding amounts above. Will not be null when query
+     * param `with_value` is `true`.
+     */
+    value: Extra.Value | null;
+  }
+
+  export namespace Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    export interface Text {
+      debt: string;
+
+      interest: string;
+
+      principal: string;
+    }
+
+    /**
+     * USD values for the corresponding amounts above. Will not be null when query
+     * param `with_value` is `true`.
+     */
+    export interface Value {
+      debt: string;
+
+      extra: Value.Extra;
+
+      interest: string;
+
+      principal: string;
+    }
+
+    export namespace Value {
+      export interface Extra {
+        /**
+         * Human-readable variants of USD values. Will not be null when query params
+         * `with_text` and `with_value` are `true`.
+         */
+        text: Extra.Text | null;
+      }
+
+      export namespace Extra {
+        /**
+         * Human-readable variants of USD values. Will not be null when query params
+         * `with_text` and `with_value` are `true`.
+         */
+        export interface Text {
+          debt: string;
+
+          interest: string;
+
+          principal: string;
+        }
+      }
+    }
+  }
+}
+
 /**
  * Object data success response
  */
 export interface SubaccountGetSubaccountResponse {
-  /**
-   * Primary response content (object)
-   */
   data: UserBorrowMarketAccount;
 
   /**
@@ -239,9 +489,6 @@ export interface SubaccountGetSubaccountCollateralsResponse {
    */
   count: number;
 
-  /**
-   * Primary response content (list)
-   */
   data: Array<UserCollateralAssetPool>;
 
   /**
@@ -270,10 +517,7 @@ export interface SubaccountGetSubaccountDebtsResponse {
    */
   count: number;
 
-  /**
-   * Primary response content (list)
-   */
-  data: Array<LendAPI.UserDebtAssetPool>;
+  data: Array<UserDebtAssetPool>;
 
   /**
    * Error data. Guaranteed `null` for successful response.
@@ -296,9 +540,6 @@ export interface SubaccountGetSubaccountDebtsResponse {
  * Object data success response
  */
 export interface SubaccountGetSubaccountHealthResponse {
-  /**
-   * Primary response content (object)
-   */
   data: UserAccountHealth;
 
   /**
@@ -385,7 +626,10 @@ export declare namespace Subaccount {
   export {
     type UserAccountHealth as UserAccountHealth,
     type UserBorrowMarketAccount as UserBorrowMarketAccount,
+    type UserCollateralAccountPool as UserCollateralAccountPool,
     type UserCollateralAssetPool as UserCollateralAssetPool,
+    type UserDebtAccountPool as UserDebtAccountPool,
+    type UserDebtAssetPool as UserDebtAssetPool,
     type SubaccountGetSubaccountResponse as SubaccountGetSubaccountResponse,
     type SubaccountGetSubaccountCollateralsResponse as SubaccountGetSubaccountCollateralsResponse,
     type SubaccountGetSubaccountDebtsResponse as SubaccountGetSubaccountDebtsResponse,
