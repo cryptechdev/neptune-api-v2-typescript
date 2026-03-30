@@ -45,7 +45,19 @@ export interface LendMarket {
   /**
    * Lending market rates
    */
-  rate: MarketRate | null;
+  rate: MarketsAPI.MarketRate | null;
+
+  /**
+   * Current lending market state
+   */
+  state: LendMarketState;
+}
+
+export interface LendMarketData {
+  /**
+   * Lending market rates
+   */
+  rate: MarketsAPI.MarketRate | null;
 
   /**
    * Current lending market state
@@ -126,109 +138,79 @@ export namespace LendMarketState {
   }
 }
 
-export interface MarketRate {
-  /**
-   * Market rate in APR standard as a decimal percentage
-   */
-  apr: string;
-
-  /**
-   * Market rate in APY standard as a decimal percentage
-   */
-  apy: string;
-
-  extra: MarketRate.Extra;
-}
-
-export namespace MarketRate {
-  export interface Extra {
-    /**
-     * Human-readable field variants. Will not be null when query param `with_text` is
-     * `true`.
-     */
-    text: Extra.Text | null;
-  }
-
-  export namespace Extra {
-    /**
-     * Human-readable field variants. Will not be null when query param `with_text` is
-     * `true`.
-     */
-    export interface Text {
-      apr: string;
-
-      apy: string;
-    }
-  }
-}
-
+/**
+ * List data success response
+ */
 export interface LendListResponse {
   /**
-   * Total number of objects in all pages
+   * Total number of objects irrespective of any pagination parameters.
    */
-  count: number | null;
+  count: number;
+
+  data: Array<LendMarket>;
 
   /**
-   * List contents
+   * Error data. Guaranteed `null` for successful response.
    */
-  data: Array<LendMarket> | null;
+  error: null;
 
   /**
-   * Error message, if any
-   */
-  error: CoreAPI.ErrorData | null;
-
-  /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface LendGetByAssetResponse {
-  /**
-   * Object data
-   */
-  data: LendMarket | null;
+  data: LendMarket;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface LendGetRateHistoryResponse {
   /**
    * Historical rates for assets
    */
-  data: MarketsAPI.AssetRateHistory | null;
+  data: AssetsAPI.AssetRateHistory;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
@@ -296,7 +278,7 @@ export interface LendGetRateHistoryParams {
    * Optional comma-separated list of asset IDs to filter for. If excluded, values
    * will be returned for all assets.
    */
-  asset_ids?: string;
+  asset_ids?: string | null;
 
   /**
    * Interval value
@@ -325,8 +307,8 @@ export interface LendGetRateHistoryParams {
 export declare namespace Lend {
   export {
     type LendMarket as LendMarket,
+    type LendMarketData as LendMarketData,
     type LendMarketState as LendMarketState,
-    type MarketRate as MarketRate,
     type LendListResponse as LendListResponse,
     type LendGetByAssetResponse as LendGetByAssetResponse,
     type LendGetRateHistoryResponse as LendGetRateHistoryResponse,

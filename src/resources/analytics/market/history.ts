@@ -31,24 +31,28 @@ export class History extends APIResource {
   }
 }
 
+/**
+ * Object data success response
+ */
 export interface HistoryGetLoansOriginatedResponse {
   /**
    * Historical cumulative lend value for assets
    */
-  data: HistoryGetLoansOriginatedResponse.Data | null;
+  data: HistoryGetLoansOriginatedResponse.Data;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
@@ -114,24 +118,28 @@ export namespace HistoryGetLoansOriginatedResponse {
   }
 }
 
+/**
+ * Object data success response
+ */
 export interface HistoryGetLoansOriginatedByAssetResponse {
   /**
    * Historical cumulative lend value for assets
    */
-  data: HistoryGetLoansOriginatedByAssetResponse.Data | null;
+  data: HistoryGetLoansOriginatedByAssetResponse.Data;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
@@ -302,7 +310,7 @@ export interface HistoryGetLoansOriginatedByAssetParams {
    * Optional comma-separated list of asset IDs to filter for. If excluded, values
    * will be returned for all assets.
    */
-  asset_ids?: string;
+  asset_ids?: string | null;
 
   /**
    * Interval value

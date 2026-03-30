@@ -1,12 +1,13 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../../core/resource';
+import * as AssetsAPI from '../../assets';
 import * as CoreAPI from '../../core';
-import * as MarketsAPI from '../markets';
 import * as CollateralsAPI from './collaterals';
 import {
   BorrowCollateralConfig,
   BorrowCollateralMarket,
+  BorrowCollateralMarketData,
   BorrowCollateralState,
   CollateralGetByAssetParams,
   CollateralGetByAssetResponse,
@@ -18,6 +19,7 @@ import * as DebtsAPI from './debts';
 import {
   BorrowDebtConfig,
   BorrowDebtMarket,
+  BorrowDebtMarketData,
   BorrowDebtState,
   DebtGetByAssetParams,
   DebtGetByAssetResponse,
@@ -65,46 +67,51 @@ export interface BorrowMarketOverview {
   debts: Array<DebtsAPI.BorrowDebtMarket>;
 }
 
+/**
+ * Object data success response
+ */
 export interface BorrowGetOverviewResponse {
-  /**
-   * Object data
-   */
-  data: BorrowMarketOverview | null;
+  data: BorrowMarketOverview;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface BorrowGetRateHistoryResponse {
   /**
    * Historical rates for assets
    */
-  data: MarketsAPI.AssetRateHistory | null;
+  data: AssetsAPI.AssetRateHistory;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
@@ -155,7 +162,7 @@ export interface BorrowGetRateHistoryParams {
    * Optional comma-separated list of asset IDs to filter for. If excluded, values
    * will be returned for all assets.
    */
-  asset_ids?: string;
+  asset_ids?: string | null;
 
   /**
    * Interval value
@@ -197,6 +204,7 @@ export declare namespace Borrow {
     Collaterals as Collaterals,
     type BorrowCollateralConfig as BorrowCollateralConfig,
     type BorrowCollateralMarket as BorrowCollateralMarket,
+    type BorrowCollateralMarketData as BorrowCollateralMarketData,
     type BorrowCollateralState as BorrowCollateralState,
     type CollateralListResponse as CollateralListResponse,
     type CollateralGetByAssetResponse as CollateralGetByAssetResponse,
@@ -208,6 +216,7 @@ export declare namespace Borrow {
     Debts as Debts,
     type BorrowDebtConfig as BorrowDebtConfig,
     type BorrowDebtMarket as BorrowDebtMarket,
+    type BorrowDebtMarketData as BorrowDebtMarketData,
     type BorrowDebtState as BorrowDebtState,
     type DebtListResponse as DebtListResponse,
     type DebtGetByAssetResponse as DebtGetByAssetResponse,

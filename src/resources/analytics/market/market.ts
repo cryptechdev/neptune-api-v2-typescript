@@ -2,7 +2,6 @@
 
 import { APIResource } from '../../../core/resource';
 import * as AssetsAPI from '../../assets';
-import * as CoreAPI from '../../core';
 import * as HistoryAPI from './history';
 import {
   History,
@@ -25,32 +24,30 @@ export class Market extends APIResource {
   }
 }
 
+/**
+ * Object data success response
+ */
 export interface MarketGetCurrentStateResponse {
-  /**
-   * Object data
-   */
-  data: MarketGetCurrentStateResponse.Data | null;
+  data: MarketGetCurrentStateResponse.Data;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
 export namespace MarketGetCurrentStateResponse {
-  /**
-   * Object data
-   */
   export interface Data {
     assets: Array<Data.Asset>;
 

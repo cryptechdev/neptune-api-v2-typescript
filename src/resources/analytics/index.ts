@@ -2,3 +2,4 @@
 
 export { Analytics } from './analytics';
 export { Market, type MarketGetCurrentStateResponse } from './market/index';
+export { Nept, type NeptUnlocksDistributionResponse, type NeptUnlocksDistributionParams } from './nept';

@@ -7,7 +7,7 @@ const client = new NeptuneAPIV2({ baseURL: process.env['TEST_API_BASE_URL'] ?? '
 describe('resource user', () => {
   // Mock server tests are disabled
   test.skip('getTxHistory', async () => {
-    const responsePromise = client.user.getTxHistory('address');
+    const responsePromise = client.user.getTxHistory('injvalcons1a03k0ztfyjnd70apawva003pkh0adqmau0a9q0');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,7 +22,7 @@ describe('resource user', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.user.getTxHistory(
-        'address',
+        'injvalcons1a03k0ztfyjnd70apawva003pkh0adqmau0a9q0',
         {
           action: 'borrow_flash_loan',
           limit: 1,
@@ -38,7 +38,7 @@ describe('resource user', () => {
 
   // Mock server tests are disabled
   test.skip('getUser', async () => {
-    const responsePromise = client.user.getUser('address');
+    const responsePromise = client.user.getUser('injvalcons1a03k0ztfyjnd70apawva003pkh0adqmau0a9q0');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -53,7 +53,7 @@ describe('resource user', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.user.getUser(
-        'address',
+        'injvalcons1a03k0ztfyjnd70apawva003pkh0adqmau0a9q0',
         {
           with_percent: true,
           with_text: true,

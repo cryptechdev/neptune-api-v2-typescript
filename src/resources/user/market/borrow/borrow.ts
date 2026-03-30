@@ -2,8 +2,6 @@
 
 import { APIResource } from '../../../../core/resource';
 import * as AssetsAPI from '../../../assets';
-import * as CoreAPI from '../../../core';
-import * as LendAPI from '../lend';
 import * as SubaccountAPI from './subaccount';
 import {
   Subaccount,
@@ -17,7 +15,10 @@ import {
   SubaccountGetSubaccountResponse,
   UserAccountHealth,
   UserBorrowMarketAccount,
+  UserCollateralAccountPool,
   UserCollateralAssetPool,
+  UserDebtAccountPool,
+  UserDebtAssetPool,
 } from './subaccount';
 import { APIPromise } from '../../../../core/api-promise';
 import { RequestOptions } from '../../../../internal/request-options';
@@ -97,343 +98,170 @@ export interface UserBorrowMarket {
   /**
    * Collateral/debt totals of all sub-accounts by asset
    */
-  totals: UserBorrowMarket.Totals;
+  totals: UserBorrowMarketPools;
 }
 
-export namespace UserBorrowMarket {
+export interface UserBorrowMarketPools {
   /**
-   * Collateral/debt totals of all sub-accounts by asset
+   * Account collateral allocations
    */
-  export interface Totals {
-    /**
-     * Account collateral allocations
-     */
-    collaterals: Array<SubaccountAPI.UserCollateralAssetPool>;
+  collaterals: Array<SubaccountAPI.UserCollateralAssetPool>;
 
-    /**
-     * Account debt allocations
-     */
-    debts: Array<LendAPI.UserDebtAssetPool>;
-  }
+  /**
+   * Account debt allocations
+   */
+  debts: Array<SubaccountAPI.UserDebtAssetPool>;
 }
 
+/**
+ * Object data success response
+ */
 export interface BorrowGetCollateralAccountsByAssetResponse {
-  /**
-   * Object data
-   */
-  data: BorrowGetCollateralAccountsByAssetResponse.Data | null;
+  data: BorrowGetCollateralAccountsByAssetResponse.Data;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
 export namespace BorrowGetCollateralAccountsByAssetResponse {
-  /**
-   * Object data
-   */
   export interface Data {
     /**
-     * All collateral subaccounts for the associated asset type Collateral sub-accounts
-     * for the user
+     * All collateral subaccounts for the associated asset type
      */
-    accounts: Array<Data.Account>;
+    accounts: Array<SubaccountAPI.UserCollateralAccountPool>;
 
     /**
      * Asset identifiers with associated metadata
      */
     asset_info: AssetsAPI.AssetInfo;
   }
-
-  export namespace Data {
-    export interface Account {
-      /**
-       * Amount of this asset which is actively collateralized
-       */
-      amount: string;
-
-      extra: Account.Extra;
-
-      /**
-       * Account index
-       */
-      index: number;
-    }
-
-    export namespace Account {
-      export interface Extra {
-        /**
-         * Human-readable field variants. Will not be null when query param `with_text` is
-         * `true`.
-         */
-        text: Extra.Text | null;
-
-        /**
-         * USD values for the corresponding amounts above. Will not be null when query
-         * param `with_value` is `true`.
-         */
-        value: Extra.Value | null;
-      }
-
-      export namespace Extra {
-        /**
-         * Human-readable field variants. Will not be null when query param `with_text` is
-         * `true`.
-         */
-        export interface Text {
-          amount: string;
-        }
-
-        /**
-         * USD values for the corresponding amounts above. Will not be null when query
-         * param `with_value` is `true`.
-         */
-        export interface Value {
-          amount: string;
-
-          extra: Value.Extra;
-        }
-
-        export namespace Value {
-          export interface Extra {
-            /**
-             * Human-readable variants of USD values. Will not be null when query params
-             * `with_text` and `with_value` are `true`.
-             */
-            text: Extra.Text | null;
-          }
-
-          export namespace Extra {
-            /**
-             * Human-readable variants of USD values. Will not be null when query params
-             * `with_text` and `with_value` are `true`.
-             */
-            export interface Text {
-              amount: string;
-            }
-          }
-        }
-      }
-    }
-  }
 }
 
+/**
+ * List data success response
+ */
 export interface BorrowGetCollateralTotalsResponse {
   /**
-   * Total number of objects in all pages
+   * Total number of objects irrespective of any pagination parameters.
    */
-  count: number | null;
+  count: number;
+
+  data: Array<SubaccountAPI.UserCollateralAssetPool>;
 
   /**
-   * List contents
+   * Error data. Guaranteed `null` for successful response.
    */
-  data: Array<SubaccountAPI.UserCollateralAssetPool> | null;
+  error: null;
 
   /**
-   * Error message, if any
-   */
-  error: CoreAPI.ErrorData | null;
-
-  /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface BorrowGetDebtAccountsByAssetResponse {
-  /**
-   * Object data
-   */
-  data: BorrowGetDebtAccountsByAssetResponse.Data | null;
+  data: BorrowGetDebtAccountsByAssetResponse.Data;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
 export namespace BorrowGetDebtAccountsByAssetResponse {
-  /**
-   * Object data
-   */
   export interface Data {
     /**
      * All debt subaccounts for the associated asset type
      */
-    accounts: Array<Data.Account>;
+    accounts: Array<SubaccountAPI.UserDebtAccountPool>;
 
     /**
      * Asset identifiers with associated metadata
      */
     asset_info: AssetsAPI.AssetInfo;
   }
-
-  export namespace Data {
-    export interface Account {
-      /**
-       * Sum open debt amount (this is simply the principal + interest)
-       */
-      debt: string;
-
-      extra: Account.Extra;
-
-      /**
-       * Account index
-       */
-      index: number;
-
-      /**
-       * Sum of accrued interest for open debt position
-       */
-      interest: string;
-
-      /**
-       * Initial amount borrowed (of debts which have not yet been repaid)
-       */
-      principal: string;
-    }
-
-    export namespace Account {
-      export interface Extra {
-        /**
-         * Human-readable field variants. Will not be null when query param `with_text` is
-         * `true`.
-         */
-        text: Extra.Text | null;
-
-        /**
-         * USD values for the corresponding amounts above. Will not be null when query
-         * param `with_value` is `true`.
-         */
-        value: Extra.Value | null;
-      }
-
-      export namespace Extra {
-        /**
-         * Human-readable field variants. Will not be null when query param `with_text` is
-         * `true`.
-         */
-        export interface Text {
-          debt: string;
-
-          interest: string;
-
-          principal: string;
-        }
-
-        /**
-         * USD values for the corresponding amounts above. Will not be null when query
-         * param `with_value` is `true`.
-         */
-        export interface Value {
-          debt: string;
-
-          extra: Value.Extra;
-
-          interest: string;
-
-          principal: string;
-        }
-
-        export namespace Value {
-          export interface Extra {
-            /**
-             * Human-readable variants of USD values. Will not be null when query params
-             * `with_text` and `with_value` are `true`.
-             */
-            text: Extra.Text | null;
-          }
-
-          export namespace Extra {
-            /**
-             * Human-readable variants of USD values. Will not be null when query params
-             * `with_text` and `with_value` are `true`.
-             */
-            export interface Text {
-              debt: string;
-
-              interest: string;
-
-              principal: string;
-            }
-          }
-        }
-      }
-    }
-  }
 }
 
+/**
+ * List data success response
+ */
 export interface BorrowGetDebtsTotalsResponse {
   /**
-   * Total number of objects in all pages
+   * Total number of objects irrespective of any pagination parameters.
    */
-  count: number | null;
+  count: number;
+
+  data: Array<SubaccountAPI.UserDebtAssetPool>;
 
   /**
-   * List contents
+   * Error data. Guaranteed `null` for successful response.
    */
-  data: Array<LendAPI.UserDebtAssetPool> | null;
+  error: null;
 
   /**
-   * Error message, if any
-   */
-  error: CoreAPI.ErrorData | null;
-
-  /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface BorrowGetPortfolioResponse {
-  /**
-   * Object data
-   */
-  data: UserBorrowMarket | null;
+  data: UserBorrowMarket;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
@@ -513,6 +341,7 @@ Borrow.Subaccount = Subaccount;
 export declare namespace Borrow {
   export {
     type UserBorrowMarket as UserBorrowMarket,
+    type UserBorrowMarketPools as UserBorrowMarketPools,
     type BorrowGetCollateralAccountsByAssetResponse as BorrowGetCollateralAccountsByAssetResponse,
     type BorrowGetCollateralTotalsResponse as BorrowGetCollateralTotalsResponse,
     type BorrowGetDebtAccountsByAssetResponse as BorrowGetDebtAccountsByAssetResponse,
@@ -529,7 +358,10 @@ export declare namespace Borrow {
     Subaccount as Subaccount,
     type UserAccountHealth as UserAccountHealth,
     type UserBorrowMarketAccount as UserBorrowMarketAccount,
+    type UserCollateralAccountPool as UserCollateralAccountPool,
     type UserCollateralAssetPool as UserCollateralAssetPool,
+    type UserDebtAccountPool as UserDebtAccountPool,
+    type UserDebtAssetPool as UserDebtAssetPool,
     type SubaccountGetSubaccountResponse as SubaccountGetSubaccountResponse,
     type SubaccountGetSubaccountCollateralsResponse as SubaccountGetSubaccountCollateralsResponse,
     type SubaccountGetSubaccountDebtsResponse as SubaccountGetSubaccountDebtsResponse,

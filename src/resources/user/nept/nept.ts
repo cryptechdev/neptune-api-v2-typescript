@@ -2,7 +2,6 @@
 
 import { APIResource } from '../../../core/resource';
 import * as NeptAPI from './nept';
-import * as CoreAPI from '../../core';
 import * as StakingAPI from './staking';
 import {
   Staking,
@@ -15,7 +14,9 @@ import {
   StakingGetUnstakingParams,
   StakingGetUnstakingResponse,
   UserStake,
+  UserStakeBondingEntry,
   UserStakePool,
+  UserStakeUnbonding,
   UserStakeUnbondingEntry,
 } from './staking';
 import { APIPromise } from '../../../core/api-promise';
@@ -37,9 +38,9 @@ export class Nept extends APIResource {
   }
 }
 
-export interface UserNeptUnlockAmounts {
+export interface UserUnlockAmounts {
   /**
-   * The full unlock amount.
+   * The full unlock amount
    *
    * This value is immutable and does not change with regards to
    * expiry/reclamation/lock states.
@@ -47,7 +48,7 @@ export interface UserNeptUnlockAmounts {
   amount: string;
 
   /**
-   * The amount currently claimable.
+   * The amount currently claimable
    *
    * This takes into account: reclamation, lock state, expiry, and previously
    * claimed. In other words, this is an accurate representation of what the user can
@@ -62,11 +63,11 @@ export interface UserNeptUnlockAmounts {
 
   /**
    * The amount that was claimable but has now expired due to the presence and
-   * subsequent passing of `expires_at`.
+   * subsequent passing of `expires_at`
    */
   expired: string;
 
-  extra: UserNeptUnlockAmounts.Extra;
+  extra: UserUnlockAmounts.Extra;
 
   /**
    * The total amount of NEPT currently awaiting unlock **NOTE:** any reclaimed
@@ -81,7 +82,7 @@ export interface UserNeptUnlockAmounts {
   reclaimed: string;
 }
 
-export namespace UserNeptUnlockAmounts {
+export namespace UserUnlockAmounts {
   export interface Extra {
     /**
      * Percentages for unlock amounts. Will not be null when query param `with_percent`
@@ -219,13 +220,13 @@ export namespace UserNeptUnlockAmounts {
   }
 }
 
-export interface UserNeptUnlockOverview {
+export interface UserUnlockOverview {
   /**
-   * -- A list of the user's active unlock arrangements
+   * A list of the user's active unlock arrangements
    */
-  arrangements: Array<UserNeptUnlockOverview.Arrangement>;
+  arrangements: Array<UserUnlockOverview.Arrangement>;
 
-  extra: UserNeptUnlockOverview.Extra;
+  extra: UserUnlockOverview.Extra;
 
   /**
    * The time at which the most recent unlock claim occurred, if any
@@ -233,12 +234,12 @@ export interface UserNeptUnlockOverview {
   last_claimed_at: string | null;
 
   /**
-   * -- Contains pre-calculated total amounts for all unlock agreements
+   * Contains pre-calculated total amounts for all unlock agreements
    */
-  totals: UserNeptUnlockAmounts;
+  totals: UserUnlockAmounts;
 }
 
-export namespace UserNeptUnlockOverview {
+export namespace UserUnlockOverview {
   export interface Arrangement {
     /**
      * The admin of the unlock, if any
@@ -248,7 +249,7 @@ export namespace UserNeptUnlockOverview {
     /**
      * Primary unlock amount and other pre-calculated/derived amounts
      */
-    amounts: NeptAPI.UserNeptUnlockAmounts;
+    amounts: NeptAPI.UserUnlockAmounts;
 
     /**
      * The time at which the unlock begins
@@ -270,7 +271,7 @@ export namespace UserNeptUnlockOverview {
     /**
      * The schedule of the unlock
      */
-    schedule: Arrangement.UnlockScheduleLinear | Arrangement.UnlockScheduleLumpSum;
+    schedule: NeptAPI.UserUnlockSchedule;
   }
 
   export namespace Arrangement {
@@ -310,52 +311,6 @@ export namespace UserNeptUnlockOverview {
         last_claimed_at: string;
       }
     }
-
-    export interface UnlockScheduleLinear {
-      /**
-       * The duration of the unlock in seconds
-       */
-      duration: number;
-
-      /**
-       * The time at which the unlock has/was/would've completed. This is identical to
-       * `begins_at + duration`.
-       *
-       * This timestamp will remain valid even if the unlock has been reclaimed.
-       * Therefore, it should not be used as a validity check.
-       */
-      ends_at: string;
-
-      extra: UnlockScheduleLinear.Extra;
-
-      kind: 'linear';
-    }
-
-    export namespace UnlockScheduleLinear {
-      export interface Extra {
-        /**
-         * Human-readable field variants. Will not be null when query param `with_text` is
-         * `true`.
-         */
-        text: Extra.Text | null;
-      }
-
-      export namespace Extra {
-        /**
-         * Human-readable field variants. Will not be null when query param `with_text` is
-         * `true`.
-         */
-        export interface Text {
-          duration: string;
-
-          ends_at: string;
-        }
-      }
-    }
-
-    export interface UnlockScheduleLumpSum {
-      kind: 'lump_sum';
-    }
   }
 
   export interface Extra {
@@ -377,24 +332,73 @@ export namespace UserNeptUnlockOverview {
   }
 }
 
+export type UserUnlockSchedule = UserUnlockScheduleLinear | UserUnlockScheduleLumpSum;
+
+export interface UserUnlockScheduleLinear {
+  /**
+   * The duration of the unlock in seconds
+   */
+  duration: number;
+
+  /**
+   * The time at which the unlock has/was/would've completed. This is identical to
+   * `begins_at + duration`.
+   *
+   * This timestamp will remain valid even if the unlock has been reclaimed.
+   * Therefore, it should not be used as a validity check.
+   */
+  ends_at: string;
+
+  extra: UserUnlockScheduleLinear.Extra;
+
+  kind: 'linear';
+}
+
+export namespace UserUnlockScheduleLinear {
+  export interface Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    text: Extra.Text | null;
+  }
+
+  export namespace Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    export interface Text {
+      duration: string;
+
+      ends_at: string;
+    }
+  }
+}
+
+export interface UserUnlockScheduleLumpSum {
+  kind: 'lump_sum';
+}
+
+/**
+ * Object data success response
+ */
 export interface NeptGetUnlocksResponse {
-  /**
-   * Object data
-   */
-  data: UserNeptUnlockOverview | null;
+  data: UserUnlockOverview;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
@@ -420,8 +424,11 @@ Nept.Staking = Staking;
 
 export declare namespace Nept {
   export {
-    type UserNeptUnlockAmounts as UserNeptUnlockAmounts,
-    type UserNeptUnlockOverview as UserNeptUnlockOverview,
+    type UserUnlockAmounts as UserUnlockAmounts,
+    type UserUnlockOverview as UserUnlockOverview,
+    type UserUnlockSchedule as UserUnlockSchedule,
+    type UserUnlockScheduleLinear as UserUnlockScheduleLinear,
+    type UserUnlockScheduleLumpSum as UserUnlockScheduleLumpSum,
     type NeptGetUnlocksResponse as NeptGetUnlocksResponse,
     type NeptGetUnlocksParams as NeptGetUnlocksParams,
   };
@@ -429,7 +436,9 @@ export declare namespace Nept {
   export {
     Staking as Staking,
     type UserStake as UserStake,
+    type UserStakeBondingEntry as UserStakeBondingEntry,
     type UserStakePool as UserStakePool,
+    type UserStakeUnbonding as UserStakeUnbonding,
     type UserStakeUnbondingEntry as UserStakeUnbondingEntry,
     type StakingGetOverviewResponse as StakingGetOverviewResponse,
     type StakingGetStakingPoolResponse as StakingGetStakingPoolResponse,

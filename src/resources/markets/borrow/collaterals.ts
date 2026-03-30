@@ -2,7 +2,6 @@
 
 import { APIResource } from '../../../core/resource';
 import * as AssetsAPI from '../../assets';
-import * as CoreAPI from '../../core';
 import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
 
@@ -143,6 +142,18 @@ export interface BorrowCollateralMarket {
   state: BorrowCollateralState;
 }
 
+export interface BorrowCollateralMarketData {
+  /**
+   * Collateral configuration parameters
+   */
+  config: BorrowCollateralConfig;
+
+  /**
+   * Current collateral state
+   */
+  state: BorrowCollateralState;
+}
+
 export interface BorrowCollateralState {
   balance: string;
 
@@ -210,51 +221,53 @@ export namespace BorrowCollateralState {
   }
 }
 
+/**
+ * List data success response
+ */
 export interface CollateralListResponse {
   /**
-   * Total number of objects in all pages
+   * Total number of objects irrespective of any pagination parameters.
    */
-  count: number | null;
+  count: number;
+
+  data: Array<BorrowCollateralMarket>;
 
   /**
-   * List contents
+   * Error data. Guaranteed `null` for successful response.
    */
-  data: Array<BorrowCollateralMarket> | null;
+  error: null;
 
   /**
-   * Error message, if any
-   */
-  error: CoreAPI.ErrorData | null;
-
-  /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface CollateralGetByAssetResponse {
-  /**
-   * Object data
-   */
-  data: BorrowCollateralMarket | null;
+  data: BorrowCollateralMarket;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
@@ -292,6 +305,7 @@ export declare namespace Collaterals {
   export {
     type BorrowCollateralConfig as BorrowCollateralConfig,
     type BorrowCollateralMarket as BorrowCollateralMarket,
+    type BorrowCollateralMarketData as BorrowCollateralMarketData,
     type BorrowCollateralState as BorrowCollateralState,
     type CollateralListResponse as CollateralListResponse,
     type CollateralGetByAssetResponse as CollateralGetByAssetResponse,

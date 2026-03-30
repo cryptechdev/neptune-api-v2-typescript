@@ -3,7 +3,6 @@
 import { APIResource } from '../../core/resource';
 import * as WalletAPI from './wallet';
 import * as AssetsAPI from '../assets';
-import * as CoreAPI from '../core';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -69,6 +68,8 @@ export namespace UserWalletPortfolio {
     }
   }
 }
+
+export type WalletAsset = WalletAssetKnown | WalletAssetUnknown;
 
 export interface WalletAssetKnown {
   /**
@@ -147,6 +148,15 @@ export namespace WalletAssetKnown {
   }
 }
 
+export interface WalletAssetUnknown {
+  /**
+   * Wallet balance in native denom.
+   */
+  amount: string;
+
+  kind: 'unknown';
+}
+
 export interface WalletBalance {
   /**
    * Provides a unique identifier for an asset for use throughout the Neptune API.
@@ -157,68 +167,56 @@ export interface WalletBalance {
   /**
    * Derived values and amounts.
    */
-  values: WalletAssetKnown | WalletBalance.WalletAssetUnknown;
+  values: WalletAsset;
 }
 
-export namespace WalletBalance {
-  export interface WalletAssetUnknown {
-    /**
-     * Wallet balance in native denom.
-     */
-    amount: string;
-
-    kind: 'unknown';
-  }
-}
-
+/**
+ * Object data success response
+ */
 export interface WalletGetBalanceByAssetResponse {
-  /**
-   * Object data
-   */
-  data: WalletBalance | null;
+  data: WalletBalance;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface WalletGetBalancesResponse {
-  /**
-   * Object data
-   */
-  data: WalletGetBalancesResponse.Data | null;
+  data: WalletGetBalancesResponse.Data;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
 export namespace WalletGetBalancesResponse {
-  /**
-   * Object data
-   */
   export interface Data {
     /**
      * Array of each wallet balance
@@ -232,7 +230,7 @@ export namespace WalletGetBalancesResponse {
      * **NOTE:** this only accounts for assets which are internally known & tracked.
      * See the `/assets` endpoint for a list of supported assets.
      */
-    total_value?: string | null;
+    total_value: string | null;
   }
 }
 
@@ -268,7 +266,9 @@ export interface WalletGetBalancesParams {
 export declare namespace Wallet {
   export {
     type UserWalletPortfolio as UserWalletPortfolio,
+    type WalletAsset as WalletAsset,
     type WalletAssetKnown as WalletAssetKnown,
+    type WalletAssetUnknown as WalletAssetUnknown,
     type WalletBalance as WalletBalance,
     type WalletGetBalanceByAssetResponse as WalletGetBalanceByAssetResponse,
     type WalletGetBalancesResponse as WalletGetBalancesResponse,

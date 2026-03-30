@@ -2,8 +2,7 @@
 
 import { APIResource } from '../../../core/resource';
 import * as AssetsAPI from '../../assets';
-import * as CoreAPI from '../../core';
-import * as LendAPI from '../lend';
+import * as MarketsAPI from '../markets';
 import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
 
@@ -124,7 +123,24 @@ export interface BorrowDebtMarket {
   /**
    * Market rates
    */
-  rate: LendAPI.MarketRate | null;
+  rate: MarketsAPI.MarketRate | null;
+
+  /**
+   * Current debt market state
+   */
+  state: BorrowDebtState;
+}
+
+export interface BorrowDebtMarketData {
+  /**
+   * Debt market configuration parameters
+   */
+  config: BorrowDebtConfig;
+
+  /**
+   * Market rates
+   */
+  rate: MarketsAPI.MarketRate | null;
 
   /**
    * Current debt market state
@@ -233,51 +249,53 @@ export namespace BorrowDebtState {
   }
 }
 
+/**
+ * List data success response
+ */
 export interface DebtListResponse {
   /**
-   * Total number of objects in all pages
+   * Total number of objects irrespective of any pagination parameters.
    */
-  count: number | null;
+  count: number;
+
+  data: Array<BorrowDebtMarket>;
 
   /**
-   * List contents
+   * Error data. Guaranteed `null` for successful response.
    */
-  data: Array<BorrowDebtMarket> | null;
+  error: null;
 
   /**
-   * Error message, if any
-   */
-  error: CoreAPI.ErrorData | null;
-
-  /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface DebtGetByAssetResponse {
-  /**
-   * Object data
-   */
-  data: BorrowDebtMarket | null;
+  data: BorrowDebtMarket;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
@@ -315,6 +333,7 @@ export declare namespace Debts {
   export {
     type BorrowDebtConfig as BorrowDebtConfig,
     type BorrowDebtMarket as BorrowDebtMarket,
+    type BorrowDebtMarketData as BorrowDebtMarketData,
     type BorrowDebtState as BorrowDebtState,
     type DebtListResponse as DebtListResponse,
     type DebtGetByAssetResponse as DebtGetByAssetResponse,

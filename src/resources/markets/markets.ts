@@ -3,10 +3,9 @@
 import { APIResource } from '../../core/resource';
 import * as MarketsAPI from './markets';
 import * as AssetsAPI from '../assets';
-import * as CoreAPI from '../core';
 import * as LendAPI from './lend';
 import {
-  Lend as LendAPILend,
+  Lend,
   LendGetByAssetParams,
   LendGetByAssetResponse,
   LendGetRateHistoryParams,
@@ -14,8 +13,8 @@ import {
   LendListParams,
   LendListResponse,
   LendMarket,
+  LendMarketData,
   LendMarketState,
-  MarketRate,
 } from './lend';
 import * as BorrowAPI from './borrow/borrow';
 import {
@@ -73,82 +72,6 @@ export class Markets extends APIResource {
     options?: RequestOptions,
   ): APIPromise<MarketGetParamsResponse> {
     return this._client.get('/api/v1/markets/config', { query, ...options });
-  }
-}
-
-/**
- * Historical rates for assets
- */
-export interface AssetRateHistory {
-  /**
-   * Values used for paginating the time series data
-   */
-  pagination: AssetRateHistory.Pagination;
-
-  /**
-   * Provides values for the requested range in it's entire width, regardless of
-   * page/limit.
-   */
-  range: AssetRateHistory.Range;
-
-  /**
-   * Pairs of items and their associated points
-   */
-  series: Array<AssetRateHistory.Series>;
-}
-
-export namespace AssetRateHistory {
-  /**
-   * Values used for paginating the time series data
-   */
-  export interface Pagination {
-    /**
-     * The total number of intervals/buckets for the provided interval parameters
-     * (size, period, start, end)
-     */
-    interval_count: number;
-
-    /**
-     * The offset a client should use to fetch the next page of intervals (so long as
-     * limit remains unchanged)
-     */
-    next_offset: number | null;
-  }
-
-  /**
-   * Provides values for the requested range in it's entire width, regardless of
-   * page/limit.
-   */
-  export interface Range {
-    end: string;
-
-    /**
-     * Interval period & size
-     */
-    interval: CoreAPI.Interval;
-
-    start: string;
-  }
-
-  export interface Series {
-    /**
-     * Provides a unique identifier for an asset for use throughout the Neptune API.
-     * IDs are unique across asset domains (contract tokens, native denoms, etc)
-     */
-    asset: AssetsAPI.AssetSpec;
-
-    points: Array<Series.Point>;
-  }
-
-  export namespace Series {
-    /**
-     * Time + value pair representing a point in time for use with time series
-     */
-    export interface Point {
-      t: string;
-
-      v: string | null;
-    }
   }
 }
 
@@ -254,6 +177,42 @@ export namespace GlobalMarketConfig {
   }
 }
 
+export interface MarketRate {
+  /**
+   * Market rate in APR standard as a decimal percentage
+   */
+  apr: string;
+
+  /**
+   * Market rate in APY standard as a decimal percentage
+   */
+  apy: string;
+
+  extra: MarketRate.Extra;
+}
+
+export namespace MarketRate {
+  export interface Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    text: Extra.Text | null;
+  }
+
+  export namespace Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    export interface Text {
+      apr: string;
+
+      apy: string;
+    }
+  }
+}
+
 /**
  * Data for all of an assets markets
  */
@@ -266,146 +225,97 @@ export interface MergedMarket {
   /**
    * Info for asset as collateral for borrow market, if one exists
    */
-  borrow_collateral: MergedMarket.BorrowCollateral | null;
+  borrow_collateral: CollateralsAPI.BorrowCollateralMarketData | null;
 
   /**
    * Info for asset as debt for borrow market, if one exists
    */
-  borrow_debt: MergedMarket.BorrowDebt | null;
+  borrow_debt: DebtsAPI.BorrowDebtMarketData | null;
 
   /**
    * Info for asset's lending market, if one exists
    */
-  lend: MergedMarket.Lend | null;
+  lend: LendAPI.LendMarketData | null;
 }
 
-export namespace MergedMarket {
-  /**
-   * Info for asset as collateral for borrow market, if one exists
-   */
-  export interface BorrowCollateral {
-    /**
-     * Collateral configuration parameters
-     */
-    config: CollateralsAPI.BorrowCollateralConfig;
-
-    /**
-     * Current collateral state
-     */
-    state: CollateralsAPI.BorrowCollateralState;
-  }
-
-  /**
-   * Info for asset as debt for borrow market, if one exists
-   */
-  export interface BorrowDebt {
-    /**
-     * Debt market configuration parameters
-     */
-    config: DebtsAPI.BorrowDebtConfig;
-
-    /**
-     * Market rates
-     */
-    rate: LendAPI.MarketRate | null;
-
-    /**
-     * Current debt market state
-     */
-    state: DebtsAPI.BorrowDebtState;
-  }
-
-  /**
-   * Info for asset's lending market, if one exists
-   */
-  export interface Lend {
-    /**
-     * Lending market rates
-     */
-    rate: LendAPI.MarketRate | null;
-
-    /**
-     * Current lending market state
-     */
-    state: LendAPI.LendMarketState;
-  }
-}
-
+/**
+ * List data success response
+ */
 export interface MarketGetMergedResponse {
   /**
-   * Total number of objects in all pages
+   * Total number of objects irrespective of any pagination parameters.
    */
-  count: number | null;
+  count: number;
+
+  data: Array<MergedMarket>;
 
   /**
-   * List contents
+   * Error data. Guaranteed `null` for successful response.
    */
-  data: Array<MergedMarket> | null;
+  error: null;
 
   /**
-   * Error message, if any
-   */
-  error: CoreAPI.ErrorData | null;
-
-  /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface MarketGetMergedByAssetResponse {
   /**
    * Data for all of an assets markets
    */
-  data: MergedMarket | null;
+  data: MergedMarket;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface MarketGetOverviewResponse {
-  /**
-   * Object data
-   */
-  data: MarketGetOverviewResponse.Data | null;
+  data: MarketGetOverviewResponse.Data;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
 export namespace MarketGetOverviewResponse {
-  /**
-   * Object data
-   */
   export interface Data {
     /**
      * Borrow market overview
@@ -424,24 +334,25 @@ export namespace MarketGetOverviewResponse {
   }
 }
 
+/**
+ * Object data success response
+ */
 export interface MarketGetParamsResponse {
-  /**
-   * Object data
-   */
-  data: GlobalMarketConfig | null;
+  data: GlobalMarketConfig;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
@@ -494,13 +405,13 @@ export interface MarketGetParamsParams {
   with_text?: boolean;
 }
 
-Markets.Lend = LendAPILend;
+Markets.Lend = Lend;
 Markets.Borrow = Borrow;
 
 export declare namespace Markets {
   export {
-    type AssetRateHistory as AssetRateHistory,
     type GlobalMarketConfig as GlobalMarketConfig,
+    type MarketRate as MarketRate,
     type MergedMarket as MergedMarket,
     type MarketGetMergedResponse as MarketGetMergedResponse,
     type MarketGetMergedByAssetResponse as MarketGetMergedByAssetResponse,
@@ -513,10 +424,10 @@ export declare namespace Markets {
   };
 
   export {
-    LendAPILend as Lend,
+    Lend as Lend,
     type LendMarket as LendMarket,
+    type LendMarketData as LendMarketData,
     type LendMarketState as LendMarketState,
-    type MarketRate as MarketRate,
     type LendListResponse as LendListResponse,
     type LendGetByAssetResponse as LendGetByAssetResponse,
     type LendGetRateHistoryResponse as LendGetRateHistoryResponse,

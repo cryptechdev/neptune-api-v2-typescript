@@ -145,6 +145,197 @@ export interface AssetMetadata {
 }
 
 /**
+ * > **Note**: Prices are sourced from Neptune's Price Oracle
+ */
+export interface AssetPrice {
+  extra: AssetPrice.Extra;
+
+  /**
+   * Asset price value, as per Neptune Price Oracle
+   */
+  last_updated_at: string;
+
+  /**
+   * Asset price
+   */
+  price: string;
+}
+
+export namespace AssetPrice {
+  export interface Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with-text` is
+     * `true`.
+     */
+    text: Extra.Text | null;
+  }
+
+  export namespace Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with-text` is
+     * `true`.
+     */
+    export interface Text {
+      last_updated_at: string;
+
+      price: string;
+    }
+  }
+}
+
+/**
+ * Historical prices for assets
+ */
+export interface AssetPriceHistory {
+  /**
+   * Values used for paginating the time series data
+   */
+  pagination: AssetPriceHistory.Pagination;
+
+  /**
+   * Provides values for the requested range in it's entire width, regardless of
+   * page/limit.
+   */
+  range: AssetPriceHistory.Range;
+
+  /**
+   * Pairs of items and their associated points
+   */
+  series: Array<AssetPriceHistory.Series>;
+}
+
+export namespace AssetPriceHistory {
+  /**
+   * Values used for paginating the time series data
+   */
+  export interface Pagination {
+    /**
+     * The total number of intervals/buckets for the provided interval parameters
+     * (size, period, start, end)
+     */
+    interval_count: number;
+
+    /**
+     * The offset a client should use to fetch the next page of intervals (so long as
+     * limit remains unchanged)
+     */
+    next_offset: number | null;
+  }
+
+  /**
+   * Provides values for the requested range in it's entire width, regardless of
+   * page/limit.
+   */
+  export interface Range {
+    end: string;
+
+    /**
+     * Interval period & size
+     */
+    interval: CoreAPI.Interval;
+
+    start: string;
+  }
+
+  export interface Series {
+    /**
+     * Provides a unique identifier for an asset for use throughout the Neptune API.
+     * IDs are unique across asset domains (contract tokens, native denoms, etc)
+     */
+    asset: AssetsAPI.AssetSpec;
+
+    points: Array<Series.Point>;
+  }
+
+  export namespace Series {
+    /**
+     * Time + value pair representing a point in time for use with time series
+     */
+    export interface Point {
+      t: string;
+
+      v: string | null;
+    }
+  }
+}
+
+/**
+ * Historical rates for assets
+ */
+export interface AssetRateHistory {
+  /**
+   * Values used for paginating the time series data
+   */
+  pagination: AssetRateHistory.Pagination;
+
+  /**
+   * Provides values for the requested range in it's entire width, regardless of
+   * page/limit.
+   */
+  range: AssetRateHistory.Range;
+
+  /**
+   * Pairs of items and their associated points
+   */
+  series: Array<AssetRateHistory.Series>;
+}
+
+export namespace AssetRateHistory {
+  /**
+   * Values used for paginating the time series data
+   */
+  export interface Pagination {
+    /**
+     * The total number of intervals/buckets for the provided interval parameters
+     * (size, period, start, end)
+     */
+    interval_count: number;
+
+    /**
+     * The offset a client should use to fetch the next page of intervals (so long as
+     * limit remains unchanged)
+     */
+    next_offset: number | null;
+  }
+
+  /**
+   * Provides values for the requested range in it's entire width, regardless of
+   * page/limit.
+   */
+  export interface Range {
+    end: string;
+
+    /**
+     * Interval period & size
+     */
+    interval: CoreAPI.Interval;
+
+    start: string;
+  }
+
+  export interface Series {
+    /**
+     * Provides a unique identifier for an asset for use throughout the Neptune API.
+     * IDs are unique across asset domains (contract tokens, native denoms, etc)
+     */
+    asset: AssetsAPI.AssetSpec;
+
+    points: Array<Series.Point>;
+  }
+
+  export namespace Series {
+    /**
+     * Time + value pair representing a point in time for use with time series
+     */
+    export interface Point {
+      t: string;
+
+      v: string | null;
+    }
+  }
+}
+
+/**
  * Provides a unique identifier for an asset for use throughout the Neptune API.
  * IDs are unique across asset domains (contract tokens, native denoms, etc)
  */
@@ -156,156 +347,84 @@ export interface AssetSpec {
   group_key: string;
 }
 
+/**
+ * List data success response
+ */
 export interface AssetListResponse {
   /**
-   * Total number of objects in all pages
+   * Total number of objects irrespective of any pagination parameters.
    */
-  count: number | null;
+  count: number;
+
+  data: Array<AssetInfo>;
 
   /**
-   * List contents
+   * Error data. Guaranteed `null` for successful response.
    */
-  data: Array<AssetInfo> | null;
+  error: null;
 
   /**
-   * Error message, if any
-   */
-  error: CoreAPI.ErrorData | null;
-
-  /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface AssetGetPriceHistoryResponse {
   /**
    * Historical prices for assets
    */
-  data: AssetGetPriceHistoryResponse.Data | null;
+  data: AssetPriceHistory;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
-export namespace AssetGetPriceHistoryResponse {
-  /**
-   * Historical prices for assets
-   */
-  export interface Data {
-    /**
-     * Values used for paginating the time series data
-     */
-    pagination: Data.Pagination;
-
-    /**
-     * Provides values for the requested range in it's entire width, regardless of
-     * page/limit.
-     */
-    range: Data.Range;
-
-    /**
-     * Pairs of items and their associated points
-     */
-    series: Array<Data.Series>;
-  }
-
-  export namespace Data {
-    /**
-     * Values used for paginating the time series data
-     */
-    export interface Pagination {
-      /**
-       * The total number of intervals/buckets for the provided interval parameters
-       * (size, period, start, end)
-       */
-      interval_count: number;
-
-      /**
-       * The offset a client should use to fetch the next page of intervals (so long as
-       * limit remains unchanged)
-       */
-      next_offset: number | null;
-    }
-
-    /**
-     * Provides values for the requested range in it's entire width, regardless of
-     * page/limit.
-     */
-    export interface Range {
-      end: string;
-
-      /**
-       * Interval period & size
-       */
-      interval: CoreAPI.Interval;
-
-      start: string;
-    }
-
-    export interface Series {
-      /**
-       * Provides a unique identifier for an asset for use throughout the Neptune API.
-       * IDs are unique across asset domains (contract tokens, native denoms, etc)
-       */
-      asset: AssetsAPI.AssetSpec;
-
-      points: Array<Series.Point>;
-    }
-
-    export namespace Series {
-      /**
-       * Time + value pair representing a point in time for use with time series
-       */
-      export interface Point {
-        t: string;
-
-        v: string | null;
-      }
-    }
-  }
-}
-
+/**
+ * List data success response
+ */
 export interface AssetListPricesResponse {
   /**
-   * Total number of objects in all pages
+   * Total number of objects irrespective of any pagination parameters.
    */
-  count: number | null;
+  count: number;
+
+  data: Array<AssetListPricesResponse.Data>;
 
   /**
-   * List contents
+   * Error data. Guaranteed `null` for successful response.
    */
-  data: Array<AssetListPricesResponse.Data> | null;
+  error: null;
 
   /**
-   * Error message, if any
-   */
-  error: CoreAPI.ErrorData | null;
-
-  /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
@@ -342,48 +461,7 @@ export namespace AssetListPricesResponse {
     /**
      * > **Note**: Prices are sourced from Neptune's Price Oracle
      */
-    price: Data.Price;
-  }
-
-  export namespace Data {
-    /**
-     * > **Note**: Prices are sourced from Neptune's Price Oracle
-     */
-    export interface Price {
-      extra: Price.Extra;
-
-      /**
-       * Asset price value, as per Neptune Price Oracle
-       */
-      last_updated_at: string;
-
-      /**
-       * Asset price
-       */
-      price: string;
-    }
-
-    export namespace Price {
-      export interface Extra {
-        /**
-         * Human-readable field variants. Will not be null when query param `with-text` is
-         * `true`.
-         */
-        text: Extra.Text | null;
-      }
-
-      export namespace Extra {
-        /**
-         * Human-readable field variants. Will not be null when query param `with-text` is
-         * `true`.
-         */
-        export interface Text {
-          last_updated_at: string;
-
-          price: string;
-        }
-      }
-    }
+    price: AssetsAPI.AssetPrice;
   }
 }
 
@@ -421,7 +499,7 @@ export interface AssetGetPriceHistoryParams {
    * Optional comma-separated list of asset IDs to filter for. If excluded, values
    * will be returned for all assets.
    */
-  asset_ids?: string;
+  asset_ids?: string | null;
 
   /**
    * Interval value
@@ -459,6 +537,9 @@ export declare namespace Assets {
     type AssetClassification as AssetClassification,
     type AssetInfo as AssetInfo,
     type AssetMetadata as AssetMetadata,
+    type AssetPrice as AssetPrice,
+    type AssetPriceHistory as AssetPriceHistory,
+    type AssetRateHistory as AssetRateHistory,
     type AssetSpec as AssetSpec,
     type AssetListResponse as AssetListResponse,
     type AssetGetPriceHistoryResponse as AssetGetPriceHistoryResponse,

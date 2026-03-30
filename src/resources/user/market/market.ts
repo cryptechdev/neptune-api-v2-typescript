@@ -2,7 +2,6 @@
 
 import { APIResource } from '../../../core/resource';
 import * as AssetsAPI from '../../assets';
-import * as CoreAPI from '../../core';
 import * as LendAPI from './lend';
 import {
   Lend as LendAPILend,
@@ -10,7 +9,7 @@ import {
   LendGetByAssetResponse,
   LendListParams,
   LendListResponse,
-  UserDebtAssetPool,
+  UserLendMarket,
 } from './lend';
 import * as BorrowAPI from './borrow/borrow';
 import {
@@ -26,6 +25,7 @@ import {
   BorrowGetPortfolioParams,
   BorrowGetPortfolioResponse,
   UserBorrowMarket,
+  UserBorrowMarketPools,
 } from './borrow/borrow';
 import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
@@ -79,19 +79,7 @@ export interface UserMarket {
   /**
    * Overview of user lending portfolio
    */
-  lend: UserMarket.Lend;
-}
-
-export namespace UserMarket {
-  /**
-   * Overview of user lending portfolio
-   */
-  export interface Lend {
-    /**
-     * User lending allocations
-     */
-    asset_pools: Array<LendAPI.UserDebtAssetPool>;
-  }
+  lend: LendAPI.UserLendMarket;
 }
 
 export interface UserMergedMarket {
@@ -370,73 +358,76 @@ export namespace UserMergedMarket {
   }
 }
 
+/**
+ * List data success response
+ */
 export interface MarketGetMergedResponse {
   /**
-   * Total number of objects in all pages
+   * Total number of objects irrespective of any pagination parameters.
    */
-  count: number | null;
+  count: number;
+
+  data: Array<UserMergedMarket>;
 
   /**
-   * List contents
+   * Error data. Guaranteed `null` for successful response.
    */
-  data: Array<UserMergedMarket> | null;
+  error: null;
 
   /**
-   * Error message, if any
-   */
-  error: CoreAPI.ErrorData | null;
-
-  /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface MarketGetMergedByAssetResponse {
-  /**
-   * Object data
-   */
-  data: UserMergedMarket | null;
+  data: UserMergedMarket;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface MarketGetPortfolioResponse {
-  /**
-   * Object data
-   */
-  data: UserMarket | null;
+  data: UserMarket;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
@@ -499,7 +490,7 @@ export declare namespace Market {
 
   export {
     LendAPILend as Lend,
-    type UserDebtAssetPool as UserDebtAssetPool,
+    type UserLendMarket as UserLendMarket,
     type LendListResponse as LendListResponse,
     type LendGetByAssetResponse as LendGetByAssetResponse,
     type LendListParams as LendListParams,
@@ -509,6 +500,7 @@ export declare namespace Market {
   export {
     Borrow as Borrow,
     type UserBorrowMarket as UserBorrowMarket,
+    type UserBorrowMarketPools as UserBorrowMarketPools,
     type BorrowGetCollateralAccountsByAssetResponse as BorrowGetCollateralAccountsByAssetResponse,
     type BorrowGetCollateralTotalsResponse as BorrowGetCollateralTotalsResponse,
     type BorrowGetDebtAccountsByAssetResponse as BorrowGetDebtAccountsByAssetResponse,

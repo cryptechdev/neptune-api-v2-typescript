@@ -3,7 +3,6 @@
 import { APIResource } from '../../../core/resource';
 import * as StakingAPI from './staking';
 import * as AssetsAPI from '../../assets';
-import * as CoreAPI from '../../core';
 import * as NeptAPI from '../../nept';
 import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
@@ -90,7 +89,7 @@ export interface UserStake {
   /**
    * User unstake/unbonding data
    */
-  unbonding: UserStake.Unbonding;
+  unbonding: UserStakeUnbonding;
 
   unclaimed: string;
 }
@@ -167,81 +166,80 @@ export namespace UserStake {
       }
     }
   }
+}
+
+export interface UserStakeBondingEntry {
+  /**
+   * User account index
+   */
+  account_index: number;
 
   /**
-   * User unstake/unbonding data
+   * Bonding amount
    */
-  export interface Unbonding {
+  amount: string;
+
+  cascade: boolean;
+
+  extra: UserStakeBondingEntry.Extra;
+
+  last_stake_acc: string;
+
+  transition_at: string | null;
+}
+
+export namespace UserStakeBondingEntry {
+  export interface Extra {
     /**
-     * Total amount of all unbond entries
-     *
-     * **NOTE:** this value is affected by active filters, if any (e.g. filtering over
-     * account index)
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
      */
-    amount_sum: string;
+    text: Extra.Text | null;
 
     /**
-     * Unbonding/unstake entries
-     *
-     * **NOTE:** cascade unbondings from pool >= 2 are contained in the bondings list
-     * of the lower adjacent pool from which the unbond occurred.
+     * USD values for the corresponding amounts above. Will not be null when query
+     * param `with_value` is `true`.
      */
-    contents: Array<StakingAPI.UserStakeUnbondingEntry>;
-
-    extra: Unbonding.Extra;
+    value: Extra.Value | null;
   }
 
-  export namespace Unbonding {
-    export interface Extra {
-      /**
-       * Human-readable field variants. Will not be null when query param `with_text` is
-       * `true`.
-       */
-      text: Extra.Text | null;
+  export namespace Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    export interface Text {
+      amount: string;
 
-      /**
-       * USD values for the corresponding amounts above. Will not be null when query
-       * param `with_value` is `true`.
-       */
-      value: Extra.Value | null;
+      transition_at: string;
     }
 
-    export namespace Extra {
-      /**
-       * Human-readable field variants. Will not be null when query param `with_text` is
-       * `true`.
-       */
-      export interface Text {
-        amount_sum: string;
+    /**
+     * USD values for the corresponding amounts above. Will not be null when query
+     * param `with_value` is `true`.
+     */
+    export interface Value {
+      amount: string;
+
+      extra: Value.Extra;
+    }
+
+    export namespace Value {
+      export interface Extra {
+        /**
+         * Human-readable variants of USD values. Will not be null when query params
+         * `with_text` and `with_value` are `true`.
+         */
+        text: Extra.Text | null;
       }
 
-      /**
-       * USD values for the corresponding amounts above. Will not be null when query
-       * param `with_value` is `true`.
-       */
-      export interface Value {
-        amount_sum: string;
-
-        extra: Value.Extra;
-      }
-
-      export namespace Value {
-        export interface Extra {
-          /**
-           * Human-readable variants of USD values. Will not be null when query params
-           * `with_text` and `with_value` are `true`.
-           */
-          text: Extra.Text | null;
-        }
-
-        export namespace Extra {
-          /**
-           * Human-readable variants of USD values. Will not be null when query params
-           * `with_text` and `with_value` are `true`.
-           */
-          export interface Text {
-            amount_sum: string;
-          }
+      export namespace Extra {
+        /**
+         * Human-readable variants of USD values. Will not be null when query params
+         * `with_text` and `with_value` are `true`.
+         */
+        export interface Text {
+          amount: string;
         }
       }
     }
@@ -267,90 +265,88 @@ export interface UserStakePool {
    *
    * **NOTE:** entries that differ only in amount are merged upon creation
    */
-  contents: Array<UserStakePool.Content>;
+  contents: Array<UserStakeBondingEntry>;
 
   extra: UserStakePool.Extra;
 }
 
 export namespace UserStakePool {
-  export interface Content {
+  export interface Extra {
     /**
-     * User account index
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
      */
-    account_index: number;
+    text: Extra.Text | null;
 
     /**
-     * Bonding amount
+     * USD values for the corresponding amounts above. Will not be null when query
+     * param `with_value` is `true`.
      */
-    amount: string;
-
-    cascade: boolean;
-
-    extra: Content.Extra;
-
-    last_stake_acc: string;
-
-    transition_at: string | null;
+    value: Extra.Value | null;
   }
 
-  export namespace Content {
-    export interface Extra {
-      /**
-       * Human-readable field variants. Will not be null when query param `with_text` is
-       * `true`.
-       */
-      text: Extra.Text | null;
-
-      /**
-       * USD values for the corresponding amounts above. Will not be null when query
-       * param `with_value` is `true`.
-       */
-      value: Extra.Value | null;
+  export namespace Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    export interface Text {
+      amount_sum: string;
     }
 
-    export namespace Extra {
-      /**
-       * Human-readable field variants. Will not be null when query param `with_text` is
-       * `true`.
-       */
-      export interface Text {
-        amount: string;
+    /**
+     * USD values for the corresponding amounts above. Will not be null when query
+     * param `with_value` is `true`.
+     */
+    export interface Value {
+      amount_sum: string;
 
-        transition_at: string;
+      extra: Value.Extra;
+    }
+
+    export namespace Value {
+      export interface Extra {
+        /**
+         * Human-readable variants of USD values. Will not be null when query params
+         * `with_text` and `with_value` are `true`.
+         */
+        text: Extra.Text | null;
       }
 
-      /**
-       * USD values for the corresponding amounts above. Will not be null when query
-       * param `with_value` is `true`.
-       */
-      export interface Value {
-        amount: string;
-
-        extra: Value.Extra;
-      }
-
-      export namespace Value {
-        export interface Extra {
-          /**
-           * Human-readable variants of USD values. Will not be null when query params
-           * `with_text` and `with_value` are `true`.
-           */
-          text: Extra.Text | null;
-        }
-
-        export namespace Extra {
-          /**
-           * Human-readable variants of USD values. Will not be null when query params
-           * `with_text` and `with_value` are `true`.
-           */
-          export interface Text {
-            amount: string;
-          }
+      export namespace Extra {
+        /**
+         * Human-readable variants of USD values. Will not be null when query params
+         * `with_text` and `with_value` are `true`.
+         */
+        export interface Text {
+          amount_sum: string;
         }
       }
     }
   }
+}
 
+export interface UserStakeUnbonding {
+  /**
+   * Total amount of all unbond entries
+   *
+   * **NOTE:** this value is affected by active filters, if any (e.g. filtering over
+   * account index)
+   */
+  amount_sum: string;
+
+  /**
+   * Unbonding/unstake entries
+   *
+   * **NOTE:** cascade unbondings from pool >= 2 are contained in the bondings list
+   * of the lower adjacent pool from which the unbond occurred.
+   */
+  contents: Array<UserStakeUnbondingEntry>;
+
+  extra: UserStakeUnbonding.Extra;
+}
+
+export namespace UserStakeUnbonding {
   export interface Extra {
     /**
      * Human-readable field variants. Will not be null when query param `with_text` is
@@ -478,103 +474,104 @@ export namespace UserStakeUnbondingEntry {
   }
 }
 
+/**
+ * Object data success response
+ */
 export interface StakingGetOverviewResponse {
-  /**
-   * Object data
-   */
-  data: UserStake | null;
+  data: UserStake;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface StakingGetStakingPoolResponse {
-  /**
-   * Object data
-   */
-  data: UserStakePool | null;
+  data: UserStakePool;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * List data success response
+ */
 export interface StakingGetStakingPoolsResponse {
   /**
-   * Total number of objects in all pages
+   * Total number of objects irrespective of any pagination parameters.
    */
-  count: number | null;
+  count: number;
+
+  data: Array<UserStakePool>;
 
   /**
-   * List contents
+   * Error data. Guaranteed `null` for successful response.
    */
-  data: Array<UserStakePool> | null;
+  error: null;
 
   /**
-   * Error message, if any
-   */
-  error: CoreAPI.ErrorData | null;
-
-  /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface StakingGetUnstakingResponse {
-  /**
-   * Object data
-   */
-  data: StakingGetUnstakingResponse.Data | null;
+  data: StakingGetUnstakingResponse.Data;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
 export namespace StakingGetUnstakingResponse {
-  /**
-   * Object data
-   */
   export interface Data {
     /**
      * Total amount of all unbond entries
@@ -659,7 +656,9 @@ export interface StakingGetUnstakingParams {
 export declare namespace Staking {
   export {
     type UserStake as UserStake,
+    type UserStakeBondingEntry as UserStakeBondingEntry,
     type UserStakePool as UserStakePool,
+    type UserStakeUnbonding as UserStakeUnbonding,
     type UserStakeUnbondingEntry as UserStakeUnbondingEntry,
     type StakingGetOverviewResponse as StakingGetOverviewResponse,
     type StakingGetStakingPoolResponse as StakingGetStakingPoolResponse,

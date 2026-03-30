@@ -26,10 +26,27 @@ import {
   AssetListPricesResponse,
   AssetListResponse,
   AssetMetadata,
+  AssetPrice,
+  AssetPriceHistory,
+  AssetRateHistory,
   AssetSpec,
   Assets,
 } from './resources/assets';
-import { Core, ErrorData, Interval, IntervalUnit } from './resources/core';
+import {
+  Core,
+  ErrorData,
+  ErrorDataVariants,
+  ErrorKind,
+  ErrorResponseVariants,
+  ErrorScope,
+  FieldValidationError,
+  Interval,
+  IntervalUnit,
+  ListErrorResponse,
+  ObjErrorResponse,
+  ValidationErrorData,
+  ValidationFieldSource,
+} from './resources/core';
 import {
   Nept,
   NeptGetParamsParams,
@@ -38,6 +55,9 @@ import {
   NeptGetStakingOverviewResponse,
   NeptGetStateParams,
   NeptGetStateResponse,
+  NeptParams,
+  NeptState,
+  NeptUnlockDistributionGroup,
   StakingPoolFull,
   StakingPoolParams,
   StakingPoolState,
@@ -46,7 +66,6 @@ import { Status, StatusCheckHealthResponse } from './resources/status';
 import { Analytics } from './resources/analytics/analytics';
 import { Integrations } from './resources/integrations/integrations';
 import {
-  AssetRateHistory,
   GlobalMarketConfig,
   MarketGetMergedByAssetParams,
   MarketGetMergedByAssetResponse,
@@ -56,6 +75,7 @@ import {
   MarketGetOverviewResponse,
   MarketGetParamsParams,
   MarketGetParamsResponse,
+  MarketRate,
   Markets,
   MergedMarket,
 } from './resources/markets/markets';
@@ -66,6 +86,8 @@ import {
   UserGetTxHistoryResponse,
   UserGetUserParams,
   UserGetUserResponse,
+  UserResource,
+  UserTx,
 } from './resources/user/user';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
@@ -270,8 +292,9 @@ export class NeptuneAPIV2 {
       : new URL(baseURL + (baseURL.endsWith('/') && path.startsWith('/') ? path.slice(1) : path));
 
     const defaultQuery = this.defaultQuery();
-    if (!isEmptyObj(defaultQuery)) {
-      query = { ...defaultQuery, ...query };
+    const pathQuery = Object.fromEntries(url.searchParams);
+    if (!isEmptyObj(defaultQuery) || !isEmptyObj(pathQuery)) {
+      query = { ...pathQuery, ...defaultQuery, ...query };
     }
 
     if (typeof query === 'object' && query && !Array.isArray(query)) {
@@ -580,9 +603,9 @@ export class NeptuneAPIV2 {
       }
     }
 
-    // If the API asks us to wait a certain amount of time (and it's a reasonable amount),
-    // just do what it says, but otherwise calculate a default
-    if (!(timeoutMillis && 0 <= timeoutMillis && timeoutMillis < 60 * 1000)) {
+    // If the API asks us to wait a certain amount of time, just do what it
+    // says, but otherwise calculate a default
+    if (timeoutMillis === undefined) {
       const maxRetries = options.maxRetries ?? this.maxRetries;
       timeoutMillis = this.calculateDefaultRetryTimeoutMillis(retriesRemaining, maxRetries);
     }
@@ -744,7 +767,7 @@ export class NeptuneAPIV2 {
   assets: API.Assets = new API.Assets(this);
   markets: API.Markets = new API.Markets(this);
   nept: API.Nept = new API.Nept(this);
-  user: API.User = new API.User(this);
+  user: API.UserResource = new API.UserResource(this);
   analytics: API.Analytics = new API.Analytics(this);
   integrations: API.Integrations = new API.Integrations(this);
 }
@@ -754,7 +777,7 @@ NeptuneAPIV2.Status = Status;
 NeptuneAPIV2.Assets = Assets;
 NeptuneAPIV2.Markets = Markets;
 NeptuneAPIV2.Nept = Nept;
-NeptuneAPIV2.User = User;
+NeptuneAPIV2.UserResource = UserResource;
 NeptuneAPIV2.Analytics = Analytics;
 NeptuneAPIV2.Integrations = Integrations;
 
@@ -764,8 +787,17 @@ export declare namespace NeptuneAPIV2 {
   export {
     Core as Core,
     type ErrorData as ErrorData,
+    type ErrorDataVariants as ErrorDataVariants,
+    type ErrorKind as ErrorKind,
+    type ErrorResponseVariants as ErrorResponseVariants,
+    type ErrorScope as ErrorScope,
+    type FieldValidationError as FieldValidationError,
     type Interval as Interval,
     type IntervalUnit as IntervalUnit,
+    type ListErrorResponse as ListErrorResponse,
+    type ObjErrorResponse as ObjErrorResponse,
+    type ValidationErrorData as ValidationErrorData,
+    type ValidationFieldSource as ValidationFieldSource,
   };
 
   export { Status as Status, type StatusCheckHealthResponse as StatusCheckHealthResponse };
@@ -775,6 +807,9 @@ export declare namespace NeptuneAPIV2 {
     type AssetClassification as AssetClassification,
     type AssetInfo as AssetInfo,
     type AssetMetadata as AssetMetadata,
+    type AssetPrice as AssetPrice,
+    type AssetPriceHistory as AssetPriceHistory,
+    type AssetRateHistory as AssetRateHistory,
     type AssetSpec as AssetSpec,
     type AssetListResponse as AssetListResponse,
     type AssetGetPriceHistoryResponse as AssetGetPriceHistoryResponse,
@@ -785,8 +820,8 @@ export declare namespace NeptuneAPIV2 {
 
   export {
     Markets as Markets,
-    type AssetRateHistory as AssetRateHistory,
     type GlobalMarketConfig as GlobalMarketConfig,
+    type MarketRate as MarketRate,
     type MergedMarket as MergedMarket,
     type MarketGetMergedResponse as MarketGetMergedResponse,
     type MarketGetMergedByAssetResponse as MarketGetMergedByAssetResponse,
@@ -800,6 +835,9 @@ export declare namespace NeptuneAPIV2 {
 
   export {
     Nept as Nept,
+    type NeptParams as NeptParams,
+    type NeptState as NeptState,
+    type NeptUnlockDistributionGroup as NeptUnlockDistributionGroup,
     type StakingPoolFull as StakingPoolFull,
     type StakingPoolParams as StakingPoolParams,
     type StakingPoolState as StakingPoolState,
@@ -812,8 +850,10 @@ export declare namespace NeptuneAPIV2 {
   };
 
   export {
-    User as User,
+    UserResource as UserResource,
     type EventAction as EventAction,
+    type User as User,
+    type UserTx as UserTx,
     type UserGetTxHistoryResponse as UserGetTxHistoryResponse,
     type UserGetUserResponse as UserGetUserResponse,
     type UserGetTxHistoryParams as UserGetTxHistoryParams,

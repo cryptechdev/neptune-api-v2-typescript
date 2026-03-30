@@ -7,7 +7,9 @@ const client = new NeptuneAPIV2({ baseURL: process.env['TEST_API_BASE_URL'] ?? '
 describe('resource staking', () => {
   // Mock server tests are disabled
   test.skip('getOverview', async () => {
-    const responsePromise = client.user.nept.staking.getOverview('address');
+    const responsePromise = client.user.nept.staking.getOverview(
+      'injvalcons1a03k0ztfyjnd70apawva003pkh0adqmau0a9q0',
+    );
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,7 +24,7 @@ describe('resource staking', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.user.nept.staking.getOverview(
-        'address',
+        'injvalcons1a03k0ztfyjnd70apawva003pkh0adqmau0a9q0',
         { with_text: true, with_value: true },
         { path: '/_stainless_unknown_path' },
       ),
@@ -31,7 +33,9 @@ describe('resource staking', () => {
 
   // Mock server tests are disabled
   test.skip('getStakingPool', async () => {
-    const responsePromise = client.user.nept.staking.getStakingPool('address');
+    const responsePromise = client.user.nept.staking.getStakingPool(
+      'injvalcons1a03k0ztfyjnd70apawva003pkh0adqmau0a9q0',
+    );
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -46,7 +50,7 @@ describe('resource staking', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.user.nept.staking.getStakingPool(
-        'address',
+        'injvalcons1a03k0ztfyjnd70apawva003pkh0adqmau0a9q0',
         {
           duration: 0,
           index: 0,
@@ -60,7 +64,9 @@ describe('resource staking', () => {
 
   // Mock server tests are disabled
   test.skip('getStakingPools', async () => {
-    const responsePromise = client.user.nept.staking.getStakingPools('address');
+    const responsePromise = client.user.nept.staking.getStakingPools(
+      'injvalcons1a03k0ztfyjnd70apawva003pkh0adqmau0a9q0',
+    );
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -75,7 +81,7 @@ describe('resource staking', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.user.nept.staking.getStakingPools(
-        'address',
+        'injvalcons1a03k0ztfyjnd70apawva003pkh0adqmau0a9q0',
         { with_text: true, with_value: true },
         { path: '/_stainless_unknown_path' },
       ),
@@ -84,7 +90,9 @@ describe('resource staking', () => {
 
   // Mock server tests are disabled
   test.skip('getUnstaking', async () => {
-    const responsePromise = client.user.nept.staking.getUnstaking('address');
+    const responsePromise = client.user.nept.staking.getUnstaking(
+      'injvalcons1a03k0ztfyjnd70apawva003pkh0adqmau0a9q0',
+    );
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -99,7 +107,7 @@ describe('resource staking', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.user.nept.staking.getUnstaking(
-        'address',
+        'injvalcons1a03k0ztfyjnd70apawva003pkh0adqmau0a9q0',
         { with_text: true, with_value: true },
         { path: '/_stainless_unknown_path' },
       ),

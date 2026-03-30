@@ -7,7 +7,7 @@ const client = new NeptuneAPIV2({ baseURL: process.env['TEST_API_BASE_URL'] ?? '
 describe('resource market', () => {
   // Mock server tests are disabled
   test.skip('getMerged', async () => {
-    const responsePromise = client.user.market.getMerged('address');
+    const responsePromise = client.user.market.getMerged('injvalcons1a03k0ztfyjnd70apawva003pkh0adqmau0a9q0');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,7 +22,7 @@ describe('resource market', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.user.market.getMerged(
-        'address',
+        'injvalcons1a03k0ztfyjnd70apawva003pkh0adqmau0a9q0',
         { with_text: true, with_value: true },
         { path: '/_stainless_unknown_path' },
       ),
@@ -31,7 +31,10 @@ describe('resource market', () => {
 
   // Mock server tests are disabled
   test.skip('getMergedByAsset: only required params', async () => {
-    const responsePromise = client.user.market.getMergedByAsset('address', { asset_id: 'token;-K-//-//3-' });
+    const responsePromise = client.user.market.getMergedByAsset(
+      'injvalcons1a03k0ztfyjnd70apawva003pkh0adqmau0a9q0',
+      { asset_id: 'token;-K-//-//3-' },
+    );
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -43,16 +46,21 @@ describe('resource market', () => {
 
   // Mock server tests are disabled
   test.skip('getMergedByAsset: required and optional params', async () => {
-    const response = await client.user.market.getMergedByAsset('address', {
-      asset_id: 'token;-K-//-//3-',
-      with_text: true,
-      with_value: true,
-    });
+    const response = await client.user.market.getMergedByAsset(
+      'injvalcons1a03k0ztfyjnd70apawva003pkh0adqmau0a9q0',
+      {
+        asset_id: 'token;-K-//-//3-',
+        with_text: true,
+        with_value: true,
+      },
+    );
   });
 
   // Mock server tests are disabled
   test.skip('getPortfolio', async () => {
-    const responsePromise = client.user.market.getPortfolio('address');
+    const responsePromise = client.user.market.getPortfolio(
+      'injvalcons1a03k0ztfyjnd70apawva003pkh0adqmau0a9q0',
+    );
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -67,7 +75,7 @@ describe('resource market', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.user.market.getPortfolio(
-        'address',
+        'injvalcons1a03k0ztfyjnd70apawva003pkh0adqmau0a9q0',
         { with_text: true, with_value: true },
         { path: '/_stainless_unknown_path' },
       ),

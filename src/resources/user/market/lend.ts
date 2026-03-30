@@ -1,8 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../../core/resource';
-import * as AssetsAPI from '../../assets';
-import * as CoreAPI from '../../core';
+import * as SubaccountAPI from './borrow/subaccount';
 import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
@@ -31,143 +30,60 @@ export class Lend extends APIResource {
   }
 }
 
-export interface UserDebtAssetPool {
+export interface UserLendMarket {
   /**
-   * Asset identifiers with associated metadata
+   * User lending allocations
    */
-  asset_info: AssetsAPI.AssetInfo;
-
-  /**
-   * Sum open debt amount (this is simply the principal + interest)
-   */
-  debt: string;
-
-  extra: UserDebtAssetPool.Extra;
-
-  /**
-   * Sum of accrued interest for open debt position
-   */
-  interest: string;
-
-  /**
-   * Initial amount borrowed (of debts which have not yet been repaid)
-   */
-  principal: string;
+  asset_pools: Array<SubaccountAPI.UserDebtAssetPool>;
 }
 
-export namespace UserDebtAssetPool {
-  export interface Extra {
-    /**
-     * Human-readable field variants. Will not be null when query param `with_text` is
-     * `true`.
-     */
-    text: Extra.Text | null;
-
-    /**
-     * USD values for the corresponding amounts above. Will not be null when query
-     * param `with_value` is `true`.
-     */
-    value: Extra.Value | null;
-  }
-
-  export namespace Extra {
-    /**
-     * Human-readable field variants. Will not be null when query param `with_text` is
-     * `true`.
-     */
-    export interface Text {
-      debt: string;
-
-      interest: string;
-
-      principal: string;
-    }
-
-    /**
-     * USD values for the corresponding amounts above. Will not be null when query
-     * param `with_value` is `true`.
-     */
-    export interface Value {
-      debt: string;
-
-      extra: Value.Extra;
-
-      interest: string;
-
-      principal: string;
-    }
-
-    export namespace Value {
-      export interface Extra {
-        /**
-         * Human-readable variants of USD values. Will not be null when query params
-         * `with_text` and `with_value` are `true`.
-         */
-        text: Extra.Text | null;
-      }
-
-      export namespace Extra {
-        /**
-         * Human-readable variants of USD values. Will not be null when query params
-         * `with_text` and `with_value` are `true`.
-         */
-        export interface Text {
-          debt: string;
-
-          interest: string;
-
-          principal: string;
-        }
-      }
-    }
-  }
-}
-
+/**
+ * List data success response
+ */
 export interface LendListResponse {
   /**
-   * Total number of objects in all pages
+   * Total number of objects irrespective of any pagination parameters.
    */
-  count: number | null;
+  count: number;
+
+  data: Array<SubaccountAPI.UserDebtAssetPool>;
 
   /**
-   * List contents
+   * Error data. Guaranteed `null` for successful response.
    */
-  data: Array<UserDebtAssetPool> | null;
+  error: null;
 
   /**
-   * Error message, if any
-   */
-  error: CoreAPI.ErrorData | null;
-
-  /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
 
+/**
+ * Object data success response
+ */
 export interface LendGetByAssetResponse {
-  /**
-   * Object data
-   */
-  data: UserDebtAssetPool | null;
+  data: SubaccountAPI.UserDebtAssetPool;
 
   /**
-   * Error content, only set if an error occurs
+   * Error data. Guaranteed `null` for successful response.
    */
-  error: CoreAPI.ErrorData | null;
+  error: null;
 
   /**
-   * Request status
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
    */
   status: number;
 
   /**
-   * Request status text
+   * HTTP status text
    */
   status_text: string;
 }
@@ -203,7 +119,7 @@ export interface LendGetByAssetParams {
 
 export declare namespace Lend {
   export {
-    type UserDebtAssetPool as UserDebtAssetPool,
+    type UserLendMarket as UserLendMarket,
     type LendListResponse as LendListResponse,
     type LendGetByAssetResponse as LendGetByAssetResponse,
     type LendListParams as LendListParams,
