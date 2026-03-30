@@ -2,8 +2,18 @@
 
 Types:
 
+- <code><a href="./src/resources/core.ts">ErrorData</a></code>
+- <code><a href="./src/resources/core.ts">ErrorDataVariants</a></code>
+- <code><a href="./src/resources/core.ts">ErrorKind</a></code>
+- <code><a href="./src/resources/core.ts">ErrorResponseVariants</a></code>
+- <code><a href="./src/resources/core.ts">ErrorScope</a></code>
+- <code><a href="./src/resources/core.ts">FieldValidationError</a></code>
 - <code><a href="./src/resources/core.ts">Interval</a></code>
 - <code><a href="./src/resources/core.ts">IntervalUnit</a></code>
+- <code><a href="./src/resources/core.ts">ListErrorResponse</a></code>
+- <code><a href="./src/resources/core.ts">ObjErrorResponse</a></code>
+- <code><a href="./src/resources/core.ts">ValidationErrorData</a></code>
+- <code><a href="./src/resources/core.ts">ValidationFieldSource</a></code>
 
 # Status
 
@@ -22,6 +32,9 @@ Types:
 - <code><a href="./src/resources/assets.ts">AssetClassification</a></code>
 - <code><a href="./src/resources/assets.ts">AssetInfo</a></code>
 - <code><a href="./src/resources/assets.ts">AssetMetadata</a></code>
+- <code><a href="./src/resources/assets.ts">AssetPrice</a></code>
+- <code><a href="./src/resources/assets.ts">AssetPriceHistory</a></code>
+- <code><a href="./src/resources/assets.ts">AssetRateHistory</a></code>
 - <code><a href="./src/resources/assets.ts">AssetSpec</a></code>
 - <code><a href="./src/resources/assets.ts">AssetListResponse</a></code>
 - <code><a href="./src/resources/assets.ts">AssetGetPriceHistoryResponse</a></code>
@@ -37,8 +50,8 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/markets/markets.ts">AssetRateHistory</a></code>
 - <code><a href="./src/resources/markets/markets.ts">GlobalMarketConfig</a></code>
+- <code><a href="./src/resources/markets/markets.ts">MarketRate</a></code>
 - <code><a href="./src/resources/markets/markets.ts">MergedMarket</a></code>
 - <code><a href="./src/resources/markets/markets.ts">MarketGetMergedResponse</a></code>
 - <code><a href="./src/resources/markets/markets.ts">MarketGetMergedByAssetResponse</a></code>
@@ -57,8 +70,8 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/markets/lend.ts">LendMarket</a></code>
+- <code><a href="./src/resources/markets/lend.ts">LendMarketData</a></code>
 - <code><a href="./src/resources/markets/lend.ts">LendMarketState</a></code>
-- <code><a href="./src/resources/markets/lend.ts">MarketRate</a></code>
 - <code><a href="./src/resources/markets/lend.ts">LendListResponse</a></code>
 - <code><a href="./src/resources/markets/lend.ts">LendGetByAssetResponse</a></code>
 - <code><a href="./src/resources/markets/lend.ts">LendGetRateHistoryResponse</a></code>
@@ -88,6 +101,7 @@ Types:
 
 - <code><a href="./src/resources/markets/borrow/collaterals.ts">BorrowCollateralConfig</a></code>
 - <code><a href="./src/resources/markets/borrow/collaterals.ts">BorrowCollateralMarket</a></code>
+- <code><a href="./src/resources/markets/borrow/collaterals.ts">BorrowCollateralMarketData</a></code>
 - <code><a href="./src/resources/markets/borrow/collaterals.ts">BorrowCollateralState</a></code>
 - <code><a href="./src/resources/markets/borrow/collaterals.ts">CollateralListResponse</a></code>
 - <code><a href="./src/resources/markets/borrow/collaterals.ts">CollateralGetByAssetResponse</a></code>
@@ -103,6 +117,7 @@ Types:
 
 - <code><a href="./src/resources/markets/borrow/debts.ts">BorrowDebtConfig</a></code>
 - <code><a href="./src/resources/markets/borrow/debts.ts">BorrowDebtMarket</a></code>
+- <code><a href="./src/resources/markets/borrow/debts.ts">BorrowDebtMarketData</a></code>
 - <code><a href="./src/resources/markets/borrow/debts.ts">BorrowDebtState</a></code>
 - <code><a href="./src/resources/markets/borrow/debts.ts">DebtListResponse</a></code>
 - <code><a href="./src/resources/markets/borrow/debts.ts">DebtGetByAssetResponse</a></code>
@@ -116,6 +131,9 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/nept.ts">NeptParams</a></code>
+- <code><a href="./src/resources/nept.ts">NeptState</a></code>
+- <code><a href="./src/resources/nept.ts">NeptUnlockDistributionGroup</a></code>
 - <code><a href="./src/resources/nept.ts">StakingPoolFull</a></code>
 - <code><a href="./src/resources/nept.ts">StakingPoolParams</a></code>
 - <code><a href="./src/resources/nept.ts">StakingPoolState</a></code>
@@ -134,6 +152,8 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/user/user.ts">EventAction</a></code>
+- <code><a href="./src/resources/user/user.ts">User</a></code>
+- <code><a href="./src/resources/user/user.ts">UserTx</a></code>
 - <code><a href="./src/resources/user/user.ts">UserGetTxHistoryResponse</a></code>
 - <code><a href="./src/resources/user/user.ts">UserGetUserResponse</a></code>
 
@@ -162,7 +182,7 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/user/market/lend.ts">UserDebtAssetPool</a></code>
+- <code><a href="./src/resources/user/market/lend.ts">UserLendMarket</a></code>
 - <code><a href="./src/resources/user/market/lend.ts">LendListResponse</a></code>
 - <code><a href="./src/resources/user/market/lend.ts">LendGetByAssetResponse</a></code>
 
@@ -176,6 +196,7 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/user/market/borrow/borrow.ts">UserBorrowMarket</a></code>
+- <code><a href="./src/resources/user/market/borrow/borrow.ts">UserBorrowMarketPools</a></code>
 - <code><a href="./src/resources/user/market/borrow/borrow.ts">BorrowGetCollateralAccountsByAssetResponse</a></code>
 - <code><a href="./src/resources/user/market/borrow/borrow.ts">BorrowGetCollateralTotalsResponse</a></code>
 - <code><a href="./src/resources/user/market/borrow/borrow.ts">BorrowGetDebtAccountsByAssetResponse</a></code>
@@ -196,7 +217,10 @@ Types:
 
 - <code><a href="./src/resources/user/market/borrow/subaccount.ts">UserAccountHealth</a></code>
 - <code><a href="./src/resources/user/market/borrow/subaccount.ts">UserBorrowMarketAccount</a></code>
+- <code><a href="./src/resources/user/market/borrow/subaccount.ts">UserCollateralAccountPool</a></code>
 - <code><a href="./src/resources/user/market/borrow/subaccount.ts">UserCollateralAssetPool</a></code>
+- <code><a href="./src/resources/user/market/borrow/subaccount.ts">UserDebtAccountPool</a></code>
+- <code><a href="./src/resources/user/market/borrow/subaccount.ts">UserDebtAssetPool</a></code>
 - <code><a href="./src/resources/user/market/borrow/subaccount.ts">SubaccountGetSubaccountResponse</a></code>
 - <code><a href="./src/resources/user/market/borrow/subaccount.ts">SubaccountGetSubaccountCollateralsResponse</a></code>
 - <code><a href="./src/resources/user/market/borrow/subaccount.ts">SubaccountGetSubaccountDebtsResponse</a></code>
@@ -213,8 +237,11 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/user/nept/nept.ts">UserNeptUnlockAmounts</a></code>
-- <code><a href="./src/resources/user/nept/nept.ts">UserNeptUnlockOverview</a></code>
+- <code><a href="./src/resources/user/nept/nept.ts">UserUnlockAmounts</a></code>
+- <code><a href="./src/resources/user/nept/nept.ts">UserUnlockOverview</a></code>
+- <code><a href="./src/resources/user/nept/nept.ts">UserUnlockSchedule</a></code>
+- <code><a href="./src/resources/user/nept/nept.ts">UserUnlockScheduleLinear</a></code>
+- <code><a href="./src/resources/user/nept/nept.ts">UserUnlockScheduleLumpSum</a></code>
 - <code><a href="./src/resources/user/nept/nept.ts">NeptGetUnlocksResponse</a></code>
 
 Methods:
@@ -226,7 +253,9 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/user/nept/staking.ts">UserStake</a></code>
+- <code><a href="./src/resources/user/nept/staking.ts">UserStakeBondingEntry</a></code>
 - <code><a href="./src/resources/user/nept/staking.ts">UserStakePool</a></code>
+- <code><a href="./src/resources/user/nept/staking.ts">UserStakeUnbonding</a></code>
 - <code><a href="./src/resources/user/nept/staking.ts">UserStakeUnbondingEntry</a></code>
 - <code><a href="./src/resources/user/nept/staking.ts">StakingGetOverviewResponse</a></code>
 - <code><a href="./src/resources/user/nept/staking.ts">StakingGetStakingPoolResponse</a></code>
@@ -245,7 +274,9 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/user/wallet.ts">UserWalletPortfolio</a></code>
+- <code><a href="./src/resources/user/wallet.ts">WalletAsset</a></code>
 - <code><a href="./src/resources/user/wallet.ts">WalletAssetKnown</a></code>
+- <code><a href="./src/resources/user/wallet.ts">WalletAssetUnknown</a></code>
 - <code><a href="./src/resources/user/wallet.ts">WalletBalance</a></code>
 - <code><a href="./src/resources/user/wallet.ts">WalletGetBalanceByAssetResponse</a></code>
 - <code><a href="./src/resources/user/wallet.ts">WalletGetBalancesResponse</a></code>

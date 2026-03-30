@@ -45,7 +45,19 @@ export interface LendMarket {
   /**
    * Lending market rates
    */
-  rate: MarketRate | null;
+  rate: MarketsAPI.MarketRate | null;
+
+  /**
+   * Current lending market state
+   */
+  state: LendMarketState;
+}
+
+export interface LendMarketData {
+  /**
+   * Lending market rates
+   */
+  rate: MarketsAPI.MarketRate | null;
 
   /**
    * Current lending market state
@@ -126,42 +138,6 @@ export namespace LendMarketState {
   }
 }
 
-export interface MarketRate {
-  /**
-   * Market rate in APR standard as a decimal percentage
-   */
-  apr: string;
-
-  /**
-   * Market rate in APY standard as a decimal percentage
-   */
-  apy: string;
-
-  extra: MarketRate.Extra;
-}
-
-export namespace MarketRate {
-  export interface Extra {
-    /**
-     * Human-readable field variants. Will not be null when query param `with_text` is
-     * `true`.
-     */
-    text: Extra.Text | null;
-  }
-
-  export namespace Extra {
-    /**
-     * Human-readable field variants. Will not be null when query param `with_text` is
-     * `true`.
-     */
-    export interface Text {
-      apr: string;
-
-      apy: string;
-    }
-  }
-}
-
 /**
  * List data success response
  */
@@ -171,9 +147,6 @@ export interface LendListResponse {
    */
   count: number;
 
-  /**
-   * Primary response content (list)
-   */
   data: Array<LendMarket>;
 
   /**
@@ -197,9 +170,6 @@ export interface LendListResponse {
  * Object data success response
  */
 export interface LendGetByAssetResponse {
-  /**
-   * Primary response content (object)
-   */
   data: LendMarket;
 
   /**
@@ -224,9 +194,9 @@ export interface LendGetByAssetResponse {
  */
 export interface LendGetRateHistoryResponse {
   /**
-   * Primary response content (object)
+   * Historical rates for assets
    */
-  data: MarketsAPI.AssetRateHistory;
+  data: AssetsAPI.AssetRateHistory;
 
   /**
    * Error data. Guaranteed `null` for successful response.
@@ -337,8 +307,8 @@ export interface LendGetRateHistoryParams {
 export declare namespace Lend {
   export {
     type LendMarket as LendMarket,
+    type LendMarketData as LendMarketData,
     type LendMarketState as LendMarketState,
-    type MarketRate as MarketRate,
     type LendListResponse as LendListResponse,
     type LendGetByAssetResponse as LendGetByAssetResponse,
     type LendGetRateHistoryResponse as LendGetRateHistoryResponse,

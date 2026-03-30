@@ -11,8 +11,8 @@ export {
 export {
   Lend,
   type LendMarket,
+  type LendMarketData,
   type LendMarketState,
-  type MarketRate,
   type LendListResponse,
   type LendGetByAssetResponse,
   type LendGetRateHistoryResponse,
@@ -22,8 +22,8 @@ export {
 } from './lend';
 export {
   Markets,
-  type AssetRateHistory,
   type GlobalMarketConfig,
+  type MarketRate,
   type MergedMarket,
   type MarketGetMergedResponse,
   type MarketGetMergedByAssetResponse,

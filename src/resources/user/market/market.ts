@@ -9,7 +9,7 @@ import {
   LendGetByAssetResponse,
   LendListParams,
   LendListResponse,
-  UserDebtAssetPool,
+  UserLendMarket,
 } from './lend';
 import * as BorrowAPI from './borrow/borrow';
 import {
@@ -25,6 +25,7 @@ import {
   BorrowGetPortfolioParams,
   BorrowGetPortfolioResponse,
   UserBorrowMarket,
+  UserBorrowMarketPools,
 } from './borrow/borrow';
 import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
@@ -78,19 +79,7 @@ export interface UserMarket {
   /**
    * Overview of user lending portfolio
    */
-  lend: UserMarket.Lend;
-}
-
-export namespace UserMarket {
-  /**
-   * Overview of user lending portfolio
-   */
-  export interface Lend {
-    /**
-     * User lending allocations
-     */
-    asset_pools: Array<LendAPI.UserDebtAssetPool>;
-  }
+  lend: LendAPI.UserLendMarket;
 }
 
 export interface UserMergedMarket {
@@ -378,9 +367,6 @@ export interface MarketGetMergedResponse {
    */
   count: number;
 
-  /**
-   * Primary response content (list)
-   */
   data: Array<UserMergedMarket>;
 
   /**
@@ -404,9 +390,6 @@ export interface MarketGetMergedResponse {
  * Object data success response
  */
 export interface MarketGetMergedByAssetResponse {
-  /**
-   * Primary response content (object)
-   */
   data: UserMergedMarket;
 
   /**
@@ -430,9 +413,6 @@ export interface MarketGetMergedByAssetResponse {
  * Object data success response
  */
 export interface MarketGetPortfolioResponse {
-  /**
-   * Primary response content (object)
-   */
   data: UserMarket;
 
   /**
@@ -510,7 +490,7 @@ export declare namespace Market {
 
   export {
     LendAPILend as Lend,
-    type UserDebtAssetPool as UserDebtAssetPool,
+    type UserLendMarket as UserLendMarket,
     type LendListResponse as LendListResponse,
     type LendGetByAssetResponse as LendGetByAssetResponse,
     type LendListParams as LendListParams,
@@ -520,6 +500,7 @@ export declare namespace Market {
   export {
     Borrow as Borrow,
     type UserBorrowMarket as UserBorrowMarket,
+    type UserBorrowMarketPools as UserBorrowMarketPools,
     type BorrowGetCollateralAccountsByAssetResponse as BorrowGetCollateralAccountsByAssetResponse,
     type BorrowGetCollateralTotalsResponse as BorrowGetCollateralTotalsResponse,
     type BorrowGetDebtAccountsByAssetResponse as BorrowGetDebtAccountsByAssetResponse,

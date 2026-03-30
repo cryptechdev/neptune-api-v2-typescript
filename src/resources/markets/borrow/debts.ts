@@ -2,7 +2,7 @@
 
 import { APIResource } from '../../../core/resource';
 import * as AssetsAPI from '../../assets';
-import * as LendAPI from '../lend';
+import * as MarketsAPI from '../markets';
 import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
 
@@ -123,7 +123,24 @@ export interface BorrowDebtMarket {
   /**
    * Market rates
    */
-  rate: LendAPI.MarketRate | null;
+  rate: MarketsAPI.MarketRate | null;
+
+  /**
+   * Current debt market state
+   */
+  state: BorrowDebtState;
+}
+
+export interface BorrowDebtMarketData {
+  /**
+   * Debt market configuration parameters
+   */
+  config: BorrowDebtConfig;
+
+  /**
+   * Market rates
+   */
+  rate: MarketsAPI.MarketRate | null;
 
   /**
    * Current debt market state
@@ -241,9 +258,6 @@ export interface DebtListResponse {
    */
   count: number;
 
-  /**
-   * Primary response content (list)
-   */
   data: Array<BorrowDebtMarket>;
 
   /**
@@ -267,9 +281,6 @@ export interface DebtListResponse {
  * Object data success response
  */
 export interface DebtGetByAssetResponse {
-  /**
-   * Primary response content (object)
-   */
   data: BorrowDebtMarket;
 
   /**
@@ -322,6 +333,7 @@ export declare namespace Debts {
   export {
     type BorrowDebtConfig as BorrowDebtConfig,
     type BorrowDebtMarket as BorrowDebtMarket,
+    type BorrowDebtMarketData as BorrowDebtMarketData,
     type BorrowDebtState as BorrowDebtState,
     type DebtListResponse as DebtListResponse,
     type DebtGetByAssetResponse as DebtGetByAssetResponse,

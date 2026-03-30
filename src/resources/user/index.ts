@@ -13,14 +13,19 @@ export {
 } from './market/index';
 export {
   Nept,
-  type UserNeptUnlockAmounts,
-  type UserNeptUnlockOverview,
+  type UserUnlockAmounts,
+  type UserUnlockOverview,
+  type UserUnlockSchedule,
+  type UserUnlockScheduleLinear,
+  type UserUnlockScheduleLumpSum,
   type NeptGetUnlocksResponse,
   type NeptGetUnlocksParams,
 } from './nept/index';
 export {
-  User,
+  UserResource,
   type EventAction,
+  type User,
+  type UserTx,
   type UserGetTxHistoryResponse,
   type UserGetUserResponse,
   type UserGetTxHistoryParams,
@@ -29,7 +34,9 @@ export {
 export {
   Wallet,
   type UserWalletPortfolio,
+  type WalletAsset,
   type WalletAssetKnown,
+  type WalletAssetUnknown,
   type WalletBalance,
   type WalletGetBalanceByAssetResponse,
   type WalletGetBalancesResponse,

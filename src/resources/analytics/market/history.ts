@@ -36,7 +36,7 @@ export class History extends APIResource {
  */
 export interface HistoryGetLoansOriginatedResponse {
   /**
-   * Primary response content (object)
+   * Historical cumulative lend value for assets
    */
   data: HistoryGetLoansOriginatedResponse.Data;
 
@@ -59,7 +59,7 @@ export interface HistoryGetLoansOriginatedResponse {
 
 export namespace HistoryGetLoansOriginatedResponse {
   /**
-   * Primary response content (object)
+   * Historical cumulative lend value for assets
    */
   export interface Data {
     /**
@@ -123,7 +123,7 @@ export namespace HistoryGetLoansOriginatedResponse {
  */
 export interface HistoryGetLoansOriginatedByAssetResponse {
   /**
-   * Primary response content (object)
+   * Historical cumulative lend value for assets
    */
   data: HistoryGetLoansOriginatedByAssetResponse.Data;
 
@@ -146,7 +146,7 @@ export interface HistoryGetLoansOriginatedByAssetResponse {
 
 export namespace HistoryGetLoansOriginatedByAssetResponse {
   /**
-   * Primary response content (object)
+   * Historical cumulative lend value for assets
    */
   export interface Data {
     /**

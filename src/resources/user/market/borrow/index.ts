@@ -3,6 +3,7 @@
 export {
   Borrow,
   type UserBorrowMarket,
+  type UserBorrowMarketPools,
   type BorrowGetCollateralAccountsByAssetResponse,
   type BorrowGetCollateralTotalsResponse,
   type BorrowGetDebtAccountsByAssetResponse,
@@ -18,7 +19,10 @@ export {
   Subaccount,
   type UserAccountHealth,
   type UserBorrowMarketAccount,
+  type UserCollateralAccountPool,
   type UserCollateralAssetPool,
+  type UserDebtAccountPool,
+  type UserDebtAssetPool,
   type SubaccountGetSubaccountResponse,
   type SubaccountGetSubaccountCollateralsResponse,
   type SubaccountGetSubaccountDebtsResponse,

@@ -38,6 +38,544 @@ export class Nept extends APIResource {
   }
 }
 
+export interface NeptParams {
+  /**
+   * The emission rate of NEPT in tokens per year
+   */
+  emission_rate: string;
+
+  extra: NeptParams.Extra;
+
+  /**
+   * Staking pools (pool params are included)
+   */
+  staking_pools: Array<NeptParams.StakingPool>;
+
+  /**
+   * Weight:token scaling factor
+   *
+   * This is defined in the contract spec to mitigate library type restrictions
+   */
+  tokens_per_weight: number;
+}
+
+export namespace NeptParams {
+  export interface Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    text: Extra.Text | null;
+
+    /**
+     * USD values for the corresponding amounts above. Will not be null when query
+     * param `with_value` is `true`.
+     */
+    value: Extra.Value | null;
+  }
+
+  export namespace Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    export interface Text {
+      emission_rate: string;
+    }
+
+    /**
+     * USD values for the corresponding amounts above. Will not be null when query
+     * param `with_value` is `true`.
+     */
+    export interface Value {
+      emission_rate: string;
+
+      extra: Value.Extra;
+    }
+
+    export namespace Value {
+      export interface Extra {
+        /**
+         * Human-readable variants of USD values. Will not be null when query params
+         * `with_text` and `with_value` are `true`.
+         */
+        text: Extra.Text | null;
+      }
+
+      export namespace Extra {
+        /**
+         * Human-readable variants of USD values. Will not be null when query params
+         * `with_text` and `with_value` are `true`.
+         */
+        export interface Text {
+          emission_rate: string;
+        }
+      }
+    }
+  }
+
+  /**
+   * Merges `StakingPool` with `StakingPoolParams`
+   */
+  export interface StakingPool {
+    /**
+     * The lockup duration for this pool in seconds
+     */
+    duration: number;
+
+    extra: StakingPool.Extra;
+
+    /**
+     * The ordered index (position) of this pool
+     */
+    index: number;
+
+    /**
+     * Staking pool contract parameters
+     */
+    params: NeptAPI.StakingPoolParams;
+  }
+
+  export namespace StakingPool {
+    export interface Extra {
+      /**
+       * Human-readable field variants. Will not be null when query param `with_text` is
+       * `true`.
+       */
+      text: Extra.Text | null;
+    }
+
+    export namespace Extra {
+      /**
+       * Human-readable field variants. Will not be null when query param `with_text` is
+       * `true`.
+       */
+      export interface Text {
+        duration: string;
+
+        index: string;
+      }
+    }
+  }
+}
+
+export interface NeptState {
+  extra: NeptState.Extra;
+
+  /**
+   * Staking pools (current pool state is included)
+   */
+  staking: Array<NeptState.Staking>;
+
+  /**
+   * Total amount of NEPT claimed, either locked or unlocked
+   *
+   * Includes initial balances and claimed rewards but not unclaimed rewards
+   */
+  total_claimed: string;
+
+  /**
+   * Total amount of NEPT issued, either locked or unlocked
+   *
+   * Includes initial balances and all claimed or claimable rewards
+   */
+  total_issued: string;
+
+  /**
+   * Total amount of NEPT locked
+   *
+   * Inlcudes unlocks which have not yet been claimed
+   */
+  total_locked: string;
+
+  /**
+   * Total supply of NEPT
+   *
+   * Includes locked and unissued tokens
+   */
+  total_supply: string;
+}
+
+export namespace NeptState {
+  export interface Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    text: Extra.Text | null;
+
+    /**
+     * USD values for the corresponding amounts above. Will not be null when query
+     * param `with_value` is `true`.
+     */
+    value: Extra.Value | null;
+  }
+
+  export namespace Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    export interface Text {
+      total_claimed: string;
+
+      total_issued: string;
+
+      total_locked: string;
+
+      total_supply: string;
+    }
+
+    /**
+     * USD values for the corresponding amounts above. Will not be null when query
+     * param `with_value` is `true`.
+     */
+    export interface Value {
+      extra: Value.Extra;
+
+      total_claimed: string;
+
+      total_issued: string;
+
+      total_locked: string;
+
+      total_supply: string;
+    }
+
+    export namespace Value {
+      export interface Extra {
+        /**
+         * Human-readable variants of USD values. Will not be null when query params
+         * `with_text` and `with_value` are `true`.
+         */
+        text: Extra.Text | null;
+      }
+
+      export namespace Extra {
+        /**
+         * Human-readable variants of USD values. Will not be null when query params
+         * `with_text` and `with_value` are `true`.
+         */
+        export interface Text {
+          total_claimed: string;
+
+          total_issued: string;
+
+          total_locked: string;
+
+          total_supply: string;
+        }
+      }
+    }
+  }
+
+  /**
+   * Merges `StakingPool` with `StakingPoolState`
+   */
+  export interface Staking {
+    /**
+     * The lockup duration for this pool in seconds
+     */
+    duration: number;
+
+    extra: Staking.Extra;
+
+    /**
+     * The ordered index (position) of this pool
+     */
+    index: number;
+
+    /**
+     * Current contract state of staking pool
+     */
+    state: NeptAPI.StakingPoolState;
+  }
+
+  export namespace Staking {
+    export interface Extra {
+      /**
+       * Human-readable field variants. Will not be null when query param `with_text` is
+       * `true`.
+       */
+      text: Extra.Text | null;
+    }
+
+    export namespace Extra {
+      /**
+       * Human-readable field variants. Will not be null when query param `with_text` is
+       * `true`.
+       */
+      export interface Text {
+        duration: string;
+
+        index: string;
+      }
+    }
+  }
+}
+
+export interface NeptUnlockDistributionGroup {
+  /**
+   * The sum of all token distribution unlock amounts for this group.
+   *
+   * This value is immutable and does not change with regards to
+   * expiry/reclamation/lock states.
+   */
+  amount: string;
+
+  /**
+   * The amount currently claimable
+   *
+   * This takes into account: reclamation, lock state, expiry, and previously
+   * claimed. In other words, this is an accurate representation of what the user can
+   * currently claim.
+   */
+  amount_claimable: string;
+
+  /**
+   * The amount that has already been successfully claimed by the user
+   */
+  amount_claimed: string;
+
+  /**
+   * The amount that has expired.
+   *
+   * This will be the remaining unclaimed amount (if any) once the time specified by
+   * the `expires_at` is past (if one is set).
+   *
+   * **NOTE:** Reclaimed amouts take priority.
+   *
+   * - If the remaining amount is reclaimed prior to a configured `expires_at`, this
+   *   will remain at 0 and will not change even after the `expires_at` time is
+   *   reached.
+   */
+  amount_expired: string;
+
+  /**
+   * The total amount of NEPT currently held by the addresses in this group.
+   */
+  amount_held: string;
+
+  /**
+   * The total amount of NEPT currently time-locked.
+   *
+   * **NOTE:** This does not factor in reclaimed or expired states.
+   *
+   * - For linear unlock schedules:
+   *
+   *   - This represents how much NEPT is time-locked by the `begins_at` and the
+   *     `ends_at` properties.
+   *
+   * - For lump sum unlocks:
+   *   - This will be the full amount prior to the `begins_at` unlock property.
+   *   - Once the time indicated by the `begins_at` property has been reached, this
+   *     value will be 0.
+   */
+  amount_locked: string;
+
+  /**
+   * The amount that has been reclaimed from the unlock arrangement admin
+   *
+   * This will be the amount of the remaining unclaimed and locked at the time the
+   * reclaim is issued.
+   */
+  amount_reclaimed: string;
+
+  /**
+   * The total amount of NEPT current staked by the addresses in this group.
+   */
+  amount_staked: string;
+
+  /**
+   * The total amount of NEPT currently unlocked
+   *
+   * **NOTE:** This does not factor in reclaimed or expired states.
+   *
+   * - For linear unlock schedules:
+   *
+   *   - This represents the "progress" of unlocked NEPT from the time range between
+   *     the `begins_at` and the `ends_at` properties.
+   *
+   * - For lump sum unlocks:
+   *   - This will be 0 at any given time prior to the timestamp provided by the
+   *     `begins_at` unlock property.
+   *   - Once the time indicated by the `begins_at` property has been reached, this
+   *     value will be the full amount of the unlock.
+   */
+  amount_unlocked: string;
+
+  extra: NeptUnlockDistributionGroup.Extra;
+
+  /**
+   * The group category
+   */
+  member_class: 'team' | 'advisor' | 'investor';
+}
+
+export namespace NeptUnlockDistributionGroup {
+  export interface Extra {
+    /**
+     * Percentages for unlock amounts. These do not factor in the `amount_staked` or
+     * `amount_held` values. Will not be null when query param `with_percent` is
+     * `true`.
+     */
+    percent: Extra.Percent | null;
+
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    text: Extra.Text | null;
+
+    /**
+     * USD values for the corresponding amounts above. Will not be null when query
+     * param `with_value` is `true`.
+     */
+    value: Extra.Value | null;
+  }
+
+  export namespace Extra {
+    /**
+     * Percentages for unlock amounts. These do not factor in the `amount_staked` or
+     * `amount_held` values. Will not be null when query param `with_percent` is
+     * `true`.
+     */
+    export interface Percent {
+      amount_claimable: string;
+
+      amount_claimed: string;
+
+      amount_expired: string;
+
+      amount_locked: string;
+
+      amount_reclaimed: string;
+
+      amount_unlocked: string;
+
+      extra: Percent.Extra;
+    }
+
+    export namespace Percent {
+      export interface Extra {
+        /**
+         * Human-readable variants of percentages for unlock amounts. Will not be null when
+         * query params `with_text` and `with_percent` are `true`.
+         */
+        text: Extra.Text | null;
+      }
+
+      export namespace Extra {
+        /**
+         * Human-readable variants of percentages for unlock amounts. Will not be null when
+         * query params `with_text` and `with_percent` are `true`.
+         */
+        export interface Text {
+          amount_claimable: string;
+
+          amount_claimed: string;
+
+          amount_expired: string;
+
+          amount_locked: string;
+
+          amount_reclaimed: string;
+
+          amount_unlocked: string;
+        }
+      }
+    }
+
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    export interface Text {
+      amount: string;
+
+      amount_claimable: string;
+
+      amount_claimed: string;
+
+      amount_expired: string;
+
+      amount_held: string;
+
+      amount_locked: string;
+
+      amount_reclaimed: string;
+
+      amount_staked: string;
+
+      amount_unlocked: string;
+
+      member_class: string;
+    }
+
+    /**
+     * USD values for the corresponding amounts above. Will not be null when query
+     * param `with_value` is `true`.
+     */
+    export interface Value {
+      amount: string;
+
+      amount_claimable: string;
+
+      amount_claimed: string;
+
+      amount_expired: string;
+
+      amount_held: string;
+
+      amount_locked: string;
+
+      amount_reclaimed: string;
+
+      amount_staked: string;
+
+      amount_unlocked: string;
+
+      extra: Value.Extra;
+    }
+
+    export namespace Value {
+      export interface Extra {
+        /**
+         * Human-readable variants of USD values. Will not be null when query params
+         * `with_text` and `with_value` are `true`.
+         */
+        text: Extra.Text | null;
+      }
+
+      export namespace Extra {
+        /**
+         * Human-readable variants of USD values. Will not be null when query params
+         * `with_text` and `with_value` are `true`.
+         */
+        export interface Text {
+          amount: string;
+
+          amount_claimable: string;
+
+          amount_claimed: string;
+
+          amount_expired: string;
+
+          amount_held: string;
+
+          amount_locked: string;
+
+          amount_reclaimed: string;
+
+          amount_staked: string;
+
+          amount_unlocked: string;
+        }
+      }
+    }
+  }
+}
+
 /**
  * Merges `StakingPool` with both `StakingPoolWithParams` and `StakingPoolState`
  */
@@ -178,10 +716,7 @@ export namespace StakingPoolState {
  * Object data success response
  */
 export interface NeptGetParamsResponse {
-  /**
-   * Primary response content (object)
-   */
-  data: NeptGetParamsResponse.Data;
+  data: NeptParams;
 
   /**
    * Error data. Guaranteed `null` for successful response.
@@ -200,139 +735,10 @@ export interface NeptGetParamsResponse {
   status_text: string;
 }
 
-export namespace NeptGetParamsResponse {
-  /**
-   * Primary response content (object)
-   */
-  export interface Data {
-    /**
-     * The emission rate of NEPT in tokens per year
-     */
-    emission_rate: string;
-
-    extra: Data.Extra;
-
-    /**
-     * Staking pools (pool params are included)
-     */
-    staking_pools: Array<Data.StakingPool>;
-
-    /**
-     * Weight:token scaling factor
-     *
-     * This is defined in the contract spec to mitigate library type restrictions
-     */
-    tokens_per_weight: number;
-  }
-
-  export namespace Data {
-    export interface Extra {
-      /**
-       * Human-readable field variants. Will not be null when query param `with_text` is
-       * `true`.
-       */
-      text: Extra.Text | null;
-
-      /**
-       * USD values for the corresponding amounts above. Will not be null when query
-       * param `with_value` is `true`.
-       */
-      value: Extra.Value | null;
-    }
-
-    export namespace Extra {
-      /**
-       * Human-readable field variants. Will not be null when query param `with_text` is
-       * `true`.
-       */
-      export interface Text {
-        emission_rate: string;
-      }
-
-      /**
-       * USD values for the corresponding amounts above. Will not be null when query
-       * param `with_value` is `true`.
-       */
-      export interface Value {
-        emission_rate: string;
-
-        extra: Value.Extra;
-      }
-
-      export namespace Value {
-        export interface Extra {
-          /**
-           * Human-readable variants of USD values. Will not be null when query params
-           * `with_text` and `with_value` are `true`.
-           */
-          text: Extra.Text | null;
-        }
-
-        export namespace Extra {
-          /**
-           * Human-readable variants of USD values. Will not be null when query params
-           * `with_text` and `with_value` are `true`.
-           */
-          export interface Text {
-            emission_rate: string;
-          }
-        }
-      }
-    }
-
-    /**
-     * Merges `StakingPool` with `StakingPoolParams`
-     */
-    export interface StakingPool {
-      /**
-       * The lockup duration for this pool in seconds
-       */
-      duration: number;
-
-      extra: StakingPool.Extra;
-
-      /**
-       * The ordered index (position) of this pool
-       */
-      index: number;
-
-      /**
-       * Staking pool contract parameters
-       */
-      params: NeptAPI.StakingPoolParams;
-    }
-
-    export namespace StakingPool {
-      export interface Extra {
-        /**
-         * Human-readable field variants. Will not be null when query param `with_text` is
-         * `true`.
-         */
-        text: Extra.Text | null;
-      }
-
-      export namespace Extra {
-        /**
-         * Human-readable field variants. Will not be null when query param `with_text` is
-         * `true`.
-         */
-        export interface Text {
-          duration: string;
-
-          index: string;
-        }
-      }
-    }
-  }
-}
-
 /**
  * Object data success response
  */
 export interface NeptGetStakingOverviewResponse {
-  /**
-   * Primary response content (object)
-   */
   data: NeptGetStakingOverviewResponse.Data;
 
   /**
@@ -353,9 +759,6 @@ export interface NeptGetStakingOverviewResponse {
 }
 
 export namespace NeptGetStakingOverviewResponse {
-  /**
-   * Primary response content (object)
-   */
   export interface Data {
     /**
      * Asset identifiers with associated metadata
@@ -421,10 +824,7 @@ export namespace NeptGetStakingOverviewResponse {
  * Object data success response
  */
 export interface NeptGetStateResponse {
-  /**
-   * Primary response content (object)
-   */
-  data: NeptGetStateResponse.Data;
+  data: NeptState;
 
   /**
    * Error data. Guaranteed `null` for successful response.
@@ -441,166 +841,6 @@ export interface NeptGetStateResponse {
    * HTTP status text
    */
   status_text: string;
-}
-
-export namespace NeptGetStateResponse {
-  /**
-   * Primary response content (object)
-   */
-  export interface Data {
-    extra: Data.Extra;
-
-    /**
-     * Staking pools (current pool state is included)
-     */
-    staking: Array<Data.Staking>;
-
-    /**
-     * Total amount of NEPT claimed, either locked or unlocked
-     *
-     * Includes initial balances and claimed rewards but not unclaimed rewards
-     */
-    total_claimed: string;
-
-    /**
-     * Total amount of NEPT issued, either locked or unlocked
-     *
-     * Includes initial balances and all claimed or claimable rewards
-     */
-    total_issued: string;
-
-    /**
-     * Total amount of NEPT locked
-     *
-     * Inlcudes unlocks which have not yet been claimed
-     */
-    total_locked: string;
-
-    /**
-     * Total supply of NEPT
-     *
-     * Includes locked and unissued tokens
-     */
-    total_supply: string;
-  }
-
-  export namespace Data {
-    export interface Extra {
-      /**
-       * Human-readable field variants. Will not be null when query param `with_text` is
-       * `true`.
-       */
-      text: Extra.Text | null;
-
-      /**
-       * USD values for the corresponding amounts above. Will not be null when query
-       * param `with_value` is `true`.
-       */
-      value: Extra.Value | null;
-    }
-
-    export namespace Extra {
-      /**
-       * Human-readable field variants. Will not be null when query param `with_text` is
-       * `true`.
-       */
-      export interface Text {
-        total_claimed: string;
-
-        total_issued: string;
-
-        total_locked: string;
-
-        total_supply: string;
-      }
-
-      /**
-       * USD values for the corresponding amounts above. Will not be null when query
-       * param `with_value` is `true`.
-       */
-      export interface Value {
-        extra: Value.Extra;
-
-        total_claimed: string;
-
-        total_issued: string;
-
-        total_locked: string;
-
-        total_supply: string;
-      }
-
-      export namespace Value {
-        export interface Extra {
-          /**
-           * Human-readable variants of USD values. Will not be null when query params
-           * `with_text` and `with_value` are `true`.
-           */
-          text: Extra.Text | null;
-        }
-
-        export namespace Extra {
-          /**
-           * Human-readable variants of USD values. Will not be null when query params
-           * `with_text` and `with_value` are `true`.
-           */
-          export interface Text {
-            total_claimed: string;
-
-            total_issued: string;
-
-            total_locked: string;
-
-            total_supply: string;
-          }
-        }
-      }
-    }
-
-    /**
-     * Merges `StakingPool` with `StakingPoolState`
-     */
-    export interface Staking {
-      /**
-       * The lockup duration for this pool in seconds
-       */
-      duration: number;
-
-      extra: Staking.Extra;
-
-      /**
-       * The ordered index (position) of this pool
-       */
-      index: number;
-
-      /**
-       * Current contract state of staking pool
-       */
-      state: NeptAPI.StakingPoolState;
-    }
-
-    export namespace Staking {
-      export interface Extra {
-        /**
-         * Human-readable field variants. Will not be null when query param `with_text` is
-         * `true`.
-         */
-        text: Extra.Text | null;
-      }
-
-      export namespace Extra {
-        /**
-         * Human-readable field variants. Will not be null when query param `with_text` is
-         * `true`.
-         */
-        export interface Text {
-          duration: string;
-
-          index: string;
-        }
-      }
-    }
-  }
 }
 
 export interface NeptGetParamsParams {
@@ -641,6 +881,9 @@ export interface NeptGetStateParams {
 
 export declare namespace Nept {
   export {
+    type NeptParams as NeptParams,
+    type NeptState as NeptState,
+    type NeptUnlockDistributionGroup as NeptUnlockDistributionGroup,
     type StakingPoolFull as StakingPoolFull,
     type StakingPoolParams as StakingPoolParams,
     type StakingPoolState as StakingPoolState,

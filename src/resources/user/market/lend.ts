@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../../core/resource';
-import * as AssetsAPI from '../../assets';
+import * as SubaccountAPI from './borrow/subaccount';
 import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
@@ -30,96 +30,11 @@ export class Lend extends APIResource {
   }
 }
 
-export interface UserDebtAssetPool {
+export interface UserLendMarket {
   /**
-   * Asset identifiers with associated metadata
+   * User lending allocations
    */
-  asset_info: AssetsAPI.AssetInfo;
-
-  /**
-   * Sum open debt amount (this is simply the principal + interest)
-   */
-  debt: string;
-
-  extra: UserDebtAssetPool.Extra;
-
-  /**
-   * Sum of accrued interest for open debt position
-   */
-  interest: string;
-
-  /**
-   * Initial amount borrowed (of debts which have not yet been repaid)
-   */
-  principal: string;
-}
-
-export namespace UserDebtAssetPool {
-  export interface Extra {
-    /**
-     * Human-readable field variants. Will not be null when query param `with_text` is
-     * `true`.
-     */
-    text: Extra.Text | null;
-
-    /**
-     * USD values for the corresponding amounts above. Will not be null when query
-     * param `with_value` is `true`.
-     */
-    value: Extra.Value | null;
-  }
-
-  export namespace Extra {
-    /**
-     * Human-readable field variants. Will not be null when query param `with_text` is
-     * `true`.
-     */
-    export interface Text {
-      debt: string;
-
-      interest: string;
-
-      principal: string;
-    }
-
-    /**
-     * USD values for the corresponding amounts above. Will not be null when query
-     * param `with_value` is `true`.
-     */
-    export interface Value {
-      debt: string;
-
-      extra: Value.Extra;
-
-      interest: string;
-
-      principal: string;
-    }
-
-    export namespace Value {
-      export interface Extra {
-        /**
-         * Human-readable variants of USD values. Will not be null when query params
-         * `with_text` and `with_value` are `true`.
-         */
-        text: Extra.Text | null;
-      }
-
-      export namespace Extra {
-        /**
-         * Human-readable variants of USD values. Will not be null when query params
-         * `with_text` and `with_value` are `true`.
-         */
-        export interface Text {
-          debt: string;
-
-          interest: string;
-
-          principal: string;
-        }
-      }
-    }
-  }
+  asset_pools: Array<SubaccountAPI.UserDebtAssetPool>;
 }
 
 /**
@@ -131,10 +46,7 @@ export interface LendListResponse {
    */
   count: number;
 
-  /**
-   * Primary response content (list)
-   */
-  data: Array<UserDebtAssetPool>;
+  data: Array<SubaccountAPI.UserDebtAssetPool>;
 
   /**
    * Error data. Guaranteed `null` for successful response.
@@ -157,10 +69,7 @@ export interface LendListResponse {
  * Object data success response
  */
 export interface LendGetByAssetResponse {
-  /**
-   * Primary response content (object)
-   */
-  data: UserDebtAssetPool;
+  data: SubaccountAPI.UserDebtAssetPool;
 
   /**
    * Error data. Guaranteed `null` for successful response.
@@ -210,7 +119,7 @@ export interface LendGetByAssetParams {
 
 export declare namespace Lend {
   export {
-    type UserDebtAssetPool as UserDebtAssetPool,
+    type UserLendMarket as UserLendMarket,
     type LendListResponse as LendListResponse,
     type LendGetByAssetResponse as LendGetByAssetResponse,
     type LendListParams as LendListParams,
