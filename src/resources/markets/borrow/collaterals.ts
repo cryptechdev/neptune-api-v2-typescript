@@ -125,6 +125,9 @@ export namespace BorrowCollateralConfig {
   }
 }
 
+/**
+ * Borrowing market, collateral info
+ */
 export interface BorrowCollateralMarket {
   /**
    * Asset identifiers with associated metadata
@@ -221,9 +224,6 @@ export namespace BorrowCollateralState {
   }
 }
 
-/**
- * List data success response
- */
 export interface CollateralListResponse {
   /**
    * Total number of objects irrespective of any pagination parameters.
@@ -249,10 +249,10 @@ export interface CollateralListResponse {
   status_text: string;
 }
 
-/**
- * Object data success response
- */
 export interface CollateralGetByAssetResponse {
+  /**
+   * Borrowing market, collateral info
+   */
   data: BorrowCollateralMarket;
 
   /**

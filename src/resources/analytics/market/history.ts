@@ -31,9 +31,6 @@ export class History extends APIResource {
   }
 }
 
-/**
- * Object data success response
- */
 export interface HistoryGetLoansOriginatedResponse {
   /**
    * Historical cumulative lend value for assets
@@ -118,9 +115,6 @@ export namespace HistoryGetLoansOriginatedResponse {
   }
 }
 
-/**
- * Object data success response
- */
 export interface HistoryGetLoansOriginatedByAssetResponse {
   /**
    * Historical cumulative lend value for assets
@@ -160,9 +154,6 @@ export namespace HistoryGetLoansOriginatedByAssetResponse {
      */
     range: Data.Range;
 
-    /**
-     * Pairs of items and their associated points
-     */
     series: Array<Data.Series>;
   }
 
@@ -199,6 +190,9 @@ export namespace HistoryGetLoansOriginatedByAssetResponse {
       start: string;
     }
 
+    /**
+     * Item and associated points
+     */
     export interface Series {
       /**
        * Provides a unique identifier for an asset for use throughout the Neptune API.

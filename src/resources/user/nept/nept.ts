@@ -380,9 +380,6 @@ export interface UserUnlockScheduleLumpSum {
   kind: 'lump_sum';
 }
 
-/**
- * Object data success response
- */
 export interface NeptGetUnlocksResponse {
   data: UserUnlockOverview;
 

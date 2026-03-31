@@ -36,6 +36,9 @@ export class Lend extends APIResource {
   }
 }
 
+/**
+ * Lending market overview
+ */
 export interface LendMarket {
   /**
    * Asset identifiers with associated metadata
@@ -138,9 +141,6 @@ export namespace LendMarketState {
   }
 }
 
-/**
- * List data success response
- */
 export interface LendListResponse {
   /**
    * Total number of objects irrespective of any pagination parameters.
@@ -166,10 +166,10 @@ export interface LendListResponse {
   status_text: string;
 }
 
-/**
- * Object data success response
- */
 export interface LendGetByAssetResponse {
+  /**
+   * Lending market overview
+   */
   data: LendMarket;
 
   /**
@@ -189,9 +189,6 @@ export interface LendGetByAssetResponse {
   status_text: string;
 }
 
-/**
- * Object data success response
- */
 export interface LendGetRateHistoryResponse {
   /**
    * Historical rates for assets

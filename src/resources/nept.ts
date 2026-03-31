@@ -40,6 +40,11 @@ export class Nept extends APIResource {
 
 export interface NeptParams {
   /**
+   * Asset identifiers with associated metadata
+   */
+  asset_info: AssetsAPI.AssetInfo;
+
+  /**
    * The emission rate of NEPT in tokens per year
    */
   emission_rate: string;
@@ -47,7 +52,7 @@ export interface NeptParams {
   extra: NeptParams.Extra;
 
   /**
-   * Staking pools (pool params are included)
+   * Staking pools
    */
   staking_pools: Array<NeptParams.StakingPool>;
 
@@ -115,7 +120,7 @@ export namespace NeptParams {
   }
 
   /**
-   * Merges `StakingPool` with `StakingPoolParams`
+   * Staking pool contents along with associated pool params
    */
   export interface StakingPool {
     /**
@@ -270,7 +275,7 @@ export namespace NeptState {
   }
 
   /**
-   * Merges `StakingPool` with `StakingPoolState`
+   * Staking pool contents along with associated pool state
    */
   export interface Staking {
     /**
@@ -577,7 +582,7 @@ export namespace NeptUnlockDistributionGroup {
 }
 
 /**
- * Merges `StakingPool` with both `StakingPoolWithParams` and `StakingPoolState`
+ * Staking pool contents along with associated pool state and pool params
  */
 export interface StakingPoolFull {
   /**
@@ -712,9 +717,6 @@ export namespace StakingPoolState {
   }
 }
 
-/**
- * Object data success response
- */
 export interface NeptGetParamsResponse {
   data: NeptParams;
 
@@ -735,9 +737,6 @@ export interface NeptGetParamsResponse {
   status_text: string;
 }
 
-/**
- * Object data success response
- */
 export interface NeptGetStakingOverviewResponse {
   data: NeptGetStakingOverviewResponse.Data;
 
@@ -771,8 +770,6 @@ export namespace NeptGetStakingOverviewResponse {
     global_state: Data.GlobalState;
 
     /**
-     * Staking pool contract parameter.
-     *
      * List of available staking pools
      */
     pools: Array<NeptAPI.StakingPoolFull>;
@@ -820,9 +817,6 @@ export namespace NeptGetStakingOverviewResponse {
   }
 }
 
-/**
- * Object data success response
- */
 export interface NeptGetStateResponse {
   data: NeptState;
 

@@ -5,13 +5,10 @@ Types:
 - <code><a href="./src/resources/core.ts">ErrorData</a></code>
 - <code><a href="./src/resources/core.ts">ErrorDataVariants</a></code>
 - <code><a href="./src/resources/core.ts">ErrorKind</a></code>
-- <code><a href="./src/resources/core.ts">ErrorResponseVariants</a></code>
 - <code><a href="./src/resources/core.ts">ErrorScope</a></code>
 - <code><a href="./src/resources/core.ts">FieldValidationError</a></code>
 - <code><a href="./src/resources/core.ts">Interval</a></code>
 - <code><a href="./src/resources/core.ts">IntervalUnit</a></code>
-- <code><a href="./src/resources/core.ts">ListErrorResponse</a></code>
-- <code><a href="./src/resources/core.ts">ObjErrorResponse</a></code>
 - <code><a href="./src/resources/core.ts">ValidationErrorData</a></code>
 - <code><a href="./src/resources/core.ts">ValidationFieldSource</a></code>
 
