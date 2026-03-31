@@ -67,9 +67,6 @@ export interface BorrowMarketOverview {
   debts: Array<DebtsAPI.BorrowDebtMarket>;
 }
 
-/**
- * Object data success response
- */
 export interface BorrowGetOverviewResponse {
   data: BorrowMarketOverview;
 
@@ -90,9 +87,6 @@ export interface BorrowGetOverviewResponse {
   status_text: string;
 }
 
-/**
- * Object data success response
- */
 export interface BorrowGetRateHistoryResponse {
   /**
    * Historical rates for assets

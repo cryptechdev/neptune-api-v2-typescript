@@ -157,6 +157,9 @@ export interface WalletAssetUnknown {
   kind: 'unknown';
 }
 
+/**
+ * Asset and balance contents for a given wallet
+ */
 export interface WalletBalance {
   /**
    * Provides a unique identifier for an asset for use throughout the Neptune API.
@@ -170,10 +173,10 @@ export interface WalletBalance {
   values: WalletAsset;
 }
 
-/**
- * Object data success response
- */
 export interface WalletGetBalanceByAssetResponse {
+  /**
+   * Asset and balance contents for a given wallet
+   */
   data: WalletBalance;
 
   /**
@@ -193,9 +196,6 @@ export interface WalletGetBalanceByAssetResponse {
   status_text: string;
 }
 
-/**
- * Object data success response
- */
 export interface WalletGetBalancesResponse {
   data: WalletGetBalancesResponse.Data;
 

@@ -113,9 +113,6 @@ export interface UserBorrowMarketPools {
   debts: Array<SubaccountAPI.UserDebtAssetPool>;
 }
 
-/**
- * Object data success response
- */
 export interface BorrowGetCollateralAccountsByAssetResponse {
   data: BorrowGetCollateralAccountsByAssetResponse.Data;
 
@@ -150,9 +147,6 @@ export namespace BorrowGetCollateralAccountsByAssetResponse {
   }
 }
 
-/**
- * List data success response
- */
 export interface BorrowGetCollateralTotalsResponse {
   /**
    * Total number of objects irrespective of any pagination parameters.
@@ -178,9 +172,6 @@ export interface BorrowGetCollateralTotalsResponse {
   status_text: string;
 }
 
-/**
- * Object data success response
- */
 export interface BorrowGetDebtAccountsByAssetResponse {
   data: BorrowGetDebtAccountsByAssetResponse.Data;
 
@@ -215,9 +206,6 @@ export namespace BorrowGetDebtAccountsByAssetResponse {
   }
 }
 
-/**
- * List data success response
- */
 export interface BorrowGetDebtsTotalsResponse {
   /**
    * Total number of objects irrespective of any pagination parameters.
@@ -243,9 +231,6 @@ export interface BorrowGetDebtsTotalsResponse {
   status_text: string;
 }
 
-/**
- * Object data success response
- */
 export interface BorrowGetPortfolioResponse {
   data: UserBorrowMarket;
 

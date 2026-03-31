@@ -21,13 +21,10 @@ export {
   type ErrorData,
   type ErrorDataVariants,
   type ErrorKind,
-  type ErrorResponseVariants,
   type ErrorScope,
   type FieldValidationError,
   type Interval,
   type IntervalUnit,
-  type ListErrorResponse,
-  type ObjErrorResponse,
   type ValidationErrorData,
   type ValidationFieldSource,
 } from './core';

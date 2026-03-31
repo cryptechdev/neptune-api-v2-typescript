@@ -109,6 +109,9 @@ export namespace BorrowDebtConfig {
   }
 }
 
+/**
+ * Borrowing market, debt info
+ */
 export interface BorrowDebtMarket {
   /**
    * Asset identifiers with associated metadata
@@ -249,9 +252,6 @@ export namespace BorrowDebtState {
   }
 }
 
-/**
- * List data success response
- */
 export interface DebtListResponse {
   /**
    * Total number of objects irrespective of any pagination parameters.
@@ -277,10 +277,10 @@ export interface DebtListResponse {
   status_text: string;
 }
 
-/**
- * Object data success response
- */
 export interface DebtGetByAssetResponse {
+  /**
+   * Borrowing market, debt info
+   */
   data: BorrowDebtMarket;
 
   /**

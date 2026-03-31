@@ -280,9 +280,6 @@ export namespace UserTx {
   }
 }
 
-/**
- * List data success response
- */
 export interface UserGetTxHistoryResponse {
   /**
    * Total number of objects irrespective of any pagination parameters.
@@ -308,9 +305,6 @@ export interface UserGetTxHistoryResponse {
   status_text: string;
 }
 
-/**
- * Object data success response
- */
 export interface UserGetUserResponse {
   data: User;
 

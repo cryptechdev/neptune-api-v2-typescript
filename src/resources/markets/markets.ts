@@ -238,9 +238,6 @@ export interface MergedMarket {
   lend: LendAPI.LendMarketData | null;
 }
 
-/**
- * List data success response
- */
 export interface MarketGetMergedResponse {
   /**
    * Total number of objects irrespective of any pagination parameters.
@@ -266,9 +263,6 @@ export interface MarketGetMergedResponse {
   status_text: string;
 }
 
-/**
- * Object data success response
- */
 export interface MarketGetMergedByAssetResponse {
   /**
    * Data for all of an assets markets
@@ -292,9 +286,6 @@ export interface MarketGetMergedByAssetResponse {
   status_text: string;
 }
 
-/**
- * Object data success response
- */
 export interface MarketGetOverviewResponse {
   data: MarketGetOverviewResponse.Data;
 
@@ -334,9 +325,6 @@ export namespace MarketGetOverviewResponse {
   }
 }
 
-/**
- * Object data success response
- */
 export interface MarketGetParamsResponse {
   data: GlobalMarketConfig;
 

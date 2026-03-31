@@ -111,6 +111,9 @@ export namespace UserAccountHealth {
   }
 }
 
+/**
+ * User borrowing subaccount
+ */
 export interface UserBorrowMarketAccount {
   /**
    * Account collateral allocations
@@ -133,6 +136,15 @@ export interface UserBorrowMarketAccount {
   index: number;
 }
 
+/**
+ * Associates a subaccount's index with it's inner allocations for a given asset.
+ *
+ * This type is identical to `UserCollateralAssetPool`, except the asset
+ * association is interchanged for an account index.
+ *
+ * Typically used in contexts where multiple subaccounts with a shared underlying
+ * asset are batched together.
+ */
 export interface UserCollateralAccountPool {
   /**
    * Amount of this asset which is actively collateralized
@@ -273,6 +285,15 @@ export namespace UserCollateralAssetPool {
   }
 }
 
+/**
+ * Associates a subaccount's index with it's inner allocations for a given asset.
+ *
+ * This type is identical to `UserDebtAssetPool`, except the asset association is
+ * interchanged for an account index.
+ *
+ * Typically used in contexts where multiple subaccounts with a shared underlying
+ * asset are batched together.
+ */
 export interface UserDebtAccountPool {
   /**
    * Sum open debt amount (this is simply the principal + interest)
@@ -457,10 +478,10 @@ export namespace UserDebtAssetPool {
   }
 }
 
-/**
- * Object data success response
- */
 export interface SubaccountGetSubaccountResponse {
+  /**
+   * User borrowing subaccount
+   */
   data: UserBorrowMarketAccount;
 
   /**
@@ -480,9 +501,6 @@ export interface SubaccountGetSubaccountResponse {
   status_text: string;
 }
 
-/**
- * List data success response
- */
 export interface SubaccountGetSubaccountCollateralsResponse {
   /**
    * Total number of objects irrespective of any pagination parameters.
@@ -508,9 +526,6 @@ export interface SubaccountGetSubaccountCollateralsResponse {
   status_text: string;
 }
 
-/**
- * List data success response
- */
 export interface SubaccountGetSubaccountDebtsResponse {
   /**
    * Total number of objects irrespective of any pagination parameters.
@@ -536,9 +551,6 @@ export interface SubaccountGetSubaccountDebtsResponse {
   status_text: string;
 }
 
-/**
- * Object data success response
- */
 export interface SubaccountGetSubaccountHealthResponse {
   data: UserAccountHealth;
 

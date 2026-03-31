@@ -256,7 +256,7 @@ export interface UserStakePool {
   amount_sum: string;
 
   /**
-   * Merges `StakingPool` with both `StakingPoolWithParams` and `StakingPoolState`
+   * Staking pool contents along with associated pool state and pool params
    */
   common: NeptAPI.StakingPoolFull;
 
@@ -474,9 +474,6 @@ export namespace UserStakeUnbondingEntry {
   }
 }
 
-/**
- * Object data success response
- */
 export interface StakingGetOverviewResponse {
   data: UserStake;
 
@@ -497,9 +494,6 @@ export interface StakingGetOverviewResponse {
   status_text: string;
 }
 
-/**
- * Object data success response
- */
 export interface StakingGetStakingPoolResponse {
   data: UserStakePool;
 
@@ -520,9 +514,6 @@ export interface StakingGetStakingPoolResponse {
   status_text: string;
 }
 
-/**
- * List data success response
- */
 export interface StakingGetStakingPoolsResponse {
   /**
    * Total number of objects irrespective of any pagination parameters.
@@ -548,9 +539,6 @@ export interface StakingGetStakingPoolsResponse {
   status_text: string;
 }
 
-/**
- * Object data success response
- */
 export interface StakingGetUnstakingResponse {
   data: StakingGetUnstakingResponse.Data;
 

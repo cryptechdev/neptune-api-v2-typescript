@@ -6,7 +6,7 @@ export class Core extends APIResource {}
 
 export interface ErrorData {
   /**
-   * Error category
+   * General error category
    *
    * Useful to match against for clients that require custom logic depending on the
    * type of error encountered
@@ -27,7 +27,7 @@ export interface ErrorData {
   scope: ErrorScope;
 }
 
-export type ErrorDataVariants = ErrorData | ValidationErrorData;
+export type ErrorDataVariants = ValidationErrorData | ErrorData;
 
 /**
  * - `entity_not_found` - Route matched, but the requested entity does not exist or
@@ -45,7 +45,6 @@ export type ErrorDataVariants = ErrorData | ValidationErrorData;
  * - `json_decode` - JSON body decode
  * - `json_body_deserialize_failure` - JSON body deserialization
  * - `content_type_unsupported` - Invalid Accept header in request
- * - `validation` - Validation error
  * - `internal` - Internal API server errors (5xx)
  */
 export type ErrorKind =
@@ -61,13 +60,7 @@ export type ErrorKind =
   | 'json_decode'
   | 'json_body_deserialize_failure'
   | 'content_type_unsupported'
-  | 'validation'
   | 'internal';
-
-/**
- * Error response for object data types
- */
-export type ErrorResponseVariants = ObjErrorResponse | ListErrorResponse;
 
 export type ErrorScope = 'user' | 'client' | 'server';
 
@@ -94,85 +87,29 @@ export interface Interval {
 
 export type IntervalUnit = 'h' | 'd' | 'w' | 'm' | 'y';
 
-/**
- * Error response for list data types
- */
-export interface ListErrorResponse {
-  /**
-   * The `count` key is still present when encountering an error from a list
-   * endpoint.
-   *
-   * It is guarnateed to be `null` for errors.
-   */
-  count: null;
-
-  /**
-   * While the `data` key does still exist in error responses, it is guaranteed to be
-   * `null`.
-   */
-  data: null;
-
-  /**
-   * Error information. Always set for unsuccessful responses
-   */
-  error: ErrorDataVariants;
-
-  /**
-   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
-   * error responses are guaranteed to be >= `400`.
-   */
-  status: number;
-
-  /**
-   * HTTP status text
-   */
-  status_text: string;
-}
-
-/**
- * Error response for object data types
- */
-export interface ObjErrorResponse {
-  /**
-   * While the `data` key does still exist in error responses, it is guaranteed to be
-   * `null`.
-   */
-  data: null;
-
-  /**
-   * Error information. Always set for unsuccessful responses
-   */
-  error: ErrorDataVariants;
-
-  /**
-   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
-   * error responses are guaranteed to be >= `400`.
-   */
-  status: number;
-
-  /**
-   * HTTP status text
-   */
-  status_text: string;
-}
-
 export interface ValidationErrorData {
+  /**
+   * Field names/paths that failed validation and their associated error messages
+   */
   fields: Array<FieldValidationError>;
 
   /**
-   * Error category
+   * General error category
    *
    * Useful to match against for clients that require custom logic depending on the
    * type of error encountered
    */
-  kind: ErrorKind;
+  kind: 'validation';
 
   /**
    * Error description
    */
   message: string;
 
-  origin: ValidationFieldSource | null;
+  /**
+   * The region of the request where the validation failure(s) occurred
+   */
+  origin: ValidationFieldSource;
 
   /**
    * The scope/region of the error.
@@ -183,6 +120,9 @@ export interface ValidationErrorData {
   scope: ErrorScope;
 }
 
+/**
+ * The region of the request where the validation failure(s) occurred
+ */
 export type ValidationFieldSource = 'header' | 'query' | 'path' | 'body';
 
 export declare namespace Core {
@@ -190,13 +130,10 @@ export declare namespace Core {
     type ErrorData as ErrorData,
     type ErrorDataVariants as ErrorDataVariants,
     type ErrorKind as ErrorKind,
-    type ErrorResponseVariants as ErrorResponseVariants,
     type ErrorScope as ErrorScope,
     type FieldValidationError as FieldValidationError,
     type Interval as Interval,
     type IntervalUnit as IntervalUnit,
-    type ListErrorResponse as ListErrorResponse,
-    type ObjErrorResponse as ObjErrorResponse,
     type ValidationErrorData as ValidationErrorData,
     type ValidationFieldSource as ValidationFieldSource,
   };

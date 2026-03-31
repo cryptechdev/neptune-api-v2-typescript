@@ -24,9 +24,6 @@ export class Market extends APIResource {
   }
 }
 
-/**
- * Object data success response
- */
 export interface MarketGetCurrentStateResponse {
   data: MarketGetCurrentStateResponse.Data;
 
