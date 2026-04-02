@@ -11,11 +11,8 @@ It is generated with [Stainless](https://www.stainless.com/).
 ## Installation
 
 ```sh
-npm install git+ssh://git@github.com:cryptechdev/neptune-api-v2-typescript.git
+npm install @neptunefinance/api-v2
 ```
-
-> [!NOTE]
-> Once this package is [published to npm](https://www.stainless.com/docs/guides/publish), this will become: `npm install @neptunefinance/api-v2`
 
 ## Usage
 
