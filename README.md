@@ -27,9 +27,9 @@ import NeptuneAPIV2 from '@neptunefinance/api-v2';
 
 const client = new NeptuneAPIV2();
 
-const response = await client.status.checkHealth();
+const response = await client.markets.getOverview({ with_text: true, with_value: true });
 
-console.log(response.status);
+console.log(response.data);
 ```
 
 ### Request & Response types
@@ -42,7 +42,8 @@ import NeptuneAPIV2 from '@neptunefinance/api-v2';
 
 const client = new NeptuneAPIV2();
 
-const response: NeptuneAPIV2.StatusCheckHealthResponse = await client.status.checkHealth();
+const params: NeptuneAPIV2.MarketGetOverviewParams = { with_text: true, with_value: true };
+const response: NeptuneAPIV2.MarketGetOverviewResponse = await client.markets.getOverview(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -55,15 +56,17 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const response = await client.status.checkHealth().catch(async (err) => {
-  if (err instanceof NeptuneAPIV2.APIError) {
-    console.log(err.status); // 400
-    console.log(err.name); // BadRequestError
-    console.log(err.headers); // {server: 'nginx', ...}
-  } else {
-    throw err;
-  }
-});
+const response = await client.markets
+  .getOverview({ with_text: true, with_value: true })
+  .catch(async (err) => {
+    if (err instanceof NeptuneAPIV2.APIError) {
+      console.log(err.status); // 400
+      console.log(err.name); // BadRequestError
+      console.log(err.headers); // {server: 'nginx', ...}
+    } else {
+      throw err;
+    }
+  });
 ```
 
 Error codes are as follows:
@@ -95,7 +98,7 @@ const client = new NeptuneAPIV2({
 });
 
 // Or, configure per-request:
-await client.status.checkHealth({
+await client.markets.getOverview({ with_text: true, with_value: true }, {
   maxRetries: 5,
 });
 ```
@@ -112,7 +115,7 @@ const client = new NeptuneAPIV2({
 });
 
 // Override per-request:
-await client.status.checkHealth({
+await client.markets.getOverview({ with_text: true, with_value: true }, {
   timeout: 5 * 1000,
 });
 ```
@@ -127,30 +130,22 @@ List methods in the NeptuneAPIV2 API are paginated.
 You can use the `for await … of` syntax to iterate through items across all pages:
 
 ```ts
-async function fetchAllAssets(params) {
-  const allAssets = [];
+async function fetchAllUserTxes(params) {
+  const allUserTxes = [];
   // Automatically fetches more pages as needed.
-  for await (const asset of client.assets.getPriceHistory({
-    end: 0,
-    period: 'h',
-    start: 0,
-  })) {
-    allAssets.push(asset);
+  for await (const userTx of client.user.getTxHistory('injvalcons1a03k0ztfyjnd70apawva003pkh0adqmau0a9q0')) {
+    allUserTxes.push(userTx);
   }
-  return allAssets;
+  return allUserTxes;
 }
 ```
 
 Alternatively, you can request a single page at a time:
 
 ```ts
-let page = await client.assets.getPriceHistory({
-  end: 0,
-  period: 'h',
-  start: 0,
-});
-for (const asset of page.data?.series) {
-  console.log(asset);
+let page = await client.user.getTxHistory('injvalcons1a03k0ztfyjnd70apawva003pkh0adqmau0a9q0');
+for (const userTx of page.data) {
+  console.log(userTx);
 }
 
 // Convenience methods are provided for manually paginating:
@@ -174,13 +169,17 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new NeptuneAPIV2();
 
-const response = await client.status.checkHealth().asResponse();
+const response = await client.markets
+  .getOverview({ with_text: true, with_value: true })
+  .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: response, response: raw } = await client.status.checkHealth().withResponse();
+const { data: response, response: raw } = await client.markets
+  .getOverview({ with_text: true, with_value: true })
+  .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(response.status);
+console.log(response.data);
 ```
 
 ### Logging
@@ -260,7 +259,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.status.checkHealth({
+client.markets.getOverview({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',

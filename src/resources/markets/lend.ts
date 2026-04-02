@@ -2,11 +2,9 @@
 
 import { APIResource } from '../../core/resource';
 import * as AssetsAPI from '../assets';
-import { AssetRateHistorySeriesIntervalMultiPage } from '../assets';
 import * as CoreAPI from '../core';
 import * as MarketsAPI from './markets';
 import { APIPromise } from '../../core/api-promise';
-import { IntervalMultiPage, type IntervalMultiPageParams, PagePromise } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 
 export class Lend extends APIResource {
@@ -33,12 +31,8 @@ export class Lend extends APIResource {
   getRateHistory(
     query: LendGetRateHistoryParams,
     options?: RequestOptions,
-  ): PagePromise<AssetRateHistorySeriesIntervalMultiPage, AssetsAPI.AssetRateHistory.Series> {
-    return this._client.getAPIList(
-      '/api/v1/markets/lend/rate-history',
-      IntervalMultiPage<AssetsAPI.AssetRateHistory.Series>,
-      { query, ...options },
-    );
+  ): APIPromise<LendGetRateHistoryResponse> {
+    return this._client.get('/api/v1/markets/lend/rate-history', { query, ...options });
   }
 }
 
@@ -221,6 +215,29 @@ export interface LendGetByAssetResponse {
   status_text: string;
 }
 
+export interface LendGetRateHistoryResponse {
+  /**
+   * Historical rates for assets
+   */
+  data: AssetsAPI.AssetRateHistory;
+
+  /**
+   * Error data. Guaranteed `null` for successful response.
+   */
+  error: null;
+
+  /**
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
+   */
+  status: number;
+
+  /**
+   * HTTP status text
+   */
+  status_text: string;
+}
+
 export interface LendListParams {
   /**
    * Include text variation fields
@@ -250,7 +267,7 @@ export interface LendGetByAssetParams {
   with_value?: boolean;
 }
 
-export interface LendGetRateHistoryParams extends IntervalMultiPageParams {
+export interface LendGetRateHistoryParams {
   /**
    * End timestamp for interval range (inclusive)
    *
@@ -292,6 +309,22 @@ export interface LendGetRateHistoryParams extends IntervalMultiPageParams {
    * E.g. for interval buckets of 2h: `interval=2&period=h`
    */
   interval?: number;
+
+  /**
+   * Maximum number of time buckets/intervals to return.
+   *
+   * For responses with multiple series, this limit is applied to each series
+   * individually rather than accumulating across series. This is a limit of returned
+   * _interval sections_, it is **not** a limit of returned _points_. In other words,
+   * `limit=200` will provide 200 time points for a single series. For multi-series
+   * responses, each series will also see the exact same set of 200 time points.
+   */
+  limit?: number;
+
+  /**
+   * Time series bucket offset
+   */
+  offset?: number;
 }
 
 export declare namespace Lend {
@@ -301,10 +334,9 @@ export declare namespace Lend {
     type LendMarketState as LendMarketState,
     type LendListResponse as LendListResponse,
     type LendGetByAssetResponse as LendGetByAssetResponse,
+    type LendGetRateHistoryResponse as LendGetRateHistoryResponse,
     type LendListParams as LendListParams,
     type LendGetByAssetParams as LendGetByAssetParams,
     type LendGetRateHistoryParams as LendGetRateHistoryParams,
   };
 }
-
-export { type AssetRateHistorySeriesIntervalMultiPage };

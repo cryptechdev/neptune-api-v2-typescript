@@ -11,10 +11,10 @@ export {
   type AssetRateHistory,
   type AssetSpec,
   type AssetListResponse,
+  type AssetGetPriceHistoryResponse,
   type AssetListPricesResponse,
   type AssetGetPriceHistoryParams,
   type AssetListPricesParams,
-  type AssetPriceHistorySeriesIntervalMultiPage,
 } from './assets';
 export {
   Core,
