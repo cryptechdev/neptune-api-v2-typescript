@@ -27,6 +27,7 @@ import {
   UserBorrowMarket,
   UserBorrowMarketPools,
 } from './borrow/borrow';
+import * as SubaccountAPI from './borrow/subaccount';
 import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
@@ -82,6 +83,12 @@ export interface UserMarket {
   lend: LendAPI.UserLendMarket;
 }
 
+/**
+ * User market allocations grouped by asset.
+ *
+ * **Note**: because of the inverted structure of merged market accounts, account
+ * health cannot be represented and is excluded in the merged structures.
+ */
 export interface UserMergedMarket {
   /**
    * Asset identifiers with associated metadata
@@ -91,184 +98,22 @@ export interface UserMergedMarket {
   /**
    * User collateral contribution for asset in borrow market, listed by subaccount
    */
-  borrow_collateral: Array<UserMergedMarket.BorrowCollateral>;
+  borrow_collateral: Array<SubaccountAPI.UserCollateralAccountPool>;
 
   /**
    * User debt contribution for asset in borrow market, listed by subaccount
    */
-  borrow_debt: Array<UserMergedMarket.BorrowDebt>;
+  borrow_debt: Array<SubaccountAPI.UserDebtAccountPool>;
 
   /**
-   * User contirbution for asset's lending market, if one exists
+   * User contribution for asset's lending market, if one exists
    */
   lend?: UserMergedMarket.Lend | null;
 }
 
 export namespace UserMergedMarket {
-  export interface BorrowCollateral {
-    /**
-     * Amount of this asset which is actively collateralized
-     */
-    amount: string;
-
-    extra: BorrowCollateral.Extra;
-
-    /**
-     * Account index
-     */
-    index: number;
-  }
-
-  export namespace BorrowCollateral {
-    export interface Extra {
-      /**
-       * Human-readable field variants. Will not be null when query param `with_text` is
-       * `true`.
-       */
-      text: Extra.Text | null;
-
-      /**
-       * USD values for the corresponding amounts above. Will not be null when query
-       * param `with_value` is `true`.
-       */
-      value: Extra.Value | null;
-    }
-
-    export namespace Extra {
-      /**
-       * Human-readable field variants. Will not be null when query param `with_text` is
-       * `true`.
-       */
-      export interface Text {
-        amount: string;
-      }
-
-      /**
-       * USD values for the corresponding amounts above. Will not be null when query
-       * param `with_value` is `true`.
-       */
-      export interface Value {
-        amount: string;
-
-        extra: Value.Extra;
-      }
-
-      export namespace Value {
-        export interface Extra {
-          /**
-           * Human-readable variants of USD values. Will not be null when query params
-           * `with_text` and `with_value` are `true`.
-           */
-          text: Extra.Text | null;
-        }
-
-        export namespace Extra {
-          /**
-           * Human-readable variants of USD values. Will not be null when query params
-           * `with_text` and `with_value` are `true`.
-           */
-          export interface Text {
-            amount: string;
-          }
-        }
-      }
-    }
-  }
-
-  export interface BorrowDebt {
-    /**
-     * Sum open debt amount (this is simply the principal + interest)
-     */
-    debt: string;
-
-    extra: BorrowDebt.Extra;
-
-    /**
-     * Account index
-     */
-    index: number;
-
-    /**
-     * Sum of accrued interest for open debt position
-     */
-    interest: string;
-
-    /**
-     * Initial amount borrowed (of debts which have not yet been repaid)
-     */
-    principal: string;
-  }
-
-  export namespace BorrowDebt {
-    export interface Extra {
-      /**
-       * Human-readable field variants. Will not be null when query param `with_text` is
-       * `true`.
-       */
-      text: Extra.Text | null;
-
-      /**
-       * USD values for the corresponding amounts above. Will not be null when query
-       * param `with_value` is `true`.
-       */
-      value: Extra.Value | null;
-    }
-
-    export namespace Extra {
-      /**
-       * Human-readable field variants. Will not be null when query param `with_text` is
-       * `true`.
-       */
-      export interface Text {
-        debt: string;
-
-        interest: string;
-
-        principal: string;
-      }
-
-      /**
-       * USD values for the corresponding amounts above. Will not be null when query
-       * param `with_value` is `true`.
-       */
-      export interface Value {
-        debt: string;
-
-        extra: Value.Extra;
-
-        interest: string;
-
-        principal: string;
-      }
-
-      export namespace Value {
-        export interface Extra {
-          /**
-           * Human-readable variants of USD values. Will not be null when query params
-           * `with_text` and `with_value` are `true`.
-           */
-          text: Extra.Text | null;
-        }
-
-        export namespace Extra {
-          /**
-           * Human-readable variants of USD values. Will not be null when query params
-           * `with_text` and `with_value` are `true`.
-           */
-          export interface Text {
-            debt: string;
-
-            interest: string;
-
-            principal: string;
-          }
-        }
-      }
-    }
-  }
-
   /**
-   * User contirbution for asset's lending market, if one exists
+   * User contribution for asset's lending market, if one exists
    */
   export interface Lend {
     /**
@@ -383,6 +228,14 @@ export namespace UserMergedMarket {
         /**
          * USD values for the corresponding amounts above. Will not be null when query
          * param `with_value` is `true`.
+         *
+         * ### Note
+         *
+         * This variant group contains an additional `price` field (set to the number used
+         * in value calculation).
+         *
+         * The embedded text group will contain the text variant if `with_text` was
+         * specified as well.
          */
         value: Extra.Value | null;
       }
@@ -403,6 +256,14 @@ export namespace UserMergedMarket {
         /**
          * USD values for the corresponding amounts above. Will not be null when query
          * param `with_value` is `true`.
+         *
+         * ### Note
+         *
+         * This variant group contains an additional `price` field (set to the number used
+         * in value calculation).
+         *
+         * The embedded text group will contain the text variant if `with_text` was
+         * specified as well.
          */
         export interface Value {
           collateralized: string;
@@ -410,6 +271,11 @@ export namespace UserMergedMarket {
           extra: Value.Extra;
 
           held: string;
+
+          /**
+           * Price used in value calculations
+           */
+          price: string;
 
           total: string;
         }
@@ -432,6 +298,11 @@ export namespace UserMergedMarket {
               collateralized: string;
 
               held: string;
+
+              /**
+               * Text representation of price
+               */
+              price: string;
 
               total: string;
             }
@@ -468,6 +339,12 @@ export interface MarketGetMergedResponse {
 }
 
 export interface MarketGetMergedByAssetResponse {
+  /**
+   * User market allocations grouped by asset.
+   *
+   * **Note**: because of the inverted structure of merged market accounts, account
+   * health cannot be represented and is excluded in the merged structures.
+   */
   data: UserMergedMarket;
 
   /**

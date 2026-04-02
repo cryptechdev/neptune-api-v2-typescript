@@ -72,6 +72,14 @@ export namespace BorrowCollateralConfig {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     value: Extra.Value | null;
   }
@@ -96,11 +104,24 @@ export namespace BorrowCollateralConfig {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     export interface Value {
       collateral_cap: string | null;
 
       extra: Value.Extra;
+
+      /**
+       * Price used in value calculations
+       */
+      price: string;
     }
 
     export namespace Value {
@@ -118,7 +139,12 @@ export namespace BorrowCollateralConfig {
          * `with_text` and `with_value` are `true`.
          */
         export interface Text {
-          collateral_cap: string;
+          collateral_cap?: string | null;
+
+          /**
+           * Text representation of price
+           */
+          price?: string | null;
         }
       }
     }
@@ -179,6 +205,14 @@ export namespace BorrowCollateralState {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     value: Extra.Value | null;
   }
@@ -195,11 +229,24 @@ export namespace BorrowCollateralState {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     export interface Value {
       collateral_sum: string;
 
       extra: Value.Extra;
+
+      /**
+       * Price used in value calculations
+       */
+      price: string;
     }
 
     export namespace Value {
@@ -218,6 +265,11 @@ export namespace BorrowCollateralState {
          */
         export interface Text {
           collateral_sum: string;
+
+          /**
+           * Text representation of price
+           */
+          price: string;
         }
       }
     }

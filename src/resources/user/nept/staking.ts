@@ -105,6 +105,14 @@ export namespace UserStake {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     value: Extra.Value | null;
   }
@@ -127,6 +135,14 @@ export namespace UserStake {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     export interface Value {
       bonding_sum: string;
@@ -136,6 +152,11 @@ export namespace UserStake {
       claimable_unbonding: string;
 
       extra: Value.Extra;
+
+      /**
+       * Price used in value calculations
+       */
+      price: string;
 
       unclaimed: string;
     }
@@ -160,6 +181,11 @@ export namespace UserStake {
           claimable_rewards: string;
 
           claimable_unbonding: string;
+
+          /**
+           * Text representation of price
+           */
+          price: string;
 
           unclaimed: string;
         }
@@ -199,6 +225,14 @@ export namespace UserStakeBondingEntry {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     value: Extra.Value | null;
   }
@@ -217,11 +251,24 @@ export namespace UserStakeBondingEntry {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     export interface Value {
       amount: string;
 
       extra: Value.Extra;
+
+      /**
+       * Price used in value calculations
+       */
+      price: string;
     }
 
     export namespace Value {
@@ -240,6 +287,11 @@ export namespace UserStakeBondingEntry {
          */
         export interface Text {
           amount: string;
+
+          /**
+           * Text representation of price
+           */
+          price: string;
         }
       }
     }
@@ -281,6 +333,14 @@ export namespace UserStakePool {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     value: Extra.Value | null;
   }
@@ -297,11 +357,24 @@ export namespace UserStakePool {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     export interface Value {
       amount_sum: string;
 
       extra: Value.Extra;
+
+      /**
+       * Price used in value calculations
+       */
+      price: string;
     }
 
     export namespace Value {
@@ -320,6 +393,11 @@ export namespace UserStakePool {
          */
         export interface Text {
           amount_sum: string;
+
+          /**
+           * Text representation of price
+           */
+          price: string;
         }
       }
     }
@@ -357,6 +435,14 @@ export namespace UserStakeUnbonding {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     value: Extra.Value | null;
   }
@@ -373,11 +459,24 @@ export namespace UserStakeUnbonding {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     export interface Value {
       amount_sum: string;
 
       extra: Value.Extra;
+
+      /**
+       * Price used in value calculations
+       */
+      price: string;
     }
 
     export namespace Value {
@@ -396,6 +495,11 @@ export namespace UserStakeUnbonding {
          */
         export interface Text {
           amount_sum: string;
+
+          /**
+           * Text representation of price
+           */
+          price: string;
         }
       }
     }
@@ -427,6 +531,14 @@ export namespace UserStakeUnbondingEntry {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     value: Extra.Value | null;
   }
@@ -445,11 +557,24 @@ export namespace UserStakeUnbondingEntry {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     export interface Value {
       amount: string;
 
       extra: Value.Extra;
+
+      /**
+       * Price used in value calculations
+       */
+      price: string;
     }
 
     export namespace Value {
@@ -468,6 +593,11 @@ export namespace UserStakeUnbondingEntry {
          */
         export interface Text {
           amount: string;
+
+          /**
+           * Text representation of price
+           */
+          price: string;
         }
       }
     }

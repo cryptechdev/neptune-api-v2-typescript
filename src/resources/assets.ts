@@ -164,7 +164,7 @@ export interface AssetPrice {
 export namespace AssetPrice {
   export interface Extra {
     /**
-     * Human-readable field variants. Will not be null when query param `with-text` is
+     * Human-readable field variants. Will not be null when query param `with_text` is
      * `true`.
      */
     text: Extra.Text | null;
@@ -172,7 +172,7 @@ export namespace AssetPrice {
 
   export namespace Extra {
     /**
-     * Human-readable field variants. Will not be null when query param `with-text` is
+     * Human-readable field variants. Will not be null when query param `with_text` is
      * `true`.
      */
     export interface Text {
