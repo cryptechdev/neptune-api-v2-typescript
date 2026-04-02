@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.3.0 (2026-04-02)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/cryptechdev/neptune-api-v2-typescript/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* **api:** api update ([27987bd](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/27987bdb686f705fa6cbc8bd6e45f1eee197ea37))
+* **api:** Fix readme title, fix inverted example params ([5f7e589](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/5f7e589b82e0dbe4578a342f3e125db950f4f4e6))
+* **api:** manual updates ([445a279](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/445a279d39427ffab442d98c1d936d8c2abeffac))
+* **api:** manual updates ([8959905](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/89599051a10357ee8f668e92bd6015b8efb9ed20))
+* **api:** Update readme ([bc42eb6](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/bc42eb63b8925d9786a1c4fd686d4312a3c366f5))
+
 ## 0.2.0 (2026-04-02)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/cryptechdev/neptune-api-v2-typescript/compare/v0.1.0...v0.2.0)

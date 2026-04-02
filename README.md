@@ -1,4 +1,4 @@
-# Neptune API V2 TypeScript API Library
+# Neptune API v2 TypeScript API Library
 
 [![NPM version](<https://img.shields.io/npm/v/@neptunefinance/api-v2.svg?label=npm%20(stable)>)](https://npmjs.org/package/@neptunefinance/api-v2) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@neptunefinance/api-v2)
 
@@ -39,8 +39,7 @@ import NeptuneAPIV2 from '@neptunefinance/api-v2';
 
 const client = new NeptuneAPIV2();
 
-const params: NeptuneAPIV2.MarketGetOverviewParams = { with_text: true, with_value: true };
-const response: NeptuneAPIV2.MarketGetOverviewResponse = await client.markets.getOverview(params);
+const response: NeptuneAPIV2.MarketGetOverviewResponse = await client.markets.getOverview();
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -53,17 +52,15 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const response = await client.markets
-  .getOverview({ with_text: true, with_value: true })
-  .catch(async (err) => {
-    if (err instanceof NeptuneAPIV2.APIError) {
-      console.log(err.status); // 400
-      console.log(err.name); // BadRequestError
-      console.log(err.headers); // {server: 'nginx', ...}
-    } else {
-      throw err;
-    }
-  });
+const response = await client.markets.getOverview().catch(async (err) => {
+  if (err instanceof NeptuneAPIV2.APIError) {
+    console.log(err.status); // 400
+    console.log(err.name); // BadRequestError
+    console.log(err.headers); // {server: 'nginx', ...}
+  } else {
+    throw err;
+  }
+});
 ```
 
 Error codes are as follows:
@@ -95,7 +92,7 @@ const client = new NeptuneAPIV2({
 });
 
 // Or, configure per-request:
-await client.markets.getOverview({ with_text: true, with_value: true }, {
+await client.markets.getOverview({
   maxRetries: 5,
 });
 ```
@@ -112,7 +109,7 @@ const client = new NeptuneAPIV2({
 });
 
 // Override per-request:
-await client.markets.getOverview({ with_text: true, with_value: true }, {
+await client.markets.getOverview({
   timeout: 5 * 1000,
 });
 ```
@@ -166,15 +163,11 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new NeptuneAPIV2();
 
-const response = await client.markets
-  .getOverview({ with_text: true, with_value: true })
-  .asResponse();
+const response = await client.markets.getOverview().asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: response, response: raw } = await client.markets
-  .getOverview({ with_text: true, with_value: true })
-  .withResponse();
+const { data: response, response: raw } = await client.markets.getOverview().withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(response.data);
 ```
