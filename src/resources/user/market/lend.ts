@@ -31,11 +31,34 @@ export class Lend extends APIResource {
   }
 }
 
+export interface UserLendAssetPool {
+  /**
+   * Asset identifiers with associated metadata
+   */
+  asset_info: AssetsAPI.AssetInfo;
+
+  /**
+   * Current market lending rate
+   */
+  market_rate: MarketsAPI.MarketRate;
+
+  /**
+   * The lending amounts converted into the equivalent for the receipt token's
+   * origin/source asset
+   */
+  origin_equivalent: UserLendOriginAmounts;
+
+  /**
+   * The lending amounts in the original receipt token amounts
+   */
+  receipt_amounts: UserLendReceiptAmounts;
+}
+
 export interface UserLendMarket {
   /**
    * User lending allocations
    */
-  asset_pools: Array<UserLendMarket.AssetPool>;
+  asset_pools: Array<UserLendAssetPool>;
 
   /**
    * Account debt net rate
@@ -43,209 +66,175 @@ export interface UserLendMarket {
   net_rate: MarketsAPI.MarketRate;
 }
 
-export namespace UserLendMarket {
-  export interface AssetPool {
-    /**
-     * Asset identifiers with associated metadata
-     */
-    asset_info: AssetsAPI.AssetInfo;
+export interface UserLendOriginAmounts {
+  /**
+   * Total equivalent amount of origin token collateralized across this user's
+   * borrowing portfolio
+   *
+   * **NOTE:** This is **not** the amount of the origin asset that the user holds,
+   * but the amount held in the receipt token rendered as the equivalent amount in
+   * the origin asset.
+   *
+   * Or, more formally:
+   * `origin_equivalent_collateralized = receipt_collateralized / receipt_redemption_ratio`
+   */
+  collateralized: string;
 
-    /**
-     * Current market lending rate
-     */
-    market_rate: MarketsAPI.MarketRate;
+  extra: UserLendOriginAmounts.Extra;
 
-    /**
-     * The lending amounts converted into the equivalent for the receipt token's
-     * origin/source asset
-     */
-    origin_equivalent: AssetPool.OriginEquivalent;
+  /**
+   * Total equivalent amount of origin token held in address balance
+   *
+   * **NOTE:** This is **not** the amount of the origin asset that the user holds,
+   * but the amount held in the receipt token rendered as the equivalent amount in
+   * the origin asset.
+   *
+   * Or, more formally:
+   * `origin_equivalent_held = receipt_held / receipt_redemption_ratio`
+   */
+  held: string;
 
+  /**
+   * Total of held and collateralized equivalent for origin asset
+   *
+   * Or, more formally:
+   * `origin_equivalent_total = receipt_lent_total / receipt_redemption_ratio`
+   */
+  total: string;
+}
+
+export namespace UserLendOriginAmounts {
+  export interface Extra {
     /**
-     * The lending amounts in the original receipt token amounts
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
      */
-    receipt_amounts: AssetPool.ReceiptAmounts;
+    text: Extra.Text | null;
   }
 
-  export namespace AssetPool {
+  export namespace Extra {
     /**
-     * The lending amounts converted into the equivalent for the receipt token's
-     * origin/source asset
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
      */
-    export interface OriginEquivalent {
-      /**
-       * Total equivalent amount of origin token collateralized across this user's
-       * borrowing portfolio
-       *
-       * **NOTE:** This is **not** the amount of the origin asset that the user holds,
-       * but the amount held in the receipt token rendered as the equivalent amount in
-       * the origin asset.
-       *
-       * Or, more formally:
-       * `origin_equivalent_collateralized = receipt_collateralized / receipt_redemption_ratio`
-       */
+    export interface Text {
       collateralized: string;
 
-      extra: OriginEquivalent.Extra;
-
-      /**
-       * Total equivalent amount of origin token held in address balance
-       *
-       * **NOTE:** This is **not** the amount of the origin asset that the user holds,
-       * but the amount held in the receipt token rendered as the equivalent amount in
-       * the origin asset.
-       *
-       * Or, more formally:
-       * `origin_equivalent_held = receipt_held / receipt_redemption_ratio`
-       */
       held: string;
 
-      /**
-       * Total of held and collateralized equivalent for origin asset
-       *
-       * Or, more formally:
-       * `origin_equivalent_total = receipt_lent_total / receipt_redemption_ratio`
-       */
+      total: string;
+    }
+  }
+}
+
+export interface UserLendReceiptAmounts {
+  /**
+   * Total amount of receipt token collateralized across this user's borrowing
+   * portfolio
+   */
+  collateralized: string;
+
+  extra: UserLendReceiptAmounts.Extra;
+
+  /**
+   * Total amount of receipt token held in address balance
+   */
+  held: string;
+
+  /**
+   * Sum of receipt amount held and receipt amount collateralized
+   */
+  total: string;
+}
+
+export namespace UserLendReceiptAmounts {
+  export interface Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    text: Extra.Text | null;
+
+    /**
+     * USD values for the corresponding amounts above. Will not be null when query
+     * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
+     */
+    value: Extra.Value | null;
+  }
+
+  export namespace Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    export interface Text {
+      collateralized: string;
+
+      held: string;
+
       total: string;
     }
 
-    export namespace OriginEquivalent {
+    /**
+     * USD values for the corresponding amounts above. Will not be null when query
+     * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
+     */
+    export interface Value {
+      collateralized: string;
+
+      extra: Value.Extra;
+
+      held: string;
+
+      /**
+       * Price used in value calculations
+       */
+      price: string;
+
+      total: string;
+    }
+
+    export namespace Value {
       export interface Extra {
         /**
-         * Human-readable field variants. Will not be null when query param `with_text` is
-         * `true`.
+         * Human-readable variants of USD values. Will not be null when query params
+         * `with_text` and `with_value` are `true`.
          */
         text: Extra.Text | null;
       }
 
       export namespace Extra {
         /**
-         * Human-readable field variants. Will not be null when query param `with_text` is
-         * `true`.
+         * Human-readable variants of USD values. Will not be null when query params
+         * `with_text` and `with_value` are `true`.
          */
         export interface Text {
           collateralized: string;
-
-          held: string;
-
-          total: string;
-        }
-      }
-    }
-
-    /**
-     * The lending amounts in the original receipt token amounts
-     */
-    export interface ReceiptAmounts {
-      /**
-       * Total amount of receipt token collateralized across this user's borrowing
-       * portfolio
-       */
-      collateralized: string;
-
-      extra: ReceiptAmounts.Extra;
-
-      /**
-       * Total amount of receipt token held in address balance
-       */
-      held: string;
-
-      /**
-       * Sum of receipt amount held and receipt amount collateralized
-       */
-      total: string;
-    }
-
-    export namespace ReceiptAmounts {
-      export interface Extra {
-        /**
-         * Human-readable field variants. Will not be null when query param `with_text` is
-         * `true`.
-         */
-        text: Extra.Text | null;
-
-        /**
-         * USD values for the corresponding amounts above. Will not be null when query
-         * param `with_value` is `true`.
-         *
-         * ### Note
-         *
-         * This variant group contains an additional `price` field (set to the number used
-         * in value calculation).
-         *
-         * The embedded text group will contain the text variant if `with_text` was
-         * specified as well.
-         */
-        value: Extra.Value | null;
-      }
-
-      export namespace Extra {
-        /**
-         * Human-readable field variants. Will not be null when query param `with_text` is
-         * `true`.
-         */
-        export interface Text {
-          collateralized: string;
-
-          held: string;
-
-          total: string;
-        }
-
-        /**
-         * USD values for the corresponding amounts above. Will not be null when query
-         * param `with_value` is `true`.
-         *
-         * ### Note
-         *
-         * This variant group contains an additional `price` field (set to the number used
-         * in value calculation).
-         *
-         * The embedded text group will contain the text variant if `with_text` was
-         * specified as well.
-         */
-        export interface Value {
-          collateralized: string;
-
-          extra: Value.Extra;
 
           held: string;
 
           /**
-           * Price used in value calculations
+           * Text representation of price
            */
           price: string;
 
           total: string;
-        }
-
-        export namespace Value {
-          export interface Extra {
-            /**
-             * Human-readable variants of USD values. Will not be null when query params
-             * `with_text` and `with_value` are `true`.
-             */
-            text: Extra.Text | null;
-          }
-
-          export namespace Extra {
-            /**
-             * Human-readable variants of USD values. Will not be null when query params
-             * `with_text` and `with_value` are `true`.
-             */
-            export interface Text {
-              collateralized: string;
-
-              held: string;
-
-              /**
-               * Text representation of price
-               */
-              price: string;
-
-              total: string;
-            }
-          }
         }
       }
     }
@@ -278,7 +267,7 @@ export interface LendListResponse {
 }
 
 export interface LendGetByAssetResponse {
-  data: LendGetByAssetResponse.Data;
+  data: UserLendAssetPool;
 
   /**
    * Error data. Guaranteed `null` for successful response.
@@ -295,215 +284,6 @@ export interface LendGetByAssetResponse {
    * HTTP status text
    */
   status_text: string;
-}
-
-export namespace LendGetByAssetResponse {
-  export interface Data {
-    /**
-     * Asset identifiers with associated metadata
-     */
-    asset_info: AssetsAPI.AssetInfo;
-
-    /**
-     * Current market lending rate
-     */
-    market_rate: MarketsAPI.MarketRate;
-
-    /**
-     * The lending amounts converted into the equivalent for the receipt token's
-     * origin/source asset
-     */
-    origin_equivalent: Data.OriginEquivalent;
-
-    /**
-     * The lending amounts in the original receipt token amounts
-     */
-    receipt_amounts: Data.ReceiptAmounts;
-  }
-
-  export namespace Data {
-    /**
-     * The lending amounts converted into the equivalent for the receipt token's
-     * origin/source asset
-     */
-    export interface OriginEquivalent {
-      /**
-       * Total equivalent amount of origin token collateralized across this user's
-       * borrowing portfolio
-       *
-       * **NOTE:** This is **not** the amount of the origin asset that the user holds,
-       * but the amount held in the receipt token rendered as the equivalent amount in
-       * the origin asset.
-       *
-       * Or, more formally:
-       * `origin_equivalent_collateralized = receipt_collateralized / receipt_redemption_ratio`
-       */
-      collateralized: string;
-
-      extra: OriginEquivalent.Extra;
-
-      /**
-       * Total equivalent amount of origin token held in address balance
-       *
-       * **NOTE:** This is **not** the amount of the origin asset that the user holds,
-       * but the amount held in the receipt token rendered as the equivalent amount in
-       * the origin asset.
-       *
-       * Or, more formally:
-       * `origin_equivalent_held = receipt_held / receipt_redemption_ratio`
-       */
-      held: string;
-
-      /**
-       * Total of held and collateralized equivalent for origin asset
-       *
-       * Or, more formally:
-       * `origin_equivalent_total = receipt_lent_total / receipt_redemption_ratio`
-       */
-      total: string;
-    }
-
-    export namespace OriginEquivalent {
-      export interface Extra {
-        /**
-         * Human-readable field variants. Will not be null when query param `with_text` is
-         * `true`.
-         */
-        text: Extra.Text | null;
-      }
-
-      export namespace Extra {
-        /**
-         * Human-readable field variants. Will not be null when query param `with_text` is
-         * `true`.
-         */
-        export interface Text {
-          collateralized: string;
-
-          held: string;
-
-          total: string;
-        }
-      }
-    }
-
-    /**
-     * The lending amounts in the original receipt token amounts
-     */
-    export interface ReceiptAmounts {
-      /**
-       * Total amount of receipt token collateralized across this user's borrowing
-       * portfolio
-       */
-      collateralized: string;
-
-      extra: ReceiptAmounts.Extra;
-
-      /**
-       * Total amount of receipt token held in address balance
-       */
-      held: string;
-
-      /**
-       * Sum of receipt amount held and receipt amount collateralized
-       */
-      total: string;
-    }
-
-    export namespace ReceiptAmounts {
-      export interface Extra {
-        /**
-         * Human-readable field variants. Will not be null when query param `with_text` is
-         * `true`.
-         */
-        text: Extra.Text | null;
-
-        /**
-         * USD values for the corresponding amounts above. Will not be null when query
-         * param `with_value` is `true`.
-         *
-         * ### Note
-         *
-         * This variant group contains an additional `price` field (set to the number used
-         * in value calculation).
-         *
-         * The embedded text group will contain the text variant if `with_text` was
-         * specified as well.
-         */
-        value: Extra.Value | null;
-      }
-
-      export namespace Extra {
-        /**
-         * Human-readable field variants. Will not be null when query param `with_text` is
-         * `true`.
-         */
-        export interface Text {
-          collateralized: string;
-
-          held: string;
-
-          total: string;
-        }
-
-        /**
-         * USD values for the corresponding amounts above. Will not be null when query
-         * param `with_value` is `true`.
-         *
-         * ### Note
-         *
-         * This variant group contains an additional `price` field (set to the number used
-         * in value calculation).
-         *
-         * The embedded text group will contain the text variant if `with_text` was
-         * specified as well.
-         */
-        export interface Value {
-          collateralized: string;
-
-          extra: Value.Extra;
-
-          held: string;
-
-          /**
-           * Price used in value calculations
-           */
-          price: string;
-
-          total: string;
-        }
-
-        export namespace Value {
-          export interface Extra {
-            /**
-             * Human-readable variants of USD values. Will not be null when query params
-             * `with_text` and `with_value` are `true`.
-             */
-            text: Extra.Text | null;
-          }
-
-          export namespace Extra {
-            /**
-             * Human-readable variants of USD values. Will not be null when query params
-             * `with_text` and `with_value` are `true`.
-             */
-            export interface Text {
-              collateralized: string;
-
-              held: string;
-
-              /**
-               * Text representation of price
-               */
-              price: string;
-
-              total: string;
-            }
-          }
-        }
-      }
-    }
-  }
 }
 
 export interface LendListParams {
@@ -537,7 +317,10 @@ export interface LendGetByAssetParams {
 
 export declare namespace Lend {
   export {
+    type UserLendAssetPool as UserLendAssetPool,
     type UserLendMarket as UserLendMarket,
+    type UserLendOriginAmounts as UserLendOriginAmounts,
+    type UserLendReceiptAmounts as UserLendReceiptAmounts,
     type LendListResponse as LendListResponse,
     type LendGetByAssetResponse as LendGetByAssetResponse,
     type LendListParams as LendListParams,

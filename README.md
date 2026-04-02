@@ -121,6 +121,45 @@ On timeout, an `APIConnectionTimeoutError` is thrown.
 
 Note that requests which time out will be [retried twice by default](#retries).
 
+## Auto-pagination
+
+List methods in the NeptuneAPIV2 API are paginated.
+You can use the `for await … of` syntax to iterate through items across all pages:
+
+```ts
+async function fetchAllAssets(params) {
+  const allAssets = [];
+  // Automatically fetches more pages as needed.
+  for await (const asset of client.assets.getPriceHistory({
+    end: 0,
+    period: 'h',
+    start: 0,
+  })) {
+    allAssets.push(asset);
+  }
+  return allAssets;
+}
+```
+
+Alternatively, you can request a single page at a time:
+
+```ts
+let page = await client.assets.getPriceHistory({
+  end: 0,
+  period: 'h',
+  start: 0,
+});
+for (const asset of page.data?.series) {
+  console.log(asset);
+}
+
+// Convenience methods are provided for manually paginating:
+while (page.hasNextPage()) {
+  page = await page.getNextPage();
+  // ...
+}
+```
+
 ## Advanced Usage
 
 ### Accessing raw Response data (e.g., headers)

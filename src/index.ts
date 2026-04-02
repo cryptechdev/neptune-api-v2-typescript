@@ -5,6 +5,7 @@ export { NeptuneAPIV2 as default } from './client';
 export { type Uploadable, toFile } from './core/uploads';
 export { APIPromise } from './core/api-promise';
 export { NeptuneAPIV2, type ClientOptions } from './client';
+export { PagePromise } from './core/pagination';
 export {
   NeptuneAPIV2Error,
   APIError,

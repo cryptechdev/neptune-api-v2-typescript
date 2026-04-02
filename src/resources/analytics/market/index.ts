@@ -6,5 +6,7 @@ export {
   type HistoryGetLoansOriginatedByAssetResponse,
   type HistoryGetLoansOriginatedParams,
   type HistoryGetLoansOriginatedByAssetParams,
+  type HistoryGetLoansOriginatedResponsesIntervalSinglePage,
+  type HistoryGetLoansOriginatedByAssetResponsesIntervalMultiPage,
 } from './history';
 export { Market, type MarketGetCurrentStateResponse } from './market';

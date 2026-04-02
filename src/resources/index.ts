@@ -11,16 +11,17 @@ export {
   type AssetRateHistory,
   type AssetSpec,
   type AssetListResponse,
-  type AssetGetPriceHistoryResponse,
   type AssetListPricesResponse,
   type AssetGetPriceHistoryParams,
   type AssetListPricesParams,
+  type AssetPriceHistorySeriesIntervalMultiPage,
 } from './assets';
 export {
   Core,
   type ErrorData,
   type ErrorDataVariants,
   type ErrorKind,
+  type ErrorResponse,
   type ErrorScope,
   type FieldValidationError,
   type Interval,
@@ -59,13 +60,14 @@ export {
   type NeptGetStateParams,
 } from './nept';
 export { Status, type StatusCheckHealthResponse } from './status';
+export { Swap } from './swap/swap';
 export {
   UserResource,
   type EventAction,
   type User,
   type UserTx,
-  type UserGetTxHistoryResponse,
   type UserGetUserResponse,
   type UserGetTxHistoryParams,
   type UserGetUserParams,
+  type UserTxesTxHistoryPage,
 } from './user/user';

@@ -62,6 +62,30 @@ export type ErrorKind =
   | 'content_type_unsupported'
   | 'internal';
 
+export interface ErrorResponse {
+  /**
+   * While the `data` key does still exist in error responses, it is guaranteed to be
+   * `null`.
+   */
+  data: null;
+
+  /**
+   * Error information. Always set for unsuccessful responses
+   */
+  error: ErrorDataVariants;
+
+  /**
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
+   */
+  status: number;
+
+  /**
+   * HTTP status text
+   */
+  status_text: string;
+}
+
 export type ErrorScope = 'user' | 'client' | 'server';
 
 export interface FieldValidationError {
@@ -130,6 +154,7 @@ export declare namespace Core {
     type ErrorData as ErrorData,
     type ErrorDataVariants as ErrorDataVariants,
     type ErrorKind as ErrorKind,
+    type ErrorResponse as ErrorResponse,
     type ErrorScope as ErrorScope,
     type FieldValidationError as FieldValidationError,
     type Interval as Interval,

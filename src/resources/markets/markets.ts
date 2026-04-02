@@ -9,7 +9,6 @@ import {
   LendGetByAssetParams,
   LendGetByAssetResponse,
   LendGetRateHistoryParams,
-  LendGetRateHistoryResponse,
   LendListParams,
   LendListResponse,
   LendMarket,
@@ -22,7 +21,6 @@ import {
   BorrowGetOverviewParams,
   BorrowGetOverviewResponse,
   BorrowGetRateHistoryParams,
-  BorrowGetRateHistoryResponse,
   BorrowMarketOverview,
 } from './borrow/borrow';
 import * as CollateralsAPI from './borrow/collaterals';
@@ -418,7 +416,6 @@ export declare namespace Markets {
     type LendMarketState as LendMarketState,
     type LendListResponse as LendListResponse,
     type LendGetByAssetResponse as LendGetByAssetResponse,
-    type LendGetRateHistoryResponse as LendGetRateHistoryResponse,
     type LendListParams as LendListParams,
     type LendGetByAssetParams as LendGetByAssetParams,
     type LendGetRateHistoryParams as LendGetRateHistoryParams,
@@ -428,7 +425,6 @@ export declare namespace Markets {
     Borrow as Borrow,
     type BorrowMarketOverview as BorrowMarketOverview,
     type BorrowGetOverviewResponse as BorrowGetOverviewResponse,
-    type BorrowGetRateHistoryResponse as BorrowGetRateHistoryResponse,
     type BorrowGetOverviewParams as BorrowGetOverviewParams,
     type BorrowGetRateHistoryParams as BorrowGetRateHistoryParams,
   };

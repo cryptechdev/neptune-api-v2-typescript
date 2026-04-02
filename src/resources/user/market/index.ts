@@ -17,7 +17,10 @@ export {
 } from './borrow/index';
 export {
   Lend,
+  type UserLendAssetPool,
   type UserLendMarket,
+  type UserLendOriginAmounts,
+  type UserLendReceiptAmounts,
   type LendListResponse,
   type LendGetByAssetResponse,
   type LendListParams,

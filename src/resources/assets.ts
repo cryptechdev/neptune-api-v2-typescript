@@ -4,6 +4,7 @@ import { APIResource } from '../core/resource';
 import * as AssetsAPI from './assets';
 import * as CoreAPI from './core';
 import { APIPromise } from '../core/api-promise';
+import { IntervalMultiPage, type IntervalMultiPageParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 
 export class Assets extends APIResource {
@@ -20,8 +21,12 @@ export class Assets extends APIResource {
   getPriceHistory(
     query: AssetGetPriceHistoryParams,
     options?: RequestOptions,
-  ): APIPromise<AssetGetPriceHistoryResponse> {
-    return this._client.get('/api/v1/assets/price-history', { query, ...options });
+  ): PagePromise<AssetPriceHistorySeriesIntervalMultiPage, AssetPriceHistory.Series> {
+    return this._client.getAPIList(
+      '/api/v1/assets/price-history',
+      IntervalMultiPage<AssetPriceHistory.Series>,
+      { query, ...options },
+    );
   }
 
   /**
@@ -34,6 +39,8 @@ export class Assets extends APIResource {
     return this._client.get('/api/v1/assets/prices', { query, ...options });
   }
 }
+
+export type AssetPriceHistorySeriesIntervalMultiPage = IntervalMultiPage<AssetPriceHistory.Series>;
 
 /**
  * The asset's classification metadata. Assets are classfied to provide context on
@@ -372,29 +379,6 @@ export interface AssetListResponse {
   status_text: string;
 }
 
-export interface AssetGetPriceHistoryResponse {
-  /**
-   * Historical prices for assets
-   */
-  data: AssetPriceHistory;
-
-  /**
-   * Error data. Guaranteed `null` for successful response.
-   */
-  error: null;
-
-  /**
-   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
-   * error responses are guaranteed to be >= `400`.
-   */
-  status: number;
-
-  /**
-   * HTTP status text
-   */
-  status_text: string;
-}
-
 export interface AssetListPricesResponse {
   /**
    * Total number of objects irrespective of any pagination parameters.
@@ -456,7 +440,7 @@ export namespace AssetListPricesResponse {
   }
 }
 
-export interface AssetGetPriceHistoryParams {
+export interface AssetGetPriceHistoryParams extends IntervalMultiPageParams {
   /**
    * End timestamp for interval range (inclusive)
    *
@@ -498,22 +482,6 @@ export interface AssetGetPriceHistoryParams {
    * E.g. for interval buckets of 2h: `interval=2&period=h`
    */
   interval?: number;
-
-  /**
-   * Maximum number of time buckets/intervals to return.
-   *
-   * For responses with multiple series, this limit is applied to each series
-   * individually rather than accumulating across series. This is a limit of returned
-   * _interval sections_, it is **not** a limit of returned _points_. In other words,
-   * `limit=200` will provide 200 time points for a single series. For multi-series
-   * responses, each series will also see the exact same set of 200 time points.
-   */
-  limit?: number;
-
-  /**
-   * Time series bucket offset
-   */
-  offset?: number;
 }
 
 export interface AssetListPricesParams {
@@ -533,8 +501,8 @@ export declare namespace Assets {
     type AssetRateHistory as AssetRateHistory,
     type AssetSpec as AssetSpec,
     type AssetListResponse as AssetListResponse,
-    type AssetGetPriceHistoryResponse as AssetGetPriceHistoryResponse,
     type AssetListPricesResponse as AssetListPricesResponse,
+    type AssetPriceHistorySeriesIntervalMultiPage as AssetPriceHistorySeriesIntervalMultiPage,
     type AssetGetPriceHistoryParams as AssetGetPriceHistoryParams,
     type AssetListPricesParams as AssetListPricesParams,
   };

@@ -40,6 +40,7 @@ import {
 } from './nept/nept';
 import * as StakingAPI from './nept/staking';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, TxHistoryPage, type TxHistoryPageParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -55,8 +56,11 @@ export class UserResource extends APIResource {
     address: string,
     query: UserGetTxHistoryParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<UserGetTxHistoryResponse> {
-    return this._client.get(path`/api/v1/users/${address}/tx-history`, { query, ...options });
+  ): PagePromise<UserTxesTxHistoryPage, UserTx> {
+    return this._client.getAPIList(path`/api/v1/users/${address}/tx-history`, TxHistoryPage<UserTx>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -70,6 +74,8 @@ export class UserResource extends APIResource {
     return this._client.get(path`/api/v1/users/${address}/user`, { query, ...options });
   }
 }
+
+export type UserTxesTxHistoryPage = TxHistoryPage<UserTx>;
 
 export type EventAction =
   | 'borrow_flash_loan'
@@ -306,31 +312,6 @@ export namespace UserTx {
   }
 }
 
-export interface UserGetTxHistoryResponse {
-  /**
-   * Total number of objects irrespective of any pagination parameters.
-   */
-  count: number;
-
-  data: Array<UserTx>;
-
-  /**
-   * Error data. Guaranteed `null` for successful response.
-   */
-  error: null;
-
-  /**
-   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
-   * error responses are guaranteed to be >= `400`.
-   */
-  status: number;
-
-  /**
-   * HTTP status text
-   */
-  status_text: string;
-}
-
 export interface UserGetUserResponse {
   data: User;
 
@@ -351,7 +332,7 @@ export interface UserGetUserResponse {
   status_text: string;
 }
 
-export interface UserGetTxHistoryParams {
+export interface UserGetTxHistoryParams extends TxHistoryPageParams {
   /**
    * Optional event/tx action to filter against
    */
@@ -363,14 +344,6 @@ export interface UserGetTxHistoryParams {
    * Optional and defaults to `20` if missing.
    */
   limit?: number;
-
-  /**
-   * Optional UUID skip parameter used for pagination.
-   *
-   * Providing the last event UUID on a given page will return the next page
-   * beginning with the following (unseen) item.
-   */
-  prev_event_uuid?: string | null;
 
   /**
    * Changes the sort order for the returned txs.
@@ -419,8 +392,8 @@ export declare namespace UserResource {
     type EventAction as EventAction,
     type User as User,
     type UserTx as UserTx,
-    type UserGetTxHistoryResponse as UserGetTxHistoryResponse,
     type UserGetUserResponse as UserGetUserResponse,
+    type UserTxesTxHistoryPage as UserTxesTxHistoryPage,
     type UserGetTxHistoryParams as UserGetTxHistoryParams,
     type UserGetUserParams as UserGetUserParams,
   };
