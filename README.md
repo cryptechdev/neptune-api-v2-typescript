@@ -1,4 +1,4 @@
-# Neptune API V2 TypeScript API Library
+# Neptune API v2 TypeScript and JavaScript API Library
 
 [![NPM version](<https://img.shields.io/npm/v/@neptunefinance/api-v2.svg?label=npm%20(stable)>)](https://npmjs.org/package/@neptunefinance/api-v2) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@neptunefinance/api-v2)
 
