@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.2.0 (2026-04-02)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/cryptechdev/neptune-api-v2-typescript/compare/v0.1.0...v0.2.0)
+
+### Features
+
+* **api:** add missing models, pagination impls ([e8fe57a](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/e8fe57ac6d62c6062b4a1fabecf24cae5fe6ec9e))
+* **api:** api update ([a4c091d](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/a4c091dce823d88bb343447af9dd0e6e7530d821))
+* **api:** api update ([3a1c0a2](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/3a1c0a2b8c117df13ea395b90f8da67b0d93424e))
+* **api:** disable series pagn, update example requests ([cef594e](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/cef594e05f9685d7721faaccd433fcd618b59a90))
+
+
+### Chores
+
+* update SDK settings ([9915119](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/9915119b16785f0fd981213faf805a6a2967a586))
+
 ## 0.1.0 (2026-03-30)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/cryptechdev/neptune-api-v2-typescript/compare/v0.0.1...v0.1.0)
