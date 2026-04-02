@@ -164,7 +164,7 @@ export interface AssetPrice {
 export namespace AssetPrice {
   export interface Extra {
     /**
-     * Human-readable field variants. Will not be null when query param `with-text` is
+     * Human-readable field variants. Will not be null when query param `with_text` is
      * `true`.
      */
     text: Extra.Text | null;
@@ -172,7 +172,7 @@ export namespace AssetPrice {
 
   export namespace Extra {
     /**
-     * Human-readable field variants. Will not be null when query param `with-text` is
+     * Human-readable field variants. Will not be null when query param `with_text` is
      * `true`.
      */
     export interface Text {
@@ -198,9 +198,6 @@ export interface AssetPriceHistory {
    */
   range: AssetPriceHistory.Range;
 
-  /**
-   * Pairs of items and their associated points
-   */
   series: Array<AssetPriceHistory.Series>;
 }
 
@@ -237,6 +234,9 @@ export namespace AssetPriceHistory {
     start: string;
   }
 
+  /**
+   * Item and associated points
+   */
   export interface Series {
     /**
      * Provides a unique identifier for an asset for use throughout the Neptune API.
@@ -274,9 +274,6 @@ export interface AssetRateHistory {
    */
   range: AssetRateHistory.Range;
 
-  /**
-   * Pairs of items and their associated points
-   */
   series: Array<AssetRateHistory.Series>;
 }
 
@@ -313,6 +310,9 @@ export namespace AssetRateHistory {
     start: string;
   }
 
+  /**
+   * Item and associated points
+   */
   export interface Series {
     /**
      * Provides a unique identifier for an asset for use throughout the Neptune API.
@@ -347,9 +347,6 @@ export interface AssetSpec {
   group_key: string;
 }
 
-/**
- * List data success response
- */
 export interface AssetListResponse {
   /**
    * Total number of objects irrespective of any pagination parameters.
@@ -375,9 +372,6 @@ export interface AssetListResponse {
   status_text: string;
 }
 
-/**
- * Object data success response
- */
 export interface AssetGetPriceHistoryResponse {
   /**
    * Historical prices for assets
@@ -401,9 +395,6 @@ export interface AssetGetPriceHistoryResponse {
   status_text: string;
 }
 
-/**
- * List data success response
- */
 export interface AssetListPricesResponse {
   /**
    * Total number of objects irrespective of any pagination parameters.

@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../../../core/resource';
 import * as AssetsAPI from '../../../assets';
+import * as MarketsAPI from '../../../markets/markets';
 import * as SubaccountAPI from './subaccount';
 import {
   Subaccount,
@@ -111,11 +112,13 @@ export interface UserBorrowMarketPools {
    * Account debt allocations
    */
   debts: Array<SubaccountAPI.UserDebtAssetPool>;
+
+  /**
+   * Account debt net rate
+   */
+  debts_net_rate: MarketsAPI.MarketRate;
 }
 
-/**
- * Object data success response
- */
 export interface BorrowGetCollateralAccountsByAssetResponse {
   data: BorrowGetCollateralAccountsByAssetResponse.Data;
 
@@ -150,9 +153,6 @@ export namespace BorrowGetCollateralAccountsByAssetResponse {
   }
 }
 
-/**
- * List data success response
- */
 export interface BorrowGetCollateralTotalsResponse {
   /**
    * Total number of objects irrespective of any pagination parameters.
@@ -178,9 +178,6 @@ export interface BorrowGetCollateralTotalsResponse {
   status_text: string;
 }
 
-/**
- * Object data success response
- */
 export interface BorrowGetDebtAccountsByAssetResponse {
   data: BorrowGetDebtAccountsByAssetResponse.Data;
 
@@ -212,12 +209,14 @@ export namespace BorrowGetDebtAccountsByAssetResponse {
      * Asset identifiers with associated metadata
      */
     asset_info: AssetsAPI.AssetInfo;
+
+    /**
+     * Current market borrowing rate
+     */
+    market_rate: MarketsAPI.MarketRate;
   }
 }
 
-/**
- * List data success response
- */
 export interface BorrowGetDebtsTotalsResponse {
   /**
    * Total number of objects irrespective of any pagination parameters.
@@ -243,9 +242,6 @@ export interface BorrowGetDebtsTotalsResponse {
   status_text: string;
 }
 
-/**
- * Object data success response
- */
 export interface BorrowGetPortfolioResponse {
   data: UserBorrowMarket;
 

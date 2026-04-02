@@ -103,6 +103,14 @@ export namespace WalletAssetKnown {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     value: Extra.Value | null;
   }
@@ -119,11 +127,24 @@ export namespace WalletAssetKnown {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     export interface Value {
       amount: string;
 
       extra: Value.Extra;
+
+      /**
+       * Price used in value calculations
+       */
+      price: string;
     }
 
     export namespace Value {
@@ -142,6 +163,11 @@ export namespace WalletAssetKnown {
          */
         export interface Text {
           amount: string;
+
+          /**
+           * Text representation of price
+           */
+          price: string;
         }
       }
     }
@@ -157,6 +183,9 @@ export interface WalletAssetUnknown {
   kind: 'unknown';
 }
 
+/**
+ * Asset and balance contents for a given wallet
+ */
 export interface WalletBalance {
   /**
    * Provides a unique identifier for an asset for use throughout the Neptune API.
@@ -170,10 +199,10 @@ export interface WalletBalance {
   values: WalletAsset;
 }
 
-/**
- * Object data success response
- */
 export interface WalletGetBalanceByAssetResponse {
+  /**
+   * Asset and balance contents for a given wallet
+   */
   data: WalletBalance;
 
   /**
@@ -193,9 +222,6 @@ export interface WalletGetBalanceByAssetResponse {
   status_text: string;
 }
 
-/**
- * Object data success response
- */
 export interface WalletGetBalancesResponse {
   data: WalletGetBalancesResponse.Data;
 

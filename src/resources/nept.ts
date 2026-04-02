@@ -40,6 +40,11 @@ export class Nept extends APIResource {
 
 export interface NeptParams {
   /**
+   * Asset identifiers with associated metadata
+   */
+  asset_info: AssetsAPI.AssetInfo;
+
+  /**
    * The emission rate of NEPT in tokens per year
    */
   emission_rate: string;
@@ -47,7 +52,7 @@ export interface NeptParams {
   extra: NeptParams.Extra;
 
   /**
-   * Staking pools (pool params are included)
+   * Staking pools
    */
   staking_pools: Array<NeptParams.StakingPool>;
 
@@ -70,6 +75,14 @@ export namespace NeptParams {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     value: Extra.Value | null;
   }
@@ -86,11 +99,24 @@ export namespace NeptParams {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     export interface Value {
       emission_rate: string;
 
       extra: Value.Extra;
+
+      /**
+       * Price used in value calculations
+       */
+      price: string;
     }
 
     export namespace Value {
@@ -109,13 +135,18 @@ export namespace NeptParams {
          */
         export interface Text {
           emission_rate: string;
+
+          /**
+           * Text representation of price
+           */
+          price: string;
         }
       }
     }
   }
 
   /**
-   * Merges `StakingPool` with `StakingPoolParams`
+   * Staking pool contents along with associated pool params
    */
   export interface StakingPool {
     /**
@@ -207,6 +238,14 @@ export namespace NeptState {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     value: Extra.Value | null;
   }
@@ -229,9 +268,22 @@ export namespace NeptState {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     export interface Value {
       extra: Value.Extra;
+
+      /**
+       * Price used in value calculations
+       */
+      price: string;
 
       total_claimed: string;
 
@@ -257,6 +309,11 @@ export namespace NeptState {
          * `with_text` and `with_value` are `true`.
          */
         export interface Text {
+          /**
+           * Text representation of price
+           */
+          price: string;
+
           total_claimed: string;
 
           total_issued: string;
@@ -270,7 +327,7 @@ export namespace NeptState {
   }
 
   /**
-   * Merges `StakingPool` with `StakingPoolState`
+   * Staking pool contents along with associated pool state
    */
   export interface Staking {
     /**
@@ -430,6 +487,14 @@ export namespace NeptUnlockDistributionGroup {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     value: Extra.Value | null;
   }
@@ -515,6 +580,14 @@ export namespace NeptUnlockDistributionGroup {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     export interface Value {
       amount: string;
@@ -536,6 +609,11 @@ export namespace NeptUnlockDistributionGroup {
       amount_unlocked: string;
 
       extra: Value.Extra;
+
+      /**
+       * Price used in value calculations
+       */
+      price: string;
     }
 
     export namespace Value {
@@ -570,6 +648,11 @@ export namespace NeptUnlockDistributionGroup {
           amount_staked: string;
 
           amount_unlocked: string;
+
+          /**
+           * Text representation of price
+           */
+          price: string;
         }
       }
     }
@@ -577,7 +660,7 @@ export namespace NeptUnlockDistributionGroup {
 }
 
 /**
- * Merges `StakingPool` with both `StakingPoolWithParams` and `StakingPoolState`
+ * Staking pool contents along with associated pool state and pool params
  */
 export interface StakingPoolFull {
   /**
@@ -667,6 +750,14 @@ export namespace StakingPoolState {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     value: Extra.Value | null;
   }
@@ -683,9 +774,22 @@ export namespace StakingPoolState {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     export interface Value {
       extra: Value.Extra;
+
+      /**
+       * Price used in value calculations
+       */
+      price: string;
 
       total_bonded: string;
     }
@@ -705,6 +809,11 @@ export namespace StakingPoolState {
          * `with_text` and `with_value` are `true`.
          */
         export interface Text {
+          /**
+           * Text representation of price
+           */
+          price: string;
+
           total_bonded: string;
         }
       }
@@ -712,9 +821,6 @@ export namespace StakingPoolState {
   }
 }
 
-/**
- * Object data success response
- */
 export interface NeptGetParamsResponse {
   data: NeptParams;
 
@@ -735,9 +841,6 @@ export interface NeptGetParamsResponse {
   status_text: string;
 }
 
-/**
- * Object data success response
- */
 export interface NeptGetStakingOverviewResponse {
   data: NeptGetStakingOverviewResponse.Data;
 
@@ -771,8 +874,6 @@ export namespace NeptGetStakingOverviewResponse {
     global_state: Data.GlobalState;
 
     /**
-     * Staking pool contract parameter.
-     *
      * List of available staking pools
      */
     pools: Array<NeptAPI.StakingPoolFull>;
@@ -820,9 +921,6 @@ export namespace NeptGetStakingOverviewResponse {
   }
 }
 
-/**
- * Object data success response
- */
 export interface NeptGetStateResponse {
   data: NeptState;
 

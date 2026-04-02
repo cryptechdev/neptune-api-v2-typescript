@@ -26,10 +26,10 @@ export {
   type EventAction,
   type User,
   type UserTx,
-  type UserGetTxHistoryResponse,
   type UserGetUserResponse,
   type UserGetTxHistoryParams,
   type UserGetUserParams,
+  type UserTxesTxHistoryPage,
 } from './user';
 export {
   Wallet,

@@ -85,8 +85,9 @@ export interface UserUnlockAmounts {
 export namespace UserUnlockAmounts {
   export interface Extra {
     /**
-     * Percentages for unlock amounts. Will not be null when query param `with_percent`
-     * is `true`.
+     * Percentages for unlock amounts. These do not factor in the `amount_staked` or
+     * `amount_held` values. Will not be null when query param `with_percent` is
+     * `true`.
      */
     percent: Extra.Percent | null;
 
@@ -99,14 +100,23 @@ export namespace UserUnlockAmounts {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     value: Extra.Value | null;
   }
 
   export namespace Extra {
     /**
-     * Percentages for unlock amounts. Will not be null when query param `with_percent`
-     * is `true`.
+     * Percentages for unlock amounts. These do not factor in the `amount_staked` or
+     * `amount_held` values. Will not be null when query param `with_percent` is
+     * `true`.
      */
     export interface Percent {
       claimable: string;
@@ -171,6 +181,14 @@ export namespace UserUnlockAmounts {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     export interface Value {
       amount: string;
@@ -184,6 +202,11 @@ export namespace UserUnlockAmounts {
       extra: Value.Extra;
 
       locked: string;
+
+      /**
+       * Price used in value calculations
+       */
+      price: string;
 
       reclaimed: string;
     }
@@ -212,6 +235,11 @@ export namespace UserUnlockAmounts {
           expired: string;
 
           locked: string;
+
+          /**
+           * Text representation of price
+           */
+          price: string;
 
           reclaimed: string;
         }
@@ -380,9 +408,6 @@ export interface UserUnlockScheduleLumpSum {
   kind: 'lump_sum';
 }
 
-/**
- * Object data success response
- */
 export interface NeptGetUnlocksResponse {
   data: UserUnlockOverview;
 

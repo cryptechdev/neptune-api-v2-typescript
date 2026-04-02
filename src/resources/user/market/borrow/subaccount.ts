@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../../../core/resource';
 import * as AssetsAPI from '../../../assets';
+import * as MarketsAPI from '../../../markets/markets';
 import { APIPromise } from '../../../../core/api-promise';
 import { RequestOptions } from '../../../../internal/request-options';
 import { path } from '../../../../internal/utils/path';
@@ -111,6 +112,9 @@ export namespace UserAccountHealth {
   }
 }
 
+/**
+ * User borrowing subaccount
+ */
 export interface UserBorrowMarketAccount {
   /**
    * Account collateral allocations
@@ -123,6 +127,11 @@ export interface UserBorrowMarketAccount {
   debts: Array<UserDebtAssetPool>;
 
   /**
+   * Account debt net rate
+   */
+  debts_net_rate: MarketsAPI.MarketRate;
+
+  /**
    * Health data for this account
    */
   health: UserAccountHealth | null;
@@ -133,6 +142,15 @@ export interface UserBorrowMarketAccount {
   index: number;
 }
 
+/**
+ * Associates a subaccount's index with it's inner allocations for a given asset.
+ *
+ * This type is identical to `UserCollateralAssetPool`, except the asset
+ * association is interchanged for an account index.
+ *
+ * Typically used in contexts where multiple subaccounts with a shared underlying
+ * asset are batched together.
+ */
 export interface UserCollateralAccountPool {
   /**
    * Amount of this asset which is actively collateralized
@@ -158,6 +176,14 @@ export namespace UserCollateralAccountPool {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     value: Extra.Value | null;
   }
@@ -174,11 +200,24 @@ export namespace UserCollateralAccountPool {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     export interface Value {
       amount: string;
 
       extra: Value.Extra;
+
+      /**
+       * Price used in value calculations
+       */
+      price: string;
     }
 
     export namespace Value {
@@ -197,6 +236,11 @@ export namespace UserCollateralAccountPool {
          */
         export interface Text {
           amount: string;
+
+          /**
+           * Text representation of price
+           */
+          price: string;
         }
       }
     }
@@ -228,6 +272,14 @@ export namespace UserCollateralAssetPool {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     value: Extra.Value | null;
   }
@@ -244,11 +296,24 @@ export namespace UserCollateralAssetPool {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     export interface Value {
       amount: string;
 
       extra: Value.Extra;
+
+      /**
+       * Price used in value calculations
+       */
+      price: string;
     }
 
     export namespace Value {
@@ -267,18 +332,27 @@ export namespace UserCollateralAssetPool {
          */
         export interface Text {
           amount: string;
+
+          /**
+           * Text representation of price
+           */
+          price: string;
         }
       }
     }
   }
 }
 
+/**
+ * Associates a subaccount's index with it's inner allocations for a given asset.
+ *
+ * This type is identical to `UserDebtAssetPool`, except the asset association is
+ * interchanged for an account index.
+ *
+ * Typically used in contexts where multiple subaccounts with a shared underlying
+ * asset are batched together.
+ */
 export interface UserDebtAccountPool {
-  /**
-   * Sum open debt amount (this is simply the principal + interest)
-   */
-  debt: string;
-
   extra: UserDebtAccountPool.Extra;
 
   /**
@@ -287,14 +361,11 @@ export interface UserDebtAccountPool {
   index: number;
 
   /**
-   * Sum of accrued interest for open debt position
-   */
-  interest: string;
-
-  /**
    * Initial amount borrowed (of debts which have not yet been repaid)
    */
   principal: string;
+
+  shares: string;
 }
 
 export namespace UserDebtAccountPool {
@@ -308,6 +379,14 @@ export namespace UserDebtAccountPool {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     value: Extra.Value | null;
   }
@@ -318,25 +397,34 @@ export namespace UserDebtAccountPool {
      * `true`.
      */
     export interface Text {
-      debt: string;
-
-      interest: string;
-
       principal: string;
+
+      shares: string;
     }
 
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     export interface Value {
-      debt: string;
-
       extra: Value.Extra;
 
-      interest: string;
+      /**
+       * Price used in value calculations
+       */
+      price: string;
 
       principal: string;
+
+      shares: string;
     }
 
     export namespace Value {
@@ -354,11 +442,14 @@ export namespace UserDebtAccountPool {
          * `with_text` and `with_value` are `true`.
          */
         export interface Text {
-          debt: string;
-
-          interest: string;
+          /**
+           * Text representation of price
+           */
+          price: string;
 
           principal: string;
+
+          shares: string;
         }
       }
     }
@@ -371,22 +462,19 @@ export interface UserDebtAssetPool {
    */
   asset_info: AssetsAPI.AssetInfo;
 
-  /**
-   * Sum open debt amount (this is simply the principal + interest)
-   */
-  debt: string;
-
   extra: UserDebtAssetPool.Extra;
 
   /**
-   * Sum of accrued interest for open debt position
+   * Current market borrowing rate
    */
-  interest: string;
+  market_rate: MarketsAPI.MarketRate;
 
   /**
    * Initial amount borrowed (of debts which have not yet been repaid)
    */
   principal: string;
+
+  shares: string;
 }
 
 export namespace UserDebtAssetPool {
@@ -400,6 +488,14 @@ export namespace UserDebtAssetPool {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     value: Extra.Value | null;
   }
@@ -410,25 +506,34 @@ export namespace UserDebtAssetPool {
      * `true`.
      */
     export interface Text {
-      debt: string;
-
-      interest: string;
-
       principal: string;
+
+      shares: string;
     }
 
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     export interface Value {
-      debt: string;
-
       extra: Value.Extra;
 
-      interest: string;
+      /**
+       * Price used in value calculations
+       */
+      price: string;
 
       principal: string;
+
+      shares: string;
     }
 
     export namespace Value {
@@ -446,21 +551,24 @@ export namespace UserDebtAssetPool {
          * `with_text` and `with_value` are `true`.
          */
         export interface Text {
-          debt: string;
-
-          interest: string;
+          /**
+           * Text representation of price
+           */
+          price: string;
 
           principal: string;
+
+          shares: string;
         }
       }
     }
   }
 }
 
-/**
- * Object data success response
- */
 export interface SubaccountGetSubaccountResponse {
+  /**
+   * User borrowing subaccount
+   */
   data: UserBorrowMarketAccount;
 
   /**
@@ -480,9 +588,6 @@ export interface SubaccountGetSubaccountResponse {
   status_text: string;
 }
 
-/**
- * List data success response
- */
 export interface SubaccountGetSubaccountCollateralsResponse {
   /**
    * Total number of objects irrespective of any pagination parameters.
@@ -508,9 +613,6 @@ export interface SubaccountGetSubaccountCollateralsResponse {
   status_text: string;
 }
 
-/**
- * List data success response
- */
 export interface SubaccountGetSubaccountDebtsResponse {
   /**
    * Total number of objects irrespective of any pagination parameters.
@@ -536,9 +638,6 @@ export interface SubaccountGetSubaccountDebtsResponse {
   status_text: string;
 }
 
-/**
- * Object data success response
- */
 export interface SubaccountGetSubaccountHealthResponse {
   data: UserAccountHealth;
 

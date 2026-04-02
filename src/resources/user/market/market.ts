@@ -9,7 +9,10 @@ import {
   LendGetByAssetResponse,
   LendListParams,
   LendListResponse,
+  UserLendAssetPool,
   UserLendMarket,
+  UserLendOriginAmounts,
+  UserLendReceiptAmounts,
 } from './lend';
 import * as BorrowAPI from './borrow/borrow';
 import {
@@ -27,6 +30,7 @@ import {
   UserBorrowMarket,
   UserBorrowMarketPools,
 } from './borrow/borrow';
+import * as SubaccountAPI from './borrow/subaccount';
 import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
@@ -82,6 +86,12 @@ export interface UserMarket {
   lend: LendAPI.UserLendMarket;
 }
 
+/**
+ * User market allocations grouped by asset.
+ *
+ * **Note**: because of the inverted structure of merged market accounts, account
+ * health cannot be represented and is excluded in the merged structures.
+ */
 export interface UserMergedMarket {
   /**
    * Asset identifiers with associated metadata
@@ -91,276 +101,37 @@ export interface UserMergedMarket {
   /**
    * User collateral contribution for asset in borrow market, listed by subaccount
    */
-  borrow_collateral: Array<UserMergedMarket.BorrowCollateral>;
+  borrow_collateral: Array<SubaccountAPI.UserCollateralAccountPool>;
 
   /**
    * User debt contribution for asset in borrow market, listed by subaccount
    */
-  borrow_debt: Array<UserMergedMarket.BorrowDebt>;
+  borrow_debt: Array<SubaccountAPI.UserDebtAccountPool>;
 
   /**
-   * User contirbution for asset's lending market, if one exists
+   * User contribution for asset's lending market, if one exists
    */
   lend?: UserMergedMarket.Lend | null;
 }
 
 export namespace UserMergedMarket {
-  export interface BorrowCollateral {
-    /**
-     * Amount of this asset which is actively collateralized
-     */
-    amount: string;
-
-    extra: BorrowCollateral.Extra;
-
-    /**
-     * Account index
-     */
-    index: number;
-  }
-
-  export namespace BorrowCollateral {
-    export interface Extra {
-      /**
-       * Human-readable field variants. Will not be null when query param `with_text` is
-       * `true`.
-       */
-      text: Extra.Text | null;
-
-      /**
-       * USD values for the corresponding amounts above. Will not be null when query
-       * param `with_value` is `true`.
-       */
-      value: Extra.Value | null;
-    }
-
-    export namespace Extra {
-      /**
-       * Human-readable field variants. Will not be null when query param `with_text` is
-       * `true`.
-       */
-      export interface Text {
-        amount: string;
-      }
-
-      /**
-       * USD values for the corresponding amounts above. Will not be null when query
-       * param `with_value` is `true`.
-       */
-      export interface Value {
-        amount: string;
-
-        extra: Value.Extra;
-      }
-
-      export namespace Value {
-        export interface Extra {
-          /**
-           * Human-readable variants of USD values. Will not be null when query params
-           * `with_text` and `with_value` are `true`.
-           */
-          text: Extra.Text | null;
-        }
-
-        export namespace Extra {
-          /**
-           * Human-readable variants of USD values. Will not be null when query params
-           * `with_text` and `with_value` are `true`.
-           */
-          export interface Text {
-            amount: string;
-          }
-        }
-      }
-    }
-  }
-
-  export interface BorrowDebt {
-    /**
-     * Sum open debt amount (this is simply the principal + interest)
-     */
-    debt: string;
-
-    extra: BorrowDebt.Extra;
-
-    /**
-     * Account index
-     */
-    index: number;
-
-    /**
-     * Sum of accrued interest for open debt position
-     */
-    interest: string;
-
-    /**
-     * Initial amount borrowed (of debts which have not yet been repaid)
-     */
-    principal: string;
-  }
-
-  export namespace BorrowDebt {
-    export interface Extra {
-      /**
-       * Human-readable field variants. Will not be null when query param `with_text` is
-       * `true`.
-       */
-      text: Extra.Text | null;
-
-      /**
-       * USD values for the corresponding amounts above. Will not be null when query
-       * param `with_value` is `true`.
-       */
-      value: Extra.Value | null;
-    }
-
-    export namespace Extra {
-      /**
-       * Human-readable field variants. Will not be null when query param `with_text` is
-       * `true`.
-       */
-      export interface Text {
-        debt: string;
-
-        interest: string;
-
-        principal: string;
-      }
-
-      /**
-       * USD values for the corresponding amounts above. Will not be null when query
-       * param `with_value` is `true`.
-       */
-      export interface Value {
-        debt: string;
-
-        extra: Value.Extra;
-
-        interest: string;
-
-        principal: string;
-      }
-
-      export namespace Value {
-        export interface Extra {
-          /**
-           * Human-readable variants of USD values. Will not be null when query params
-           * `with_text` and `with_value` are `true`.
-           */
-          text: Extra.Text | null;
-        }
-
-        export namespace Extra {
-          /**
-           * Human-readable variants of USD values. Will not be null when query params
-           * `with_text` and `with_value` are `true`.
-           */
-          export interface Text {
-            debt: string;
-
-            interest: string;
-
-            principal: string;
-          }
-        }
-      }
-    }
-  }
-
   /**
-   * User contirbution for asset's lending market, if one exists
+   * User contribution for asset's lending market, if one exists
    */
   export interface Lend {
     /**
-     * Sum open debt amount (this is simply the principal + interest)
+     * The lending amounts converted into the equivalent for the receipt token's
+     * origin/source asset
      */
-    debt: string;
-
-    extra: Lend.Extra;
+    origin_equivalent: LendAPI.UserLendOriginAmounts;
 
     /**
-     * Sum of accrued interest for open debt position
+     * The lending amounts in the original receipt token amounts
      */
-    interest: string;
-
-    /**
-     * Initial amount borrowed (of debts which have not yet been repaid)
-     */
-    principal: string;
-  }
-
-  export namespace Lend {
-    export interface Extra {
-      /**
-       * Human-readable field variants. Will not be null when query param `with_text` is
-       * `true`.
-       */
-      text: Extra.Text | null;
-
-      /**
-       * USD values for the corresponding amounts above. Will not be null when query
-       * param `with_value` is `true`.
-       */
-      value: Extra.Value | null;
-    }
-
-    export namespace Extra {
-      /**
-       * Human-readable field variants. Will not be null when query param `with_text` is
-       * `true`.
-       */
-      export interface Text {
-        debt: string;
-
-        interest: string;
-
-        principal: string;
-      }
-
-      /**
-       * USD values for the corresponding amounts above. Will not be null when query
-       * param `with_value` is `true`.
-       */
-      export interface Value {
-        debt: string;
-
-        extra: Value.Extra;
-
-        interest: string;
-
-        principal: string;
-      }
-
-      export namespace Value {
-        export interface Extra {
-          /**
-           * Human-readable variants of USD values. Will not be null when query params
-           * `with_text` and `with_value` are `true`.
-           */
-          text: Extra.Text | null;
-        }
-
-        export namespace Extra {
-          /**
-           * Human-readable variants of USD values. Will not be null when query params
-           * `with_text` and `with_value` are `true`.
-           */
-          export interface Text {
-            debt: string;
-
-            interest: string;
-
-            principal: string;
-          }
-        }
-      }
-    }
+    receipt_amounts: LendAPI.UserLendReceiptAmounts;
   }
 }
 
-/**
- * List data success response
- */
 export interface MarketGetMergedResponse {
   /**
    * Total number of objects irrespective of any pagination parameters.
@@ -386,10 +157,13 @@ export interface MarketGetMergedResponse {
   status_text: string;
 }
 
-/**
- * Object data success response
- */
 export interface MarketGetMergedByAssetResponse {
+  /**
+   * User market allocations grouped by asset.
+   *
+   * **Note**: because of the inverted structure of merged market accounts, account
+   * health cannot be represented and is excluded in the merged structures.
+   */
   data: UserMergedMarket;
 
   /**
@@ -409,9 +183,6 @@ export interface MarketGetMergedByAssetResponse {
   status_text: string;
 }
 
-/**
- * Object data success response
- */
 export interface MarketGetPortfolioResponse {
   data: UserMarket;
 
@@ -490,7 +261,10 @@ export declare namespace Market {
 
   export {
     LendAPILend as Lend,
+    type UserLendAssetPool as UserLendAssetPool,
     type UserLendMarket as UserLendMarket,
+    type UserLendOriginAmounts as UserLendOriginAmounts,
+    type UserLendReceiptAmounts as UserLendReceiptAmounts,
     type LendListResponse as LendListResponse,
     type LendGetByAssetResponse as LendGetByAssetResponse,
     type LendListParams as LendListParams,

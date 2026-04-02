@@ -5,13 +5,11 @@ Types:
 - <code><a href="./src/resources/core.ts">ErrorData</a></code>
 - <code><a href="./src/resources/core.ts">ErrorDataVariants</a></code>
 - <code><a href="./src/resources/core.ts">ErrorKind</a></code>
-- <code><a href="./src/resources/core.ts">ErrorResponseVariants</a></code>
+- <code><a href="./src/resources/core.ts">ErrorResponse</a></code>
 - <code><a href="./src/resources/core.ts">ErrorScope</a></code>
 - <code><a href="./src/resources/core.ts">FieldValidationError</a></code>
 - <code><a href="./src/resources/core.ts">Interval</a></code>
 - <code><a href="./src/resources/core.ts">IntervalUnit</a></code>
-- <code><a href="./src/resources/core.ts">ListErrorResponse</a></code>
-- <code><a href="./src/resources/core.ts">ObjErrorResponse</a></code>
 - <code><a href="./src/resources/core.ts">ValidationErrorData</a></code>
 - <code><a href="./src/resources/core.ts">ValidationFieldSource</a></code>
 
@@ -154,12 +152,11 @@ Types:
 - <code><a href="./src/resources/user/user.ts">EventAction</a></code>
 - <code><a href="./src/resources/user/user.ts">User</a></code>
 - <code><a href="./src/resources/user/user.ts">UserTx</a></code>
-- <code><a href="./src/resources/user/user.ts">UserGetTxHistoryResponse</a></code>
 - <code><a href="./src/resources/user/user.ts">UserGetUserResponse</a></code>
 
 Methods:
 
-- <code title="get /api/v1/users/{address}/tx-history">client.user.<a href="./src/resources/user/user.ts">getTxHistory</a>(address, { ...params }) -> UserGetTxHistoryResponse</code>
+- <code title="get /api/v1/users/{address}/tx-history">client.user.<a href="./src/resources/user/user.ts">getTxHistory</a>(address, { ...params }) -> UserTxesTxHistoryPage</code>
 - <code title="get /api/v1/users/{address}/user">client.user.<a href="./src/resources/user/user.ts">getUser</a>(address, { ...params }) -> UserGetUserResponse</code>
 
 ## Market
@@ -182,7 +179,10 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/user/market/lend.ts">UserLendAssetPool</a></code>
 - <code><a href="./src/resources/user/market/lend.ts">UserLendMarket</a></code>
+- <code><a href="./src/resources/user/market/lend.ts">UserLendOriginAmounts</a></code>
+- <code><a href="./src/resources/user/market/lend.ts">UserLendReceiptAmounts</a></code>
 - <code><a href="./src/resources/user/market/lend.ts">LendListResponse</a></code>
 - <code><a href="./src/resources/user/market/lend.ts">LendGetByAssetResponse</a></code>
 
@@ -307,7 +307,7 @@ Types:
 
 Methods:
 
-- <code title="get /api/v1/analytics/market/history/loans-originated">client.analytics.market.history.<a href="./src/resources/analytics/market/history.ts">getLoansOriginated</a>({ ...params }) -> HistoryGetLoansOriginatedResponse</code>
+- <code title="get /api/v1/analytics/market/history/loans-originated">client.analytics.market.history.<a href="./src/resources/analytics/market/history.ts">getLoansOriginated</a>({ ...params }) -> HistoryGetLoansOriginatedResponsesIntervalSinglePage</code>
 - <code title="get /api/v1/analytics/market/history/loans-originated/by-asset">client.analytics.market.history.<a href="./src/resources/analytics/market/history.ts">getLoansOriginatedByAsset</a>({ ...params }) -> HistoryGetLoansOriginatedByAssetResponse</code>
 
 ## Nept
@@ -331,3 +331,18 @@ Types:
 Methods:
 
 - <code title="get /api/v1/integrations/bantr/transactions">client.integrations.bantr.<a href="./src/resources/integrations/bantr.ts">getTransactions</a>({ ...params }) -> BantrGetTransactionsResponse</code>
+
+# Swap
+
+## Routes
+
+Types:
+
+- <code><a href="./src/resources/swap/routes.ts">SwapRouteTargetSet</a></code>
+- <code><a href="./src/resources/swap/routes.ts">RouteListAllResponse</a></code>
+- <code><a href="./src/resources/swap/routes.ts">RouteListByDenomResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v1/swap/routes/all">client.swap.routes.<a href="./src/resources/swap/routes.ts">listAll</a>({ ...params }) -> RouteListAllResponse</code>
+- <code title="get /api/v1/swap/routes">client.swap.routes.<a href="./src/resources/swap/routes.ts">listByDenom</a>({ ...params }) -> RouteListByDenomResponse</code>

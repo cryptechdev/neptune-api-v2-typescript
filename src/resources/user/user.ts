@@ -40,6 +40,7 @@ import {
 } from './nept/nept';
 import * as StakingAPI from './nept/staking';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, TxHistoryPage, type TxHistoryPageParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -55,8 +56,11 @@ export class UserResource extends APIResource {
     address: string,
     query: UserGetTxHistoryParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<UserGetTxHistoryResponse> {
-    return this._client.get(path`/api/v1/users/${address}/tx-history`, { query, ...options });
+  ): PagePromise<UserTxesTxHistoryPage, UserTx> {
+    return this._client.getAPIList(path`/api/v1/users/${address}/tx-history`, TxHistoryPage<UserTx>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -70,6 +74,8 @@ export class UserResource extends APIResource {
     return this._client.get(path`/api/v1/users/${address}/user`, { query, ...options });
   }
 }
+
+export type UserTxesTxHistoryPage = TxHistoryPage<UserTx>;
 
 export type EventAction =
   | 'borrow_flash_loan'
@@ -198,12 +204,7 @@ export interface UserTx {
    * nullable for forwards compatibility for future action types which may not have
    * an associated amount.
    */
-  price: string | number | null;
-
-  /**
-   * Transaction hash
-   */
-  tx_hash: string;
+  historic_price: string | number | null;
 
   /**
    * The USD value at the time of the transaction. Derived using the amount and
@@ -213,7 +214,12 @@ export interface UserTx {
    * nullable for forwards compatibility for future action types which may not have
    * an associated amount.
    */
-  value: string | number | null;
+  historic_value: string | number | null;
+
+  /**
+   * Transaction hash
+   */
+  tx_hash: string;
 }
 
 export namespace UserTx {
@@ -227,6 +233,14 @@ export namespace UserTx {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     value: Extra.Value | null;
   }
@@ -243,19 +257,32 @@ export namespace UserTx {
 
       event_time: string;
 
-      price: string;
+      historic_price: string;
 
-      value: string;
+      historic_value: string;
     }
 
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     export interface Value {
       amount: string | null;
 
       extra: Value.Extra;
+
+      /**
+       * Price used in value calculations
+       */
+      price: string;
     }
 
     export namespace Value {
@@ -274,43 +301,17 @@ export namespace UserTx {
          */
         export interface Text {
           amount?: string | null;
+
+          /**
+           * Text representation of price
+           */
+          price?: string | null;
         }
       }
     }
   }
 }
 
-/**
- * List data success response
- */
-export interface UserGetTxHistoryResponse {
-  /**
-   * Total number of objects irrespective of any pagination parameters.
-   */
-  count: number;
-
-  data: Array<UserTx>;
-
-  /**
-   * Error data. Guaranteed `null` for successful response.
-   */
-  error: null;
-
-  /**
-   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
-   * error responses are guaranteed to be >= `400`.
-   */
-  status: number;
-
-  /**
-   * HTTP status text
-   */
-  status_text: string;
-}
-
-/**
- * Object data success response
- */
 export interface UserGetUserResponse {
   data: User;
 
@@ -331,7 +332,7 @@ export interface UserGetUserResponse {
   status_text: string;
 }
 
-export interface UserGetTxHistoryParams {
+export interface UserGetTxHistoryParams extends TxHistoryPageParams {
   /**
    * Optional event/tx action to filter against
    */
@@ -343,14 +344,6 @@ export interface UserGetTxHistoryParams {
    * Optional and defaults to `20` if missing.
    */
   limit?: number;
-
-  /**
-   * Optional UUID skip parameter used for pagination.
-   *
-   * Providing the last event UUID on a given page will return the next page
-   * beginning with the following (unseen) item.
-   */
-  prev_event_uuid?: string | null;
 
   /**
    * Changes the sort order for the returned txs.
@@ -399,8 +392,8 @@ export declare namespace UserResource {
     type EventAction as EventAction,
     type User as User,
     type UserTx as UserTx,
-    type UserGetTxHistoryResponse as UserGetTxHistoryResponse,
     type UserGetUserResponse as UserGetUserResponse,
+    type UserTxesTxHistoryPage as UserTxesTxHistoryPage,
     type UserGetTxHistoryParams as UserGetTxHistoryParams,
     type UserGetUserParams as UserGetUserParams,
   };

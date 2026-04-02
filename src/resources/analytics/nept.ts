@@ -17,9 +17,6 @@ export class Nept extends APIResource {
   }
 }
 
-/**
- * Object data success response
- */
 export interface NeptUnlocksDistributionResponse {
   data: NeptUnlocksDistributionResponse.Data;
 

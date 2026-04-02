@@ -21,13 +21,11 @@ export {
   type ErrorData,
   type ErrorDataVariants,
   type ErrorKind,
-  type ErrorResponseVariants,
+  type ErrorResponse,
   type ErrorScope,
   type FieldValidationError,
   type Interval,
   type IntervalUnit,
-  type ListErrorResponse,
-  type ObjErrorResponse,
   type ValidationErrorData,
   type ValidationFieldSource,
 } from './core';
@@ -62,13 +60,14 @@ export {
   type NeptGetStateParams,
 } from './nept';
 export { Status, type StatusCheckHealthResponse } from './status';
+export { Swap } from './swap/swap';
 export {
   UserResource,
   type EventAction,
   type User,
   type UserTx,
-  type UserGetTxHistoryResponse,
   type UserGetUserResponse,
   type UserGetTxHistoryParams,
   type UserGetUserParams,
+  type UserTxesTxHistoryPage,
 } from './user/user';
