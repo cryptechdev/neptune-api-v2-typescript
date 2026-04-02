@@ -198,12 +198,7 @@ export interface UserTx {
    * nullable for forwards compatibility for future action types which may not have
    * an associated amount.
    */
-  price: string | number | null;
-
-  /**
-   * Transaction hash
-   */
-  tx_hash: string;
+  historic_price: string | number | null;
 
   /**
    * The USD value at the time of the transaction. Derived using the amount and
@@ -213,7 +208,12 @@ export interface UserTx {
    * nullable for forwards compatibility for future action types which may not have
    * an associated amount.
    */
-  value: string | number | null;
+  historic_value: string | number | null;
+
+  /**
+   * Transaction hash
+   */
+  tx_hash: string;
 }
 
 export namespace UserTx {
@@ -227,6 +227,14 @@ export namespace UserTx {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     value: Extra.Value | null;
   }
@@ -243,19 +251,32 @@ export namespace UserTx {
 
       event_time: string;
 
-      price: string;
+      historic_price: string;
 
-      value: string;
+      historic_value: string;
     }
 
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     export interface Value {
       amount: string | null;
 
       extra: Value.Extra;
+
+      /**
+       * Price used in value calculations
+       */
+      price: string;
     }
 
     export namespace Value {
@@ -274,6 +295,11 @@ export namespace UserTx {
          */
         export interface Text {
           amount?: string | null;
+
+          /**
+           * Text representation of price
+           */
+          price?: string | null;
         }
       }
     }

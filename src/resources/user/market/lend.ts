@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../../core/resource';
 import * as AssetsAPI from '../../assets';
+import * as MarketsAPI from '../../markets/markets';
 import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
@@ -35,6 +36,11 @@ export interface UserLendMarket {
    * User lending allocations
    */
   asset_pools: Array<UserLendMarket.AssetPool>;
+
+  /**
+   * Account debt net rate
+   */
+  net_rate: MarketsAPI.MarketRate;
 }
 
 export namespace UserLendMarket {
@@ -43,6 +49,11 @@ export namespace UserLendMarket {
      * Asset identifiers with associated metadata
      */
     asset_info: AssetsAPI.AssetInfo;
+
+    /**
+     * Current market lending rate
+     */
+    market_rate: MarketsAPI.MarketRate;
 
     /**
      * The lending amounts converted into the equivalent for the receipt token's
@@ -156,6 +167,14 @@ export namespace UserLendMarket {
         /**
          * USD values for the corresponding amounts above. Will not be null when query
          * param `with_value` is `true`.
+         *
+         * ### Note
+         *
+         * This variant group contains an additional `price` field (set to the number used
+         * in value calculation).
+         *
+         * The embedded text group will contain the text variant if `with_text` was
+         * specified as well.
          */
         value: Extra.Value | null;
       }
@@ -176,6 +195,14 @@ export namespace UserLendMarket {
         /**
          * USD values for the corresponding amounts above. Will not be null when query
          * param `with_value` is `true`.
+         *
+         * ### Note
+         *
+         * This variant group contains an additional `price` field (set to the number used
+         * in value calculation).
+         *
+         * The embedded text group will contain the text variant if `with_text` was
+         * specified as well.
          */
         export interface Value {
           collateralized: string;
@@ -183,6 +210,11 @@ export namespace UserLendMarket {
           extra: Value.Extra;
 
           held: string;
+
+          /**
+           * Price used in value calculations
+           */
+          price: string;
 
           total: string;
         }
@@ -205,6 +237,11 @@ export namespace UserLendMarket {
               collateralized: string;
 
               held: string;
+
+              /**
+               * Text representation of price
+               */
+              price: string;
 
               total: string;
             }
@@ -266,6 +303,11 @@ export namespace LendGetByAssetResponse {
      * Asset identifiers with associated metadata
      */
     asset_info: AssetsAPI.AssetInfo;
+
+    /**
+     * Current market lending rate
+     */
+    market_rate: MarketsAPI.MarketRate;
 
     /**
      * The lending amounts converted into the equivalent for the receipt token's
@@ -379,6 +421,14 @@ export namespace LendGetByAssetResponse {
         /**
          * USD values for the corresponding amounts above. Will not be null when query
          * param `with_value` is `true`.
+         *
+         * ### Note
+         *
+         * This variant group contains an additional `price` field (set to the number used
+         * in value calculation).
+         *
+         * The embedded text group will contain the text variant if `with_text` was
+         * specified as well.
          */
         value: Extra.Value | null;
       }
@@ -399,6 +449,14 @@ export namespace LendGetByAssetResponse {
         /**
          * USD values for the corresponding amounts above. Will not be null when query
          * param `with_value` is `true`.
+         *
+         * ### Note
+         *
+         * This variant group contains an additional `price` field (set to the number used
+         * in value calculation).
+         *
+         * The embedded text group will contain the text variant if `with_text` was
+         * specified as well.
          */
         export interface Value {
           collateralized: string;
@@ -406,6 +464,11 @@ export namespace LendGetByAssetResponse {
           extra: Value.Extra;
 
           held: string;
+
+          /**
+           * Price used in value calculations
+           */
+          price: string;
 
           total: string;
         }
@@ -428,6 +491,11 @@ export namespace LendGetByAssetResponse {
               collateralized: string;
 
               held: string;
+
+              /**
+               * Text representation of price
+               */
+              price: string;
 
               total: string;
             }

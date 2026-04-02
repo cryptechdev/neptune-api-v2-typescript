@@ -48,7 +48,7 @@ export interface LendMarket {
   /**
    * Lending market rates
    */
-  rate: MarketsAPI.MarketRate | null;
+  rate: MarketsAPI.MarketRate;
 
   /**
    * Current lending market state
@@ -60,7 +60,7 @@ export interface LendMarketData {
   /**
    * Lending market rates
    */
-  rate: MarketsAPI.MarketRate | null;
+  rate: MarketsAPI.MarketRate;
 
   /**
    * Current lending market state
@@ -92,6 +92,14 @@ export namespace LendMarketState {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     value: Extra.Value | null;
   }
@@ -112,9 +120,22 @@ export namespace LendMarketState {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     export interface Value {
       extra: Value.Extra;
+
+      /**
+       * Price used in value calculations
+       */
+      price: string;
 
       principal_sum: string;
     }
@@ -134,6 +155,11 @@ export namespace LendMarketState {
          * `with_text` and `with_value` are `true`.
          */
         export interface Text {
+          /**
+           * Text representation of price
+           */
+          price: string;
+
           principal_sum: string;
         }
       }

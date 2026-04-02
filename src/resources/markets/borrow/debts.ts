@@ -60,6 +60,14 @@ export namespace BorrowDebtConfig {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     value: Extra.Value | null;
   }
@@ -80,11 +88,24 @@ export namespace BorrowDebtConfig {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     export interface Value {
       borrow_cap: string | null;
 
       extra: Value.Extra;
+
+      /**
+       * Price used in value calculations
+       */
+      price: string;
     }
 
     export namespace Value {
@@ -102,7 +123,12 @@ export namespace BorrowDebtConfig {
          * `with_text` and `with_value` are `true`.
          */
         export interface Text {
-          borrow_cap: string;
+          borrow_cap?: string | null;
+
+          /**
+           * Text representation of price
+           */
+          price?: string | null;
         }
       }
     }
@@ -126,7 +152,7 @@ export interface BorrowDebtMarket {
   /**
    * Market rates
    */
-  rate: MarketsAPI.MarketRate | null;
+  rate: MarketsAPI.MarketRate;
 
   /**
    * Current debt market state
@@ -143,7 +169,7 @@ export interface BorrowDebtMarketData {
   /**
    * Market rates
    */
-  rate: MarketsAPI.MarketRate | null;
+  rate: MarketsAPI.MarketRate;
 
   /**
    * Current debt market state
@@ -152,23 +178,10 @@ export interface BorrowDebtMarketData {
 }
 
 export interface BorrowDebtState {
-  /**
-   * Sum open debt amount (this is simply the principal sum + interest sum)
-   */
-  debt_sum: string;
+  balance_sum: string;
 
   extra: BorrowDebtState.Extra;
 
-  /**
-   * Sum of accrued interest for all open debts (those which have not yet been
-   * repaid)
-   */
-  interest_sum: string;
-
-  /**
-   * Sum of initial amount borrowed for all open debts (those which have not yet been
-   * repaid)
-   */
   principal_sum: string;
 
   /**
@@ -193,6 +206,14 @@ export namespace BorrowDebtState {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     value: Extra.Value | null;
   }
@@ -203,9 +224,7 @@ export namespace BorrowDebtState {
      * `true`.
      */
     export interface Text {
-      debt_sum: string;
-
-      interest_sum: string;
+      balance_sum: string;
 
       principal_sum: string;
 
@@ -215,13 +234,24 @@ export namespace BorrowDebtState {
     /**
      * USD values for the corresponding amounts above. Will not be null when query
      * param `with_value` is `true`.
+     *
+     * ### Note
+     *
+     * This variant group contains an additional `price` field (set to the number used
+     * in value calculation).
+     *
+     * The embedded text group will contain the text variant if `with_text` was
+     * specified as well.
      */
     export interface Value {
-      debt_sum: string;
+      balance_sum: string;
 
       extra: Value.Extra;
 
-      interest_sum: string;
+      /**
+       * Price used in value calculations
+       */
+      price: string;
 
       principal_sum: string;
     }
@@ -241,9 +271,12 @@ export namespace BorrowDebtState {
          * `with_text` and `with_value` are `true`.
          */
         export interface Text {
-          debt_sum: string;
+          balance_sum: string;
 
-          interest_sum: string;
+          /**
+           * Text representation of price
+           */
+          price: string;
 
           principal_sum: string;
         }

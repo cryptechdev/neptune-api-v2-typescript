@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../../../core/resource';
 import * as AssetsAPI from '../../../assets';
+import * as MarketsAPI from '../../../markets/markets';
 import * as SubaccountAPI from './subaccount';
 import {
   Subaccount,
@@ -111,6 +112,11 @@ export interface UserBorrowMarketPools {
    * Account debt allocations
    */
   debts: Array<SubaccountAPI.UserDebtAssetPool>;
+
+  /**
+   * Account debt net rate
+   */
+  debts_net_rate: MarketsAPI.MarketRate;
 }
 
 export interface BorrowGetCollateralAccountsByAssetResponse {
@@ -203,6 +209,11 @@ export namespace BorrowGetDebtAccountsByAssetResponse {
      * Asset identifiers with associated metadata
      */
     asset_info: AssetsAPI.AssetInfo;
+
+    /**
+     * Current market borrowing rate
+     */
+    market_rate: MarketsAPI.MarketRate;
   }
 }
 
