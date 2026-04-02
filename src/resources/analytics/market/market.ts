@@ -7,8 +7,10 @@ import {
   History,
   HistoryGetLoansOriginatedByAssetParams,
   HistoryGetLoansOriginatedByAssetResponse,
+  HistoryGetLoansOriginatedByAssetResponsesIntervalMultiPage,
   HistoryGetLoansOriginatedParams,
   HistoryGetLoansOriginatedResponse,
+  HistoryGetLoansOriginatedResponsesIntervalSinglePage,
 } from './history';
 import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
@@ -111,6 +113,8 @@ export declare namespace Market {
     History as History,
     type HistoryGetLoansOriginatedResponse as HistoryGetLoansOriginatedResponse,
     type HistoryGetLoansOriginatedByAssetResponse as HistoryGetLoansOriginatedByAssetResponse,
+    type HistoryGetLoansOriginatedResponsesIntervalSinglePage as HistoryGetLoansOriginatedResponsesIntervalSinglePage,
+    type HistoryGetLoansOriginatedByAssetResponsesIntervalMultiPage as HistoryGetLoansOriginatedByAssetResponsesIntervalMultiPage,
     type HistoryGetLoansOriginatedParams as HistoryGetLoansOriginatedParams,
     type HistoryGetLoansOriginatedByAssetParams as HistoryGetLoansOriginatedByAssetParams,
   };

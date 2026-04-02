@@ -5,6 +5,7 @@ Types:
 - <code><a href="./src/resources/core.ts">ErrorData</a></code>
 - <code><a href="./src/resources/core.ts">ErrorDataVariants</a></code>
 - <code><a href="./src/resources/core.ts">ErrorKind</a></code>
+- <code><a href="./src/resources/core.ts">ErrorResponse</a></code>
 - <code><a href="./src/resources/core.ts">ErrorScope</a></code>
 - <code><a href="./src/resources/core.ts">FieldValidationError</a></code>
 - <code><a href="./src/resources/core.ts">Interval</a></code>
@@ -34,13 +35,12 @@ Types:
 - <code><a href="./src/resources/assets.ts">AssetRateHistory</a></code>
 - <code><a href="./src/resources/assets.ts">AssetSpec</a></code>
 - <code><a href="./src/resources/assets.ts">AssetListResponse</a></code>
-- <code><a href="./src/resources/assets.ts">AssetGetPriceHistoryResponse</a></code>
 - <code><a href="./src/resources/assets.ts">AssetListPricesResponse</a></code>
 
 Methods:
 
 - <code title="get /api/v1/assets">client.assets.<a href="./src/resources/assets.ts">list</a>() -> AssetListResponse</code>
-- <code title="get /api/v1/assets/price-history">client.assets.<a href="./src/resources/assets.ts">getPriceHistory</a>({ ...params }) -> AssetGetPriceHistoryResponse</code>
+- <code title="get /api/v1/assets/price-history">client.assets.<a href="./src/resources/assets.ts">getPriceHistory</a>({ ...params }) -> AssetPriceHistorySeriesIntervalMultiPage</code>
 - <code title="get /api/v1/assets/prices">client.assets.<a href="./src/resources/assets.ts">listPrices</a>({ ...params }) -> AssetListPricesResponse</code>
 
 # Markets
@@ -71,13 +71,12 @@ Types:
 - <code><a href="./src/resources/markets/lend.ts">LendMarketState</a></code>
 - <code><a href="./src/resources/markets/lend.ts">LendListResponse</a></code>
 - <code><a href="./src/resources/markets/lend.ts">LendGetByAssetResponse</a></code>
-- <code><a href="./src/resources/markets/lend.ts">LendGetRateHistoryResponse</a></code>
 
 Methods:
 
 - <code title="get /api/v1/markets/lend">client.markets.lend.<a href="./src/resources/markets/lend.ts">list</a>({ ...params }) -> LendListResponse</code>
 - <code title="get /api/v1/markets/lend/lookup">client.markets.lend.<a href="./src/resources/markets/lend.ts">getByAsset</a>({ ...params }) -> LendGetByAssetResponse</code>
-- <code title="get /api/v1/markets/lend/rate-history">client.markets.lend.<a href="./src/resources/markets/lend.ts">getRateHistory</a>({ ...params }) -> LendGetRateHistoryResponse</code>
+- <code title="get /api/v1/markets/lend/rate-history">client.markets.lend.<a href="./src/resources/markets/lend.ts">getRateHistory</a>({ ...params }) -> AssetRateHistorySeriesIntervalMultiPage</code>
 
 ## Borrow
 
@@ -85,12 +84,11 @@ Types:
 
 - <code><a href="./src/resources/markets/borrow/borrow.ts">BorrowMarketOverview</a></code>
 - <code><a href="./src/resources/markets/borrow/borrow.ts">BorrowGetOverviewResponse</a></code>
-- <code><a href="./src/resources/markets/borrow/borrow.ts">BorrowGetRateHistoryResponse</a></code>
 
 Methods:
 
 - <code title="get /api/v1/markets/borrow">client.markets.borrow.<a href="./src/resources/markets/borrow/borrow.ts">getOverview</a>({ ...params }) -> BorrowGetOverviewResponse</code>
-- <code title="get /api/v1/markets/borrow/rate-history">client.markets.borrow.<a href="./src/resources/markets/borrow/borrow.ts">getRateHistory</a>({ ...params }) -> BorrowGetRateHistoryResponse</code>
+- <code title="get /api/v1/markets/borrow/rate-history">client.markets.borrow.<a href="./src/resources/markets/borrow/borrow.ts">getRateHistory</a>({ ...params }) -> AssetRateHistorySeriesIntervalMultiPage</code>
 
 ### Collaterals
 
@@ -151,12 +149,11 @@ Types:
 - <code><a href="./src/resources/user/user.ts">EventAction</a></code>
 - <code><a href="./src/resources/user/user.ts">User</a></code>
 - <code><a href="./src/resources/user/user.ts">UserTx</a></code>
-- <code><a href="./src/resources/user/user.ts">UserGetTxHistoryResponse</a></code>
 - <code><a href="./src/resources/user/user.ts">UserGetUserResponse</a></code>
 
 Methods:
 
-- <code title="get /api/v1/users/{address}/tx-history">client.user.<a href="./src/resources/user/user.ts">getTxHistory</a>(address, { ...params }) -> UserGetTxHistoryResponse</code>
+- <code title="get /api/v1/users/{address}/tx-history">client.user.<a href="./src/resources/user/user.ts">getTxHistory</a>(address, { ...params }) -> UserTxesTxHistoryPage</code>
 - <code title="get /api/v1/users/{address}/user">client.user.<a href="./src/resources/user/user.ts">getUser</a>(address, { ...params }) -> UserGetUserResponse</code>
 
 ## Market
@@ -179,7 +176,10 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/user/market/lend.ts">UserLendAssetPool</a></code>
 - <code><a href="./src/resources/user/market/lend.ts">UserLendMarket</a></code>
+- <code><a href="./src/resources/user/market/lend.ts">UserLendOriginAmounts</a></code>
+- <code><a href="./src/resources/user/market/lend.ts">UserLendReceiptAmounts</a></code>
 - <code><a href="./src/resources/user/market/lend.ts">LendListResponse</a></code>
 - <code><a href="./src/resources/user/market/lend.ts">LendGetByAssetResponse</a></code>
 
@@ -304,8 +304,8 @@ Types:
 
 Methods:
 
-- <code title="get /api/v1/analytics/market/history/loans-originated">client.analytics.market.history.<a href="./src/resources/analytics/market/history.ts">getLoansOriginated</a>({ ...params }) -> HistoryGetLoansOriginatedResponse</code>
-- <code title="get /api/v1/analytics/market/history/loans-originated/by-asset">client.analytics.market.history.<a href="./src/resources/analytics/market/history.ts">getLoansOriginatedByAsset</a>({ ...params }) -> HistoryGetLoansOriginatedByAssetResponse</code>
+- <code title="get /api/v1/analytics/market/history/loans-originated">client.analytics.market.history.<a href="./src/resources/analytics/market/history.ts">getLoansOriginated</a>({ ...params }) -> HistoryGetLoansOriginatedResponsesIntervalSinglePage</code>
+- <code title="get /api/v1/analytics/market/history/loans-originated/by-asset">client.analytics.market.history.<a href="./src/resources/analytics/market/history.ts">getLoansOriginatedByAsset</a>({ ...params }) -> HistoryGetLoansOriginatedByAssetResponsesIntervalMultiPage</code>
 
 ## Nept
 
@@ -328,3 +328,18 @@ Types:
 Methods:
 
 - <code title="get /api/v1/integrations/bantr/transactions">client.integrations.bantr.<a href="./src/resources/integrations/bantr.ts">getTransactions</a>({ ...params }) -> BantrGetTransactionsResponse</code>
+
+# Swap
+
+## Routes
+
+Types:
+
+- <code><a href="./src/resources/swap/routes.ts">SwapRouteTargetSet</a></code>
+- <code><a href="./src/resources/swap/routes.ts">RouteListAllResponse</a></code>
+- <code><a href="./src/resources/swap/routes.ts">RouteListByDenomResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v1/swap/routes/all">client.swap.routes.<a href="./src/resources/swap/routes.ts">listAll</a>({ ...params }) -> RouteListAllResponse</code>
+- <code title="get /api/v1/swap/routes">client.swap.routes.<a href="./src/resources/swap/routes.ts">listByDenom</a>({ ...params }) -> RouteListByDenomResponse</code>

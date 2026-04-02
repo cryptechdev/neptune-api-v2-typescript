@@ -14,13 +14,22 @@ import * as Opts from './internal/request-options';
 import { stringifyQuery } from './internal/utils/query';
 import { VERSION } from './version';
 import * as Errors from './core/error';
+import * as Pagination from './core/pagination';
+import {
+  AbstractPage,
+  type IntervalMultiPageParams,
+  IntervalMultiPageResponse,
+  type IntervalSinglePageParams,
+  IntervalSinglePageResponse,
+  type TxHistoryPageParams,
+  TxHistoryPageResponse,
+} from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
   AssetClassification,
   AssetGetPriceHistoryParams,
-  AssetGetPriceHistoryResponse,
   AssetInfo,
   AssetListPricesParams,
   AssetListPricesResponse,
@@ -28,6 +37,7 @@ import {
   AssetMetadata,
   AssetPrice,
   AssetPriceHistory,
+  AssetPriceHistorySeriesIntervalMultiPage,
   AssetRateHistory,
   AssetSpec,
   Assets,
@@ -37,6 +47,7 @@ import {
   ErrorData,
   ErrorDataVariants,
   ErrorKind,
+  ErrorResponse,
   ErrorScope,
   FieldValidationError,
   Interval,
@@ -76,15 +87,16 @@ import {
   Markets,
   MergedMarket,
 } from './resources/markets/markets';
+import { Swap } from './resources/swap/swap';
 import {
   EventAction,
   User,
   UserGetTxHistoryParams,
-  UserGetTxHistoryResponse,
   UserGetUserParams,
   UserGetUserResponse,
   UserResource,
   UserTx,
+  UserTxesTxHistoryPage,
 } from './resources/user/user';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
@@ -513,6 +525,30 @@ export class NeptuneAPIV2 {
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
 
+  getAPIList<Item, PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>>(
+    path: string,
+    Page: new (...args: any[]) => PageClass,
+    opts?: PromiseOrValue<RequestOptions>,
+  ): Pagination.PagePromise<PageClass, Item> {
+    return this.requestAPIList(
+      Page,
+      opts && 'then' in opts ?
+        opts.then((opts) => ({ method: 'get', path, ...opts }))
+      : { method: 'get', path, ...opts },
+    );
+  }
+
+  requestAPIList<
+    Item = unknown,
+    PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>,
+  >(
+    Page: new (...args: ConstructorParameters<typeof Pagination.AbstractPage>) => PageClass,
+    options: PromiseOrValue<FinalRequestOptions>,
+  ): Pagination.PagePromise<PageClass, Item> {
+    const request = this.makeRequest(options, null, undefined);
+    return new Pagination.PagePromise<PageClass, Item>(this as any as NeptuneAPIV2, request, Page);
+  }
+
   async fetchWithTimeout(
     url: RequestInfo,
     init: RequestInit | undefined,
@@ -767,6 +803,7 @@ export class NeptuneAPIV2 {
   user: API.UserResource = new API.UserResource(this);
   analytics: API.Analytics = new API.Analytics(this);
   integrations: API.Integrations = new API.Integrations(this);
+  swap: API.Swap = new API.Swap(this);
 }
 
 NeptuneAPIV2.Core = Core;
@@ -777,15 +814,35 @@ NeptuneAPIV2.Nept = Nept;
 NeptuneAPIV2.UserResource = UserResource;
 NeptuneAPIV2.Analytics = Analytics;
 NeptuneAPIV2.Integrations = Integrations;
+NeptuneAPIV2.Swap = Swap;
 
 export declare namespace NeptuneAPIV2 {
   export type RequestOptions = Opts.RequestOptions;
+
+  export import TxHistoryPage = Pagination.TxHistoryPage;
+  export {
+    type TxHistoryPageParams as TxHistoryPageParams,
+    type TxHistoryPageResponse as TxHistoryPageResponse,
+  };
+
+  export import IntervalMultiPage = Pagination.IntervalMultiPage;
+  export {
+    type IntervalMultiPageParams as IntervalMultiPageParams,
+    type IntervalMultiPageResponse as IntervalMultiPageResponse,
+  };
+
+  export import IntervalSinglePage = Pagination.IntervalSinglePage;
+  export {
+    type IntervalSinglePageParams as IntervalSinglePageParams,
+    type IntervalSinglePageResponse as IntervalSinglePageResponse,
+  };
 
   export {
     Core as Core,
     type ErrorData as ErrorData,
     type ErrorDataVariants as ErrorDataVariants,
     type ErrorKind as ErrorKind,
+    type ErrorResponse as ErrorResponse,
     type ErrorScope as ErrorScope,
     type FieldValidationError as FieldValidationError,
     type Interval as Interval,
@@ -806,8 +863,8 @@ export declare namespace NeptuneAPIV2 {
     type AssetRateHistory as AssetRateHistory,
     type AssetSpec as AssetSpec,
     type AssetListResponse as AssetListResponse,
-    type AssetGetPriceHistoryResponse as AssetGetPriceHistoryResponse,
     type AssetListPricesResponse as AssetListPricesResponse,
+    type AssetPriceHistorySeriesIntervalMultiPage as AssetPriceHistorySeriesIntervalMultiPage,
     type AssetGetPriceHistoryParams as AssetGetPriceHistoryParams,
     type AssetListPricesParams as AssetListPricesParams,
   };
@@ -848,8 +905,8 @@ export declare namespace NeptuneAPIV2 {
     type EventAction as EventAction,
     type User as User,
     type UserTx as UserTx,
-    type UserGetTxHistoryResponse as UserGetTxHistoryResponse,
     type UserGetUserResponse as UserGetUserResponse,
+    type UserTxesTxHistoryPage as UserTxesTxHistoryPage,
     type UserGetTxHistoryParams as UserGetTxHistoryParams,
     type UserGetUserParams as UserGetUserParams,
   };
@@ -857,4 +914,6 @@ export declare namespace NeptuneAPIV2 {
   export { Analytics as Analytics };
 
   export { Integrations as Integrations };
+
+  export { Swap as Swap };
 }
