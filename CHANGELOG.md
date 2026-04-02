@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.1 (2026-04-02)
+
+Full Changelog: [v0.3.0...v0.3.1](https://github.com/cryptechdev/neptune-api-v2-typescript/compare/v0.3.0...v0.3.1)
+
+### Chores
+
+* update SDK settings ([638275b](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/638275bbb4a38116ed03314e9137f90641934931))
+* update SDK settings ([dae435b](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/dae435bd891b5654b9f44b155693e08df96a361a))
+
 ## 0.3.0 (2026-04-02)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/cryptechdev/neptune-api-v2-typescript/compare/v0.2.0...v0.3.0)
