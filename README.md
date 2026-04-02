@@ -24,7 +24,7 @@ import NeptuneAPIV2 from '@neptunefinance/api-v2';
 
 const client = new NeptuneAPIV2();
 
-const response = await client.markets.getOverview({ with_text: true, with_value: true });
+const response = await client.markets.getOverview();
 
 console.log(response.data);
 ```
