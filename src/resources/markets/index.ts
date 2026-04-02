@@ -4,6 +4,7 @@ export {
   Borrow,
   type BorrowMarketOverview,
   type BorrowGetOverviewResponse,
+  type BorrowGetRateHistoryResponse,
   type BorrowGetOverviewParams,
   type BorrowGetRateHistoryParams,
 } from './borrow/index';
@@ -14,6 +15,7 @@ export {
   type LendMarketState,
   type LendListResponse,
   type LendGetByAssetResponse,
+  type LendGetRateHistoryResponse,
   type LendListParams,
   type LendGetByAssetParams,
   type LendGetRateHistoryParams,

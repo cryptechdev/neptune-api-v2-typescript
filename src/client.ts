@@ -30,6 +30,7 @@ import { APIPromise } from './core/api-promise';
 import {
   AssetClassification,
   AssetGetPriceHistoryParams,
+  AssetGetPriceHistoryResponse,
   AssetInfo,
   AssetListPricesParams,
   AssetListPricesResponse,
@@ -37,7 +38,6 @@ import {
   AssetMetadata,
   AssetPrice,
   AssetPriceHistory,
-  AssetPriceHistorySeriesIntervalMultiPage,
   AssetRateHistory,
   AssetSpec,
   Assets,
@@ -863,8 +863,8 @@ export declare namespace NeptuneAPIV2 {
     type AssetRateHistory as AssetRateHistory,
     type AssetSpec as AssetSpec,
     type AssetListResponse as AssetListResponse,
+    type AssetGetPriceHistoryResponse as AssetGetPriceHistoryResponse,
     type AssetListPricesResponse as AssetListPricesResponse,
-    type AssetPriceHistorySeriesIntervalMultiPage as AssetPriceHistorySeriesIntervalMultiPage,
     type AssetGetPriceHistoryParams as AssetGetPriceHistoryParams,
     type AssetListPricesParams as AssetListPricesParams,
   };

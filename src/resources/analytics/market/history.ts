@@ -3,13 +3,8 @@
 import { APIResource } from '../../../core/resource';
 import * as AssetsAPI from '../../assets';
 import * as CoreAPI from '../../core';
-import {
-  IntervalMultiPage,
-  type IntervalMultiPageParams,
-  IntervalSinglePage,
-  type IntervalSinglePageParams,
-  PagePromise,
-} from '../../../core/pagination';
+import { APIPromise } from '../../../core/api-promise';
+import { IntervalSinglePage, type IntervalSinglePageParams, PagePromise } from '../../../core/pagination';
 import { RequestOptions } from '../../../internal/request-options';
 
 export class History extends APIResource {
@@ -33,23 +28,16 @@ export class History extends APIResource {
   getLoansOriginatedByAsset(
     query: HistoryGetLoansOriginatedByAssetParams,
     options?: RequestOptions,
-  ): PagePromise<
-    HistoryGetLoansOriginatedByAssetResponsesIntervalMultiPage,
-    HistoryGetLoansOriginatedByAssetResponse
-  > {
-    return this._client.getAPIList(
-      '/api/v1/analytics/market/history/loans-originated/by-asset',
-      IntervalMultiPage<HistoryGetLoansOriginatedByAssetResponse>,
-      { query, ...options },
-    );
+  ): APIPromise<HistoryGetLoansOriginatedByAssetResponse> {
+    return this._client.get('/api/v1/analytics/market/history/loans-originated/by-asset', {
+      query,
+      ...options,
+    });
   }
 }
 
 export type HistoryGetLoansOriginatedResponsesIntervalSinglePage =
   IntervalSinglePage<HistoryGetLoansOriginatedResponse>;
-
-export type HistoryGetLoansOriginatedByAssetResponsesIntervalMultiPage =
-  IntervalMultiPage<HistoryGetLoansOriginatedByAssetResponse>;
 
 /**
  * Time + value pair representing a point in time for use with time series
@@ -60,27 +48,104 @@ export interface HistoryGetLoansOriginatedResponse {
   v: string | number | null;
 }
 
-/**
- * Item and associated points
- */
 export interface HistoryGetLoansOriginatedByAssetResponse {
   /**
-   * Provides a unique identifier for an asset for use throughout the Neptune API.
-   * IDs are unique across asset domains (contract tokens, native denoms, etc)
+   * Historical cumulative lend value for assets
    */
-  asset: AssetsAPI.AssetSpec;
+  data: HistoryGetLoansOriginatedByAssetResponse.Data;
 
-  points: Array<HistoryGetLoansOriginatedByAssetResponse.Point>;
+  /**
+   * Error data. Guaranteed `null` for successful response.
+   */
+  error: null;
+
+  /**
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
+   */
+  status: number;
+
+  /**
+   * HTTP status text
+   */
+  status_text: string;
 }
 
 export namespace HistoryGetLoansOriginatedByAssetResponse {
   /**
-   * Time + value pair representing a point in time for use with time series
+   * Historical cumulative lend value for assets
    */
-  export interface Point {
-    t: string;
+  export interface Data {
+    /**
+     * Values used for paginating the time series data
+     */
+    pagination: Data.Pagination;
 
-    v: string | number | null;
+    /**
+     * Provides values for the requested range in it's entire width, regardless of
+     * page/limit.
+     */
+    range: Data.Range;
+
+    series: Array<Data.Series>;
+  }
+
+  export namespace Data {
+    /**
+     * Values used for paginating the time series data
+     */
+    export interface Pagination {
+      /**
+       * The total number of intervals/buckets for the provided interval parameters
+       * (size, period, start, end)
+       */
+      interval_count: number;
+
+      /**
+       * The offset a client should use to fetch the next page of intervals (so long as
+       * limit remains unchanged)
+       */
+      next_offset: number | null;
+    }
+
+    /**
+     * Provides values for the requested range in it's entire width, regardless of
+     * page/limit.
+     */
+    export interface Range {
+      end: string;
+
+      /**
+       * Interval period & size
+       */
+      interval: CoreAPI.Interval;
+
+      start: string;
+    }
+
+    /**
+     * Item and associated points
+     */
+    export interface Series {
+      /**
+       * Provides a unique identifier for an asset for use throughout the Neptune API.
+       * IDs are unique across asset domains (contract tokens, native denoms, etc)
+       */
+      asset: AssetsAPI.AssetSpec;
+
+      points: Array<Series.Point>;
+    }
+
+    export namespace Series {
+      /**
+       * Time + value pair representing a point in time for use with time series
+       */
+      export interface Point {
+        t: string;
+
+        v: string | number | null;
+      }
+    }
   }
 }
 
@@ -122,7 +187,7 @@ export interface HistoryGetLoansOriginatedParams extends IntervalSinglePageParam
   interval?: number;
 }
 
-export interface HistoryGetLoansOriginatedByAssetParams extends IntervalMultiPageParams {
+export interface HistoryGetLoansOriginatedByAssetParams {
   /**
    * End timestamp for interval range (inclusive)
    *
@@ -164,6 +229,22 @@ export interface HistoryGetLoansOriginatedByAssetParams extends IntervalMultiPag
    * E.g. for interval buckets of 2h: `interval=2&period=h`
    */
   interval?: number;
+
+  /**
+   * Maximum number of time buckets/intervals to return.
+   *
+   * For responses with multiple series, this limit is applied to each series
+   * individually rather than accumulating across series. This is a limit of returned
+   * _interval sections_, it is **not** a limit of returned _points_. In other words,
+   * `limit=200` will provide 200 time points for a single series. For multi-series
+   * responses, each series will also see the exact same set of 200 time points.
+   */
+  limit?: number;
+
+  /**
+   * Time series bucket offset
+   */
+  offset?: number;
 }
 
 export declare namespace History {
@@ -171,7 +252,6 @@ export declare namespace History {
     type HistoryGetLoansOriginatedResponse as HistoryGetLoansOriginatedResponse,
     type HistoryGetLoansOriginatedByAssetResponse as HistoryGetLoansOriginatedByAssetResponse,
     type HistoryGetLoansOriginatedResponsesIntervalSinglePage as HistoryGetLoansOriginatedResponsesIntervalSinglePage,
-    type HistoryGetLoansOriginatedByAssetResponsesIntervalMultiPage as HistoryGetLoansOriginatedByAssetResponsesIntervalMultiPage,
     type HistoryGetLoansOriginatedParams as HistoryGetLoansOriginatedParams,
     type HistoryGetLoansOriginatedByAssetParams as HistoryGetLoansOriginatedByAssetParams,
   };
