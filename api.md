@@ -324,14 +324,6 @@ Methods:
 
 ## Bantr
 
-Types:
-
-- <code><a href="./src/resources/integrations/bantr.ts">BantrGetTransactionsResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/integrations/bantr/transactions">client.integrations.bantr.<a href="./src/resources/integrations/bantr.ts">getTransactions</a>({ ...params }) -> BantrGetTransactionsResponse</code>
-
 # Swap
 
 ## Routes
