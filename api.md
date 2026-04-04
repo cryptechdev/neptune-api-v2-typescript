@@ -320,10 +320,6 @@ Methods:
 
 - <code title="get /api/v1/analytics/nept/unlocks-distribution">client.analytics.nept.<a href="./src/resources/analytics/nept.ts">unlocksDistribution</a>({ ...params }) -> NeptUnlocksDistributionResponse</code>
 
-# Integrations
-
-## Bantr
-
 # Swap
 
 ## Routes
