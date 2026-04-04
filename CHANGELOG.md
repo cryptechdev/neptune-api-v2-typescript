@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.0 (2026-04-04)
+
+Full Changelog: [v0.3.1...v0.4.0](https://github.com/cryptechdev/neptune-api-v2-typescript/compare/v0.3.1...v0.4.0)
+
+### Features
+
+* **api:** api update ([859397c](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/859397cc0250623f5ba7511bad97dad8c9c525df))
+* **api:** remove bantr integration endpoint ([75cb535](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/75cb5359057458dc0cee2db91392edca572d4182))
+
 ## 0.3.1 (2026-04-02)
 
 Full Changelog: [v0.3.0...v0.3.1](https://github.com/cryptechdev/neptune-api-v2-typescript/compare/v0.3.0...v0.3.1)
