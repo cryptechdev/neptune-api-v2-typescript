@@ -72,7 +72,6 @@ import {
 } from './resources/nept';
 import { Status, StatusCheckHealthResponse } from './resources/status';
 import { Analytics } from './resources/analytics/analytics';
-import { Integrations } from './resources/integrations/integrations';
 import {
   GlobalMarketConfig,
   MarketGetMergedByAssetParams,
@@ -802,7 +801,6 @@ export class NeptuneAPIV2 {
   nept: API.Nept = new API.Nept(this);
   user: API.UserResource = new API.UserResource(this);
   analytics: API.Analytics = new API.Analytics(this);
-  integrations: API.Integrations = new API.Integrations(this);
   swap: API.Swap = new API.Swap(this);
 }
 
@@ -813,7 +811,6 @@ NeptuneAPIV2.Markets = Markets;
 NeptuneAPIV2.Nept = Nept;
 NeptuneAPIV2.UserResource = UserResource;
 NeptuneAPIV2.Analytics = Analytics;
-NeptuneAPIV2.Integrations = Integrations;
 NeptuneAPIV2.Swap = Swap;
 
 export declare namespace NeptuneAPIV2 {
@@ -912,8 +909,6 @@ export declare namespace NeptuneAPIV2 {
   };
 
   export { Analytics as Analytics };
-
-  export { Integrations as Integrations };
 
   export { Swap as Swap };
 }
