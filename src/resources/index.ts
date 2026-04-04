@@ -29,7 +29,6 @@ export {
   type ValidationErrorData,
   type ValidationFieldSource,
 } from './core';
-export { Integrations } from './integrations/integrations';
 export {
   Markets,
   type GlobalMarketConfig,

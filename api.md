@@ -320,18 +320,6 @@ Methods:
 
 - <code title="get /api/v1/analytics/nept/unlocks-distribution">client.analytics.nept.<a href="./src/resources/analytics/nept.ts">unlocksDistribution</a>({ ...params }) -> NeptUnlocksDistributionResponse</code>
 
-# Integrations
-
-## Bantr
-
-Types:
-
-- <code><a href="./src/resources/integrations/bantr.ts">BantrGetTransactionsResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v1/integrations/bantr/transactions">client.integrations.bantr.<a href="./src/resources/integrations/bantr.ts">getTransactions</a>({ ...params }) -> BantrGetTransactionsResponse</code>
-
 # Swap
 
 ## Routes
