@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../../core/resource';
-import * as StakingAPI from './staking';
 import * as AssetsAPI from '../../assets';
 import * as NeptAPI from '../../nept';
 import { APIPromise } from '../../../core/api-promise';
@@ -670,7 +669,7 @@ export interface StakingGetStakingPoolsResponse {
 }
 
 export interface StakingGetUnstakingResponse {
-  data: StakingGetUnstakingResponse.Data;
+  data: UserStakeUnbonding;
 
   /**
    * Error data. Guaranteed `null` for successful response.
@@ -687,26 +686,6 @@ export interface StakingGetUnstakingResponse {
    * HTTP status text
    */
   status_text: string;
-}
-
-export namespace StakingGetUnstakingResponse {
-  export interface Data {
-    /**
-     * Total amount of all unbond entries
-     *
-     * **NOTE:** this value is affected by active filters, if any (e.g. filtering over
-     * account index)
-     */
-    amount_sum: string;
-
-    /**
-     * Unbonding/unstake entries
-     *
-     * **NOTE:** cascade unbondings from pool >= 2 are contained in the bondings list
-     * of the lower adjacent pool from which the unbond occurred.
-     */
-    contents: Array<StakingAPI.UserStakeUnbondingEntry>;
-  }
 }
 
 export interface StakingGetOverviewParams {
