@@ -23,7 +23,7 @@ export class History extends APIResource {
   }
 
   /**
-   * Get cumulative lending value history assets
+   * Get loans originated history
    */
   getLoansOriginatedByAsset(
     query: HistoryGetLoansOriginatedByAssetParams,

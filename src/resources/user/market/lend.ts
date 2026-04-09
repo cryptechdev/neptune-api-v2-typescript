@@ -242,12 +242,7 @@ export namespace UserLendReceiptAmounts {
 }
 
 export interface LendListResponse {
-  /**
-   * Total number of objects irrespective of any pagination parameters.
-   */
-  count: number;
-
-  data: Array<UserLendMarket>;
+  data: UserLendMarket;
 
   /**
    * Error data. Guaranteed `null` for successful response.
