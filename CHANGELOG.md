@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.5.0 (2026-04-09)
+
+Full Changelog: [v0.4.0...v0.5.0](https://github.com/cryptechdev/neptune-api-v2-typescript/compare/v0.4.0...v0.5.0)
+
+### Features
+
+* **api:** API backend sync ([82b229a](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/82b229a10d07e226c19abeefc95a0d31cbb40ed5))
+
+
+### Chores
+
+* **internal:** codegen related update ([7d4f39c](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/7d4f39c4e9df2336eec81b9c2142da9d9b1f1b45))
+
 ## 0.4.0 (2026-04-04)
 
 Full Changelog: [v0.3.1...v0.4.0](https://github.com/cryptechdev/neptune-api-v2-typescript/compare/v0.3.1...v0.4.0)

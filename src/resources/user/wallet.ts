@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as WalletAPI from './wallet';
 import * as AssetsAPI from '../assets';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
@@ -223,7 +222,7 @@ export interface WalletGetBalanceByAssetResponse {
 }
 
 export interface WalletGetBalancesResponse {
-  data: WalletGetBalancesResponse.Data;
+  data: UserWalletPortfolio;
 
   /**
    * Error data. Guaranteed `null` for successful response.
@@ -240,24 +239,6 @@ export interface WalletGetBalancesResponse {
    * HTTP status text
    */
   status_text: string;
-}
-
-export namespace WalletGetBalancesResponse {
-  export interface Data {
-    /**
-     * Array of each wallet balance
-     */
-    balances: Array<WalletAPI.WalletBalance>;
-
-    /**
-     * Sum value in USD. Guaranteed null if value calculation is disabled / guaranteed
-     * non-null if calculation is enabled.
-     *
-     * **NOTE:** this only accounts for assets which are internally known & tracked.
-     * See the `/assets` endpoint for a list of supported assets.
-     */
-    total_value: string | null;
-  }
 }
 
 export interface WalletGetBalanceByAssetParams {
