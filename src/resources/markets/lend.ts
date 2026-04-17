@@ -37,7 +37,7 @@ export class Lend extends APIResource {
 }
 
 /**
- * Lending market overview
+ * Lending market
  */
 export interface LendMarket {
   /**
@@ -74,7 +74,7 @@ export interface LendMarketState {
   /**
    * The total amount of the asset deposited for lending in the market.
    */
-  principal_sum: string;
+  principal: string;
 
   receipt_total_supply: string;
 
@@ -110,7 +110,7 @@ export namespace LendMarketState {
      * `true`.
      */
     export interface Text {
-      principal_sum: string;
+      principal: string;
 
       receipt_total_supply: string;
 
@@ -137,7 +137,7 @@ export namespace LendMarketState {
        */
       price: string;
 
-      principal_sum: string;
+      principal: string;
     }
 
     export namespace Value {
@@ -160,20 +160,62 @@ export namespace LendMarketState {
            */
           price: string;
 
-          principal_sum: string;
+          principal: string;
         }
       }
     }
   }
 }
 
+export interface LendMarketSupply {
+  extra: LendMarketSupply.Extra;
+
+  /**
+   * Sum USD value of lending principal
+   */
+  principal: string;
+}
+
+export namespace LendMarketSupply {
+  export interface Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    text: Extra.Text | null;
+  }
+
+  export namespace Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    export interface Text {
+      principal: string;
+    }
+  }
+}
+
+/**
+ * Lending markets overview
+ */
+export interface LendOverview {
+  /**
+   * Lending markets
+   */
+  contents: Array<LendMarket>;
+
+  /**
+   * Supply breakdown for lending markets
+   */
+  supply: LendMarketSupply;
+}
+
 export interface LendListResponse {
   /**
-   * Total number of objects irrespective of any pagination parameters.
+   * Lending markets overview
    */
-  count: number;
-
-  data: Array<LendMarket>;
+  data: LendOverview;
 
   /**
    * Error data. Guaranteed `null` for successful response.
@@ -194,7 +236,7 @@ export interface LendListResponse {
 
 export interface LendGetByAssetResponse {
   /**
-   * Lending market overview
+   * Lending market
    */
   data: LendMarket;
 
@@ -332,6 +374,8 @@ export declare namespace Lend {
     type LendMarket as LendMarket,
     type LendMarketData as LendMarketData,
     type LendMarketState as LendMarketState,
+    type LendMarketSupply as LendMarketSupply,
+    type LendOverview as LendOverview,
     type LendListResponse as LendListResponse,
     type LendGetByAssetResponse as LendGetByAssetResponse,
     type LendGetRateHistoryResponse as LendGetRateHistoryResponse,
