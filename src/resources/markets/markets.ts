@@ -73,6 +73,16 @@ export class Markets extends APIResource {
   ): APIPromise<MarketGetParamsResponse> {
     return this._client.get('/api/v1/markets/config', { query, ...options });
   }
+
+  /**
+   * Get market TVL
+   */
+  getTvl(
+    query: MarketGetTvlParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<MarketGetTvlResponse> {
+    return this._client.get('/api/v1/markets/tvl', { query, ...options });
+  }
 }
 
 export interface GlobalMarketConfig {
@@ -238,6 +248,49 @@ export interface MergedMarket {
   lend: LendAPI.LendMarketData | null;
 }
 
+export interface Tvl {
+  /**
+   * Market TVL in USD - collateral portion
+   */
+  collateral_value: string;
+
+  extra: Tvl.Extra;
+
+  /**
+   * Market TVL in USD - lend portion
+   */
+  lend_value: string;
+
+  /**
+   * Market TVL in USD
+   */
+  total_value: string;
+}
+
+export namespace Tvl {
+  export interface Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    text: Extra.Text | null;
+  }
+
+  export namespace Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    export interface Text {
+      collateral_value: string;
+
+      lend_value: string;
+
+      total_value: string;
+    }
+  }
+}
+
 export interface MarketGetMergedResponse {
   /**
    * Total number of objects irrespective of any pagination parameters.
@@ -322,11 +375,36 @@ export namespace MarketGetOverviewResponse {
      * Current lending markets
      */
     lend: Array<LendAPI.LendMarket>;
+
+    /**
+     * Market TVL
+     */
+    tvl: MarketsAPI.Tvl;
   }
 }
 
 export interface MarketGetParamsResponse {
   data: GlobalMarketConfig;
+
+  /**
+   * Error data. Guaranteed `null` for successful response.
+   */
+  error: null;
+
+  /**
+   * HTTP status. Successful responses are guaranteed to be < `400`. Conversely,
+   * error responses are guaranteed to be >= `400`.
+   */
+  status: number;
+
+  /**
+   * HTTP status text
+   */
+  status_text: string;
+}
+
+export interface MarketGetTvlResponse {
+  data: Tvl;
 
   /**
    * Error data. Guaranteed `null` for successful response.
@@ -393,6 +471,13 @@ export interface MarketGetParamsParams {
   with_text?: boolean;
 }
 
+export interface MarketGetTvlParams {
+  /**
+   * Include text variation fields
+   */
+  with_text?: boolean;
+}
+
 Markets.Lend = Lend;
 Markets.Borrow = Borrow;
 
@@ -401,14 +486,17 @@ export declare namespace Markets {
     type GlobalMarketConfig as GlobalMarketConfig,
     type MarketRate as MarketRate,
     type MergedMarket as MergedMarket,
+    type Tvl as Tvl,
     type MarketGetMergedResponse as MarketGetMergedResponse,
     type MarketGetMergedByAssetResponse as MarketGetMergedByAssetResponse,
     type MarketGetOverviewResponse as MarketGetOverviewResponse,
     type MarketGetParamsResponse as MarketGetParamsResponse,
+    type MarketGetTvlResponse as MarketGetTvlResponse,
     type MarketGetMergedParams as MarketGetMergedParams,
     type MarketGetMergedByAssetParams as MarketGetMergedByAssetParams,
     type MarketGetOverviewParams as MarketGetOverviewParams,
     type MarketGetParamsParams as MarketGetParamsParams,
+    type MarketGetTvlParams as MarketGetTvlParams,
   };
 
   export {
