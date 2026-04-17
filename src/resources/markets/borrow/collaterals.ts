@@ -223,6 +223,8 @@ export namespace BorrowCollateralState {
      * `true`.
      */
     export interface Text {
+      balance: string;
+
       collateral_sum: string;
     }
 
@@ -239,6 +241,8 @@ export namespace BorrowCollateralState {
      * specified as well.
      */
     export interface Value {
+      balance: string;
+
       collateral_sum: string;
 
       extra: Value.Extra;
@@ -264,6 +268,8 @@ export namespace BorrowCollateralState {
          * `with_text` and `with_value` are `true`.
          */
         export interface Text {
+          balance: string;
+
           collateral_sum: string;
 
           /**

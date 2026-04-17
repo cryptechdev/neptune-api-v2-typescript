@@ -51,10 +51,12 @@ Types:
 - <code><a href="./src/resources/markets/markets.ts">GlobalMarketConfig</a></code>
 - <code><a href="./src/resources/markets/markets.ts">MarketRate</a></code>
 - <code><a href="./src/resources/markets/markets.ts">MergedMarket</a></code>
+- <code><a href="./src/resources/markets/markets.ts">Tvl</a></code>
 - <code><a href="./src/resources/markets/markets.ts">MarketGetMergedResponse</a></code>
 - <code><a href="./src/resources/markets/markets.ts">MarketGetMergedByAssetResponse</a></code>
 - <code><a href="./src/resources/markets/markets.ts">MarketGetOverviewResponse</a></code>
 - <code><a href="./src/resources/markets/markets.ts">MarketGetParamsResponse</a></code>
+- <code><a href="./src/resources/markets/markets.ts">MarketGetTvlResponse</a></code>
 
 Methods:
 
@@ -62,6 +64,7 @@ Methods:
 - <code title="get /api/v1/markets/merged/lookup">client.markets.<a href="./src/resources/markets/markets.ts">getMergedByAsset</a>({ ...params }) -> MarketGetMergedByAssetResponse</code>
 - <code title="get /api/v1/markets">client.markets.<a href="./src/resources/markets/markets.ts">getOverview</a>({ ...params }) -> MarketGetOverviewResponse</code>
 - <code title="get /api/v1/markets/config">client.markets.<a href="./src/resources/markets/markets.ts">getParams</a>({ ...params }) -> MarketGetParamsResponse</code>
+- <code title="get /api/v1/markets/tvl">client.markets.<a href="./src/resources/markets/markets.ts">getTvl</a>({ ...params }) -> MarketGetTvlResponse</code>
 
 ## Lend
 

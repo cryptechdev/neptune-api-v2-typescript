@@ -82,9 +82,12 @@ import {
   MarketGetOverviewResponse,
   MarketGetParamsParams,
   MarketGetParamsResponse,
+  MarketGetTvlParams,
+  MarketGetTvlResponse,
   MarketRate,
   Markets,
   MergedMarket,
+  Tvl,
 } from './resources/markets/markets';
 import { Swap } from './resources/swap/swap';
 import {
@@ -871,14 +874,17 @@ export declare namespace NeptuneAPIV2 {
     type GlobalMarketConfig as GlobalMarketConfig,
     type MarketRate as MarketRate,
     type MergedMarket as MergedMarket,
+    type Tvl as Tvl,
     type MarketGetMergedResponse as MarketGetMergedResponse,
     type MarketGetMergedByAssetResponse as MarketGetMergedByAssetResponse,
     type MarketGetOverviewResponse as MarketGetOverviewResponse,
     type MarketGetParamsResponse as MarketGetParamsResponse,
+    type MarketGetTvlResponse as MarketGetTvlResponse,
     type MarketGetMergedParams as MarketGetMergedParams,
     type MarketGetMergedByAssetParams as MarketGetMergedByAssetParams,
     type MarketGetOverviewParams as MarketGetOverviewParams,
     type MarketGetParamsParams as MarketGetParamsParams,
+    type MarketGetTvlParams as MarketGetTvlParams,
   };
 
   export {

@@ -1,4 +1,4 @@
-configured_endpoints: 49
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/cryptech%2Fneptune-api-v2-99a21fdf9159c28a75eb60c0b7ad4710d01b0a98dd0474267a07e9914039fa83.yml
-openapi_spec_hash: f58f326c00c34bc45b28b09b9530566c
-config_hash: 27aff5f3f84397a9b3c2cb8a3c1d1e71
+configured_endpoints: 50
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/cryptech%2Fneptune-api-v2-40d8045cda417d4c8a7a4a0d014345cdeb273fb5fdfa48eea08493bc5a5079ce.yml
+openapi_spec_hash: 71ca66dcf6e775aae3f49b42cd6ce2cc
+config_hash: f5ca3bc259f95069f0db4114d34e29ef
