@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.0 (2026-04-17)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/cryptechdev/neptune-api-v2-typescript/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* **api:** rename `/markets/tvl` endpoint, fix market state pool fields, nest market listings under `content` ([d8c1d0f](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/d8c1d0fb60430b42524011226203fec91f76003a))
+
 ## 0.6.0 (2026-04-17)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/cryptechdev/neptune-api-v2-typescript/compare/v0.5.0...v0.6.0)

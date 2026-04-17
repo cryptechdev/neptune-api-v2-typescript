@@ -87,8 +87,8 @@ describe('resource markets', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('getTvl', async () => {
-    const responsePromise = client.markets.getTvl();
+  test.skip('getSupply', async () => {
+    const responsePromise = client.markets.getSupply();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -99,10 +99,10 @@ describe('resource markets', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('getTvl: request options and params are passed correctly', async () => {
+  test.skip('getSupply: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.markets.getTvl({ with_text: true }, { path: '/_stainless_unknown_path' }),
+      client.markets.getSupply({ with_text: true }, { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(NeptuneAPIV2.NotFoundError);
   });
 });

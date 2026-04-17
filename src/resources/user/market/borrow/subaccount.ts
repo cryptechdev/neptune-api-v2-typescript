@@ -152,17 +152,19 @@ export interface UserBorrowMarketAccount {
  * asset are batched together.
  */
 export interface UserCollateralAccountPool {
-  /**
-   * Amount of this asset which is actively collateralized
-   */
-  amount: string;
-
   extra: UserCollateralAccountPool.Extra;
 
   /**
    * Account index
    */
   index: number;
+
+  /**
+   * Amount of this asset which is actively collateralized
+   */
+  principal: string;
+
+  shares: string;
 }
 
 export namespace UserCollateralAccountPool {
@@ -194,7 +196,9 @@ export namespace UserCollateralAccountPool {
      * `true`.
      */
     export interface Text {
-      amount: string;
+      principal: string;
+
+      shares: string;
     }
 
     /**
@@ -210,14 +214,16 @@ export namespace UserCollateralAccountPool {
      * specified as well.
      */
     export interface Value {
-      amount: string;
-
       extra: Value.Extra;
 
       /**
        * Price used in value calculations
        */
       price: string;
+
+      principal: string;
+
+      shares: string;
     }
 
     export namespace Value {
@@ -235,12 +241,14 @@ export namespace UserCollateralAccountPool {
          * `with_text` and `with_value` are `true`.
          */
         export interface Text {
-          amount: string;
-
           /**
            * Text representation of price
            */
           price: string;
+
+          principal: string;
+
+          shares: string;
         }
       }
     }
@@ -249,16 +257,18 @@ export namespace UserCollateralAccountPool {
 
 export interface UserCollateralAssetPool {
   /**
-   * Amount of this asset which is actively collateralized
-   */
-  amount: string;
-
-  /**
    * Asset identifiers with associated metadata
    */
   asset_info: AssetsAPI.AssetInfo;
 
   extra: UserCollateralAssetPool.Extra;
+
+  /**
+   * Amount of this asset which is actively collateralized
+   */
+  principal: string;
+
+  shares: string;
 }
 
 export namespace UserCollateralAssetPool {
@@ -290,7 +300,9 @@ export namespace UserCollateralAssetPool {
      * `true`.
      */
     export interface Text {
-      amount: string;
+      principal: string;
+
+      shares: string;
     }
 
     /**
@@ -306,14 +318,16 @@ export namespace UserCollateralAssetPool {
      * specified as well.
      */
     export interface Value {
-      amount: string;
-
       extra: Value.Extra;
 
       /**
        * Price used in value calculations
        */
       price: string;
+
+      principal: string;
+
+      shares: string;
     }
 
     export namespace Value {
@@ -331,12 +345,14 @@ export namespace UserCollateralAssetPool {
          * `with_text` and `with_value` are `true`.
          */
         export interface Text {
-          amount: string;
-
           /**
            * Text representation of price
            */
           price: string;
+
+          principal: string;
+
+          shares: string;
         }
       }
     }

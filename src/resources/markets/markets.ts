@@ -15,6 +15,8 @@ import {
   LendMarket,
   LendMarketData,
   LendMarketState,
+  LendMarketSupply,
+  LendOverview,
 } from './lend';
 import * as BorrowAPI from './borrow/borrow';
 import {
@@ -75,13 +77,13 @@ export class Markets extends APIResource {
   }
 
   /**
-   * Get market TVL
+   * Get market supply
    */
-  getTvl(
-    query: MarketGetTvlParams | null | undefined = {},
+  getSupply(
+    query: MarketGetSupplyParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<MarketGetTvlResponse> {
-    return this._client.get('/api/v1/markets/tvl', { query, ...options });
+  ): APIPromise<MarketGetSupplyResponse> {
+    return this._client.get('/api/v1/markets/supply', { query, ...options });
   }
 }
 
@@ -223,6 +225,42 @@ export namespace MarketRate {
   }
 }
 
+export interface MarketSupplyPool {
+  /**
+   * Sum USD value of market balance
+   */
+  balance: string;
+
+  extra: MarketSupplyPool.Extra;
+
+  /**
+   * Sum USD value of market shares
+   */
+  shares: string;
+}
+
+export namespace MarketSupplyPool {
+  export interface Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    text: Extra.Text | null;
+  }
+
+  export namespace Extra {
+    /**
+     * Human-readable field variants. Will not be null when query param `with_text` is
+     * `true`.
+     */
+    export interface Text {
+      balance: string;
+
+      shares: string;
+    }
+  }
+}
+
 /**
  * Data for all of an assets markets
  */
@@ -249,22 +287,18 @@ export interface MergedMarket {
 }
 
 export interface Tvl {
-  /**
-   * Market TVL in USD - collateral portion
-   */
-  collateral_value: string;
-
   extra: Tvl.Extra;
 
   /**
-   * Market TVL in USD - lend portion
+   * Market net TVL in USD (equivalent to `tvl - borrow.debts.supply.balance`)
    */
-  lend_value: string;
+  net_tvl: string;
 
   /**
-   * Market TVL in USD
+   * Market TVL in USD (equivalent to
+   * `borrow.collaterals.supply.non_receipt.balance + lend.supply.principal`)
    */
-  total_value: string;
+  tvl: string;
 }
 
 export namespace Tvl {
@@ -282,11 +316,9 @@ export namespace Tvl {
      * `true`.
      */
     export interface Text {
-      collateral_value: string;
+      net_tvl: string;
 
-      lend_value: string;
-
-      total_value: string;
+      tvl: string;
     }
   }
 }
@@ -372,12 +404,12 @@ export namespace MarketGetOverviewResponse {
     global_config: MarketsAPI.GlobalMarketConfig;
 
     /**
-     * Current lending markets
+     * Lending markets overview
      */
-    lend: Array<LendAPI.LendMarket>;
+    lend: LendAPI.LendOverview;
 
     /**
-     * Market TVL
+     * Oveerall market TVL
      */
     tvl: MarketsAPI.Tvl;
   }
@@ -403,8 +435,8 @@ export interface MarketGetParamsResponse {
   status_text: string;
 }
 
-export interface MarketGetTvlResponse {
-  data: Tvl;
+export interface MarketGetSupplyResponse {
+  data: MarketGetSupplyResponse.Data;
 
   /**
    * Error data. Guaranteed `null` for successful response.
@@ -421,6 +453,30 @@ export interface MarketGetTvlResponse {
    * HTTP status text
    */
   status_text: string;
+}
+
+export namespace MarketGetSupplyResponse {
+  export interface Data {
+    /**
+     * Borrowing market supply - collaterals
+     */
+    borrow_collateral: CollateralsAPI.BorrowCollateralMarketSupply;
+
+    /**
+     * Borrowing market supply - debts
+     */
+    borrow_debt: MarketsAPI.MarketSupplyPool;
+
+    /**
+     * Lending market supply
+     */
+    lend: LendAPI.LendMarketSupply;
+
+    /**
+     * Market TVL
+     */
+    tvl: MarketsAPI.Tvl;
+  }
 }
 
 export interface MarketGetMergedParams {
@@ -471,7 +527,7 @@ export interface MarketGetParamsParams {
   with_text?: boolean;
 }
 
-export interface MarketGetTvlParams {
+export interface MarketGetSupplyParams {
   /**
    * Include text variation fields
    */
@@ -485,18 +541,19 @@ export declare namespace Markets {
   export {
     type GlobalMarketConfig as GlobalMarketConfig,
     type MarketRate as MarketRate,
+    type MarketSupplyPool as MarketSupplyPool,
     type MergedMarket as MergedMarket,
     type Tvl as Tvl,
     type MarketGetMergedResponse as MarketGetMergedResponse,
     type MarketGetMergedByAssetResponse as MarketGetMergedByAssetResponse,
     type MarketGetOverviewResponse as MarketGetOverviewResponse,
     type MarketGetParamsResponse as MarketGetParamsResponse,
-    type MarketGetTvlResponse as MarketGetTvlResponse,
+    type MarketGetSupplyResponse as MarketGetSupplyResponse,
     type MarketGetMergedParams as MarketGetMergedParams,
     type MarketGetMergedByAssetParams as MarketGetMergedByAssetParams,
     type MarketGetOverviewParams as MarketGetOverviewParams,
     type MarketGetParamsParams as MarketGetParamsParams,
-    type MarketGetTvlParams as MarketGetTvlParams,
+    type MarketGetSupplyParams as MarketGetSupplyParams,
   };
 
   export {
@@ -504,6 +561,8 @@ export declare namespace Markets {
     type LendMarket as LendMarket,
     type LendMarketData as LendMarketData,
     type LendMarketState as LendMarketState,
+    type LendMarketSupply as LendMarketSupply,
+    type LendOverview as LendOverview,
     type LendListResponse as LendListResponse,
     type LendGetByAssetResponse as LendGetByAssetResponse,
     type LendGetRateHistoryResponse as LendGetRateHistoryResponse,
