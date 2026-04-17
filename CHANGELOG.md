@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.6.0 (2026-04-17)
+
+Full Changelog: [v0.5.0...v0.6.0](https://github.com/cryptechdev/neptune-api-v2-typescript/compare/v0.5.0...v0.6.0)
+
+### Features
+
+* **api:** add TVL, missing balance variants ([6983754](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/69837543ef6ddc5cc9fff7ba256ce27860299184))
+
+
+### Chores
+
+* **ci:** remove release-doctor workflow ([7b26cae](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/7b26cae978ed8a0521371ddade2e72a376ef4be8))
+* update SDK settings ([c94d985](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/c94d9855135f6fc9765fce2bd21851107f6249b4))
+* update SDK settings ([248d321](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/248d321679c47fb8b7598d7c338a34578aaf0eec))
+
 ## 0.5.0 (2026-04-09)
 
 Full Changelog: [v0.4.0...v0.5.0](https://github.com/cryptechdev/neptune-api-v2-typescript/compare/v0.4.0...v0.5.0)

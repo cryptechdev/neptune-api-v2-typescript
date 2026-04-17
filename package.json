@@ -1,6 +1,6 @@
 {
   "name": "@neptunefinance/api-v2",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "The official TypeScript library for the Neptune API V2 API",
   "author": "Neptune API V2 <>",
   "types": "dist/index.d.ts",
