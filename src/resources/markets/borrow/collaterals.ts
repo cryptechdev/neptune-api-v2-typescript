@@ -2,12 +2,13 @@
 
 import { APIResource } from '../../../core/resource';
 import * as AssetsAPI from '../../assets';
+import * as MarketsAPI from '../markets';
 import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
 
 export class Collaterals extends APIResource {
   /**
-   * Get borrowing collateral markets
+   * Get borrowing collateral markets overview
    */
   list(
     query: CollateralListParams | null | undefined = {},
@@ -183,15 +184,48 @@ export interface BorrowCollateralMarketData {
   state: BorrowCollateralState;
 }
 
+export interface BorrowCollateralMarketSupply {
+  /**
+   * Supply of all collaterals (excluding receipt tokens)
+   */
+  non_receipt: MarketsAPI.MarketSupplyPool;
+
+  /**
+   * Supply of receipt token collaterals
+   */
+  receipt: MarketsAPI.MarketSupplyPool;
+
+  /**
+   * Total supply for collaterals, regardless of type. Equivalent to
+   * `non_receipt + receipt`
+   */
+  total: MarketsAPI.MarketSupplyPool;
+}
+
+/**
+ * Borrowing market collaterals overview
+ */
+export interface BorrowCollateralOverview {
+  /**
+   * Borrowing collateral markets
+   */
+  contents: Array<BorrowCollateralMarket>;
+
+  /**
+   * Supply breakdown for collaterals
+   */
+  supply: BorrowCollateralMarketSupply;
+}
+
 export interface BorrowCollateralState {
   balance: string;
+
+  extra: BorrowCollateralState.Extra;
 
   /**
    * Total amount of this asset which is actively collateralized
    */
-  collateral_sum: string;
-
-  extra: BorrowCollateralState.Extra;
+  shares: string;
 }
 
 export namespace BorrowCollateralState {
@@ -225,7 +259,7 @@ export namespace BorrowCollateralState {
     export interface Text {
       balance: string;
 
-      collateral_sum: string;
+      shares: string;
     }
 
     /**
@@ -243,14 +277,14 @@ export namespace BorrowCollateralState {
     export interface Value {
       balance: string;
 
-      collateral_sum: string;
-
       extra: Value.Extra;
 
       /**
        * Price used in value calculations
        */
       price: string;
+
+      shares: string;
     }
 
     export namespace Value {
@@ -270,12 +304,12 @@ export namespace BorrowCollateralState {
         export interface Text {
           balance: string;
 
-          collateral_sum: string;
-
           /**
            * Text representation of price
            */
           price: string;
+
+          shares: string;
         }
       }
     }
@@ -284,11 +318,9 @@ export namespace BorrowCollateralState {
 
 export interface CollateralListResponse {
   /**
-   * Total number of objects irrespective of any pagination parameters.
+   * Borrowing market collaterals overview
    */
-  count: number;
-
-  data: Array<BorrowCollateralMarket>;
+  data: BorrowCollateralOverview;
 
   /**
    * Error data. Guaranteed `null` for successful response.
@@ -364,6 +396,8 @@ export declare namespace Collaterals {
     type BorrowCollateralConfig as BorrowCollateralConfig,
     type BorrowCollateralMarket as BorrowCollateralMarket,
     type BorrowCollateralMarketData as BorrowCollateralMarketData,
+    type BorrowCollateralMarketSupply as BorrowCollateralMarketSupply,
+    type BorrowCollateralOverview as BorrowCollateralOverview,
     type BorrowCollateralState as BorrowCollateralState,
     type CollateralListResponse as CollateralListResponse,
     type CollateralGetByAssetResponse as CollateralGetByAssetResponse,

@@ -50,13 +50,14 @@ Types:
 
 - <code><a href="./src/resources/markets/markets.ts">GlobalMarketConfig</a></code>
 - <code><a href="./src/resources/markets/markets.ts">MarketRate</a></code>
+- <code><a href="./src/resources/markets/markets.ts">MarketSupplyPool</a></code>
 - <code><a href="./src/resources/markets/markets.ts">MergedMarket</a></code>
 - <code><a href="./src/resources/markets/markets.ts">Tvl</a></code>
 - <code><a href="./src/resources/markets/markets.ts">MarketGetMergedResponse</a></code>
 - <code><a href="./src/resources/markets/markets.ts">MarketGetMergedByAssetResponse</a></code>
 - <code><a href="./src/resources/markets/markets.ts">MarketGetOverviewResponse</a></code>
 - <code><a href="./src/resources/markets/markets.ts">MarketGetParamsResponse</a></code>
-- <code><a href="./src/resources/markets/markets.ts">MarketGetTvlResponse</a></code>
+- <code><a href="./src/resources/markets/markets.ts">MarketGetSupplyResponse</a></code>
 
 Methods:
 
@@ -64,7 +65,7 @@ Methods:
 - <code title="get /api/v1/markets/merged/lookup">client.markets.<a href="./src/resources/markets/markets.ts">getMergedByAsset</a>({ ...params }) -> MarketGetMergedByAssetResponse</code>
 - <code title="get /api/v1/markets">client.markets.<a href="./src/resources/markets/markets.ts">getOverview</a>({ ...params }) -> MarketGetOverviewResponse</code>
 - <code title="get /api/v1/markets/config">client.markets.<a href="./src/resources/markets/markets.ts">getParams</a>({ ...params }) -> MarketGetParamsResponse</code>
-- <code title="get /api/v1/markets/tvl">client.markets.<a href="./src/resources/markets/markets.ts">getTvl</a>({ ...params }) -> MarketGetTvlResponse</code>
+- <code title="get /api/v1/markets/supply">client.markets.<a href="./src/resources/markets/markets.ts">getSupply</a>({ ...params }) -> MarketGetSupplyResponse</code>
 
 ## Lend
 
@@ -73,6 +74,8 @@ Types:
 - <code><a href="./src/resources/markets/lend.ts">LendMarket</a></code>
 - <code><a href="./src/resources/markets/lend.ts">LendMarketData</a></code>
 - <code><a href="./src/resources/markets/lend.ts">LendMarketState</a></code>
+- <code><a href="./src/resources/markets/lend.ts">LendMarketSupply</a></code>
+- <code><a href="./src/resources/markets/lend.ts">LendOverview</a></code>
 - <code><a href="./src/resources/markets/lend.ts">LendListResponse</a></code>
 - <code><a href="./src/resources/markets/lend.ts">LendGetByAssetResponse</a></code>
 - <code><a href="./src/resources/markets/lend.ts">LendGetRateHistoryResponse</a></code>
@@ -103,6 +106,8 @@ Types:
 - <code><a href="./src/resources/markets/borrow/collaterals.ts">BorrowCollateralConfig</a></code>
 - <code><a href="./src/resources/markets/borrow/collaterals.ts">BorrowCollateralMarket</a></code>
 - <code><a href="./src/resources/markets/borrow/collaterals.ts">BorrowCollateralMarketData</a></code>
+- <code><a href="./src/resources/markets/borrow/collaterals.ts">BorrowCollateralMarketSupply</a></code>
+- <code><a href="./src/resources/markets/borrow/collaterals.ts">BorrowCollateralOverview</a></code>
 - <code><a href="./src/resources/markets/borrow/collaterals.ts">BorrowCollateralState</a></code>
 - <code><a href="./src/resources/markets/borrow/collaterals.ts">CollateralListResponse</a></code>
 - <code><a href="./src/resources/markets/borrow/collaterals.ts">CollateralGetByAssetResponse</a></code>
@@ -119,6 +124,7 @@ Types:
 - <code><a href="./src/resources/markets/borrow/debts.ts">BorrowDebtConfig</a></code>
 - <code><a href="./src/resources/markets/borrow/debts.ts">BorrowDebtMarket</a></code>
 - <code><a href="./src/resources/markets/borrow/debts.ts">BorrowDebtMarketData</a></code>
+- <code><a href="./src/resources/markets/borrow/debts.ts">BorrowDebtOverview</a></code>
 - <code><a href="./src/resources/markets/borrow/debts.ts">BorrowDebtState</a></code>
 - <code><a href="./src/resources/markets/borrow/debts.ts">DebtListResponse</a></code>
 - <code><a href="./src/resources/markets/borrow/debts.ts">DebtGetByAssetResponse</a></code>

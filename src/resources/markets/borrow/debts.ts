@@ -8,7 +8,7 @@ import { RequestOptions } from '../../../internal/request-options';
 
 export class Debts extends APIResource {
   /**
-   * Get borrowing debt markets
+   * Get borrowing debt markets overview
    */
   list(
     query: DebtListParams | null | undefined = {},
@@ -177,12 +177,27 @@ export interface BorrowDebtMarketData {
   state: BorrowDebtState;
 }
 
+/**
+ * Borrowing market debts overview
+ */
+export interface BorrowDebtOverview {
+  /**
+   * Borrowing debt markets
+   */
+  contents: Array<BorrowDebtMarket>;
+
+  /**
+   * Supply breakdown for debt markets
+   */
+  supply: MarketsAPI.MarketSupplyPool;
+}
+
 export interface BorrowDebtState {
-  balance_sum: string;
+  balance: string;
 
   extra: BorrowDebtState.Extra;
 
-  principal_sum: string;
+  shares: string;
 
   /**
    * Timestamp used to keep track of the last time interest was distributed.
@@ -224,9 +239,9 @@ export namespace BorrowDebtState {
      * `true`.
      */
     export interface Text {
-      balance_sum: string;
+      balance: string;
 
-      principal_sum: string;
+      shares: string;
 
       time_last_distributed_interest: string;
     }
@@ -244,7 +259,7 @@ export namespace BorrowDebtState {
      * specified as well.
      */
     export interface Value {
-      balance_sum: string;
+      balance: string;
 
       extra: Value.Extra;
 
@@ -253,7 +268,7 @@ export namespace BorrowDebtState {
        */
       price: string;
 
-      principal_sum: string;
+      shares: string;
     }
 
     export namespace Value {
@@ -271,14 +286,14 @@ export namespace BorrowDebtState {
          * `with_text` and `with_value` are `true`.
          */
         export interface Text {
-          balance_sum: string;
+          balance: string;
 
           /**
            * Text representation of price
            */
           price: string;
 
-          principal_sum: string;
+          shares: string;
         }
       }
     }
@@ -287,11 +302,9 @@ export namespace BorrowDebtState {
 
 export interface DebtListResponse {
   /**
-   * Total number of objects irrespective of any pagination parameters.
+   * Borrowing market debts overview
    */
-  count: number;
-
-  data: Array<BorrowDebtMarket>;
+  data: BorrowDebtOverview;
 
   /**
    * Error data. Guaranteed `null` for successful response.
@@ -367,6 +380,7 @@ export declare namespace Debts {
     type BorrowDebtConfig as BorrowDebtConfig,
     type BorrowDebtMarket as BorrowDebtMarket,
     type BorrowDebtMarketData as BorrowDebtMarketData,
+    type BorrowDebtOverview as BorrowDebtOverview,
     type BorrowDebtState as BorrowDebtState,
     type DebtListResponse as DebtListResponse,
     type DebtGetByAssetResponse as DebtGetByAssetResponse,

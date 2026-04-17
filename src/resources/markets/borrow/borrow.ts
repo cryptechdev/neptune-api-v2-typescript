@@ -8,6 +8,8 @@ import {
   BorrowCollateralConfig,
   BorrowCollateralMarket,
   BorrowCollateralMarketData,
+  BorrowCollateralMarketSupply,
+  BorrowCollateralOverview,
   BorrowCollateralState,
   CollateralGetByAssetParams,
   CollateralGetByAssetResponse,
@@ -20,6 +22,7 @@ import {
   BorrowDebtConfig,
   BorrowDebtMarket,
   BorrowDebtMarketData,
+  BorrowDebtOverview,
   BorrowDebtState,
   DebtGetByAssetParams,
   DebtGetByAssetResponse,
@@ -57,14 +60,14 @@ export class Borrow extends APIResource {
 
 export interface BorrowMarketOverview {
   /**
-   * Borrowing collateral markets
+   * Borrowing market collaterals overview
    */
-  collaterals: Array<CollateralsAPI.BorrowCollateralMarket>;
+  collaterals: CollateralsAPI.BorrowCollateralOverview;
 
   /**
-   * Borrowing debt markets
+   * Borrowing market debts overview
    */
-  debts: Array<DebtsAPI.BorrowDebtMarket>;
+  debts: DebtsAPI.BorrowDebtOverview;
 }
 
 export interface BorrowGetOverviewResponse {
@@ -199,6 +202,8 @@ export declare namespace Borrow {
     type BorrowCollateralConfig as BorrowCollateralConfig,
     type BorrowCollateralMarket as BorrowCollateralMarket,
     type BorrowCollateralMarketData as BorrowCollateralMarketData,
+    type BorrowCollateralMarketSupply as BorrowCollateralMarketSupply,
+    type BorrowCollateralOverview as BorrowCollateralOverview,
     type BorrowCollateralState as BorrowCollateralState,
     type CollateralListResponse as CollateralListResponse,
     type CollateralGetByAssetResponse as CollateralGetByAssetResponse,
@@ -211,6 +216,7 @@ export declare namespace Borrow {
     type BorrowDebtConfig as BorrowDebtConfig,
     type BorrowDebtMarket as BorrowDebtMarket,
     type BorrowDebtMarketData as BorrowDebtMarketData,
+    type BorrowDebtOverview as BorrowDebtOverview,
     type BorrowDebtState as BorrowDebtState,
     type DebtListResponse as DebtListResponse,
     type DebtGetByAssetResponse as DebtGetByAssetResponse,
