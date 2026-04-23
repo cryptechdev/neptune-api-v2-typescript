@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.1 (2026-04-23)
+
+Full Changelog: [v0.7.0...v0.7.1](https://github.com/cryptechdev/neptune-api-v2-typescript/compare/v0.7.0...v0.7.1)
+
+### Chores
+
+* **internal:** more robust bootstrap script ([0e74ec5](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/0e74ec5bca1f68f2f8fc49dadd6ba41387ae412b))
+
 ## 0.7.0 (2026-04-17)
 
 Full Changelog: [v0.6.0...v0.7.0](https://github.com/cryptechdev/neptune-api-v2-typescript/compare/v0.6.0...v0.7.0)
