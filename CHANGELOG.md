@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.8.0 (2026-05-19)
+
+Full Changelog: [v0.7.0...v0.8.0](https://github.com/cryptechdev/neptune-api-v2-typescript/compare/v0.7.0...v0.8.0)
+
+### Features
+
+* support setting headers via env ([0d54c3e](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/0d54c3e850d3930f2b7225a23d0dcf3f86dd5262))
+
+
+### Bug Fixes
+
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([5a9f181](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/5a9f1814fbe70aba79ad1a25f3f3613bed53c509))
+
+
+### Chores
+
+* **format:** run eslint and prettier separately ([33da064](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/33da064204baf1d3af97e58d3909d257947a5ae8))
+* **internal:** codegen related update ([27bf2b2](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/27bf2b2b5a872d760b95f1c15942204e60726d61))
+* **internal:** more robust bootstrap script ([0e74ec5](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/0e74ec5bca1f68f2f8fc49dadd6ba41387ae412b))
+* redact api-key headers in debug logs ([6ddcad9](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/6ddcad9e8fa5c8a4dcc6a1ffad4804c3d43c18e4))
+* **tests:** remove redundant File import ([7498801](https://github.com/cryptechdev/neptune-api-v2-typescript/commit/7498801365f25c89305c9b7e5ad82e7206b8dde2))
+
 ## 0.7.0 (2026-04-17)
 
 Full Changelog: [v0.6.0...v0.7.0](https://github.com/cryptechdev/neptune-api-v2-typescript/compare/v0.6.0...v0.7.0)
