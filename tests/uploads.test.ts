@@ -1,7 +1,6 @@
 import fs from 'fs';
 import type { ResponseLike } from '@neptunefinance/api-v2/internal/to-file';
 import { toFile } from '@neptunefinance/api-v2/core/uploads';
-import { File } from 'node:buffer';
 
 class MyClass {
   name: string = 'foo';
